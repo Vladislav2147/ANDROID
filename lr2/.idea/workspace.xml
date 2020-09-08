@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f827c58c-56b0-4a8c-9d54-9eacde15504f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/by/bstu/shichko/fit/manager/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/by/bstu/shichko/fit/manager/Action.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,12 +75,24 @@
       <workItem from="1599502950082" duration="3238000" />
       <workItem from="1599541130201" duration="3038000" />
       <workItem from="1599545940479" duration="2212000" />
-      <workItem from="1599565117057" duration="435000" />
+      <workItem from="1599565117057" duration="517000" />
     </task>
+    <task id="LOCAL-00001" summary="decided to go to 3lr">
+      <created>1599565599247</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1599565599247</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="decided to go to 3lr" />
+    <option name="LAST_COMMIT_MESSAGE" value="decided to go to 3lr" />
   </component>
   <component name="WindowStateProjectService">
     <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1599542176608">
@@ -93,6 +103,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="397" y="71" key="#toString()_Generation_Settings/0.0.1536.824@0.0.1536.824" timestamp="1599503826931" />
+    <state x="393" y="7" key="CommitChangelistDialog2" timestamp="1599565597655">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="393" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1599565597655" />
     <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1599504956715">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -117,6 +131,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1596481800104" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1599565601405">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1599565601405" />
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1599565118212">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
