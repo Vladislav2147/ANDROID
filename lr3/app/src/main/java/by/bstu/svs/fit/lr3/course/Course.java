@@ -1,7 +1,7 @@
-package by.bstu.shichko.fit.course;
+package by.bstu.svs.fit.lr3.course;
 
-import by.bstu.shichko.fit.exception.PersonAlreadyOnCourseException;
-import by.bstu.shichko.fit.person.Person;
+import by.bstu.svs.fit.lr3.exception.PersonAlreadyOnCourseException;
+import by.bstu.svs.fit.lr3.person.Person;
 import lombok.Data;
 
 import java.util.List;

@@ -1,8 +1,9 @@
-package by.bstu.shichko.fit.manager;
+package by.bstu.svs.fit.lr3.manager;
 
-import by.bstu.shichko.fit.course.Course;
-import by.bstu.shichko.fit.person.Person;
-import by.bstu.shichko.fit.person.Student;
+import by.bstu.svs.fit.lr3.course.Course;
+import by.bstu.svs.fit.lr3.person.Person;
+import by.bstu.svs.fit.lr3.person.Student;
+
 
 import java.io.File;
 import java.util.List;

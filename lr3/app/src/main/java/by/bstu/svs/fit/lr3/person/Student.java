@@ -1,8 +1,7 @@
-package by.bstu.shichko.fit.person;
+package by.bstu.svs.fit.lr3.person;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @NoArgsConstructor

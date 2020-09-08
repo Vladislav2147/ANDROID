@@ -1,4 +1,4 @@
-package by.bstu.shichko.fit.person;
+package by.bstu.svs.fit.lr3.person;
 
 public enum University {
 

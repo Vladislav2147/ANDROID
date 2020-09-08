@@ -1,4 +1,4 @@
-package by.bstu.shichko.fit.manager;
+package by.bstu.svs.fit.lr3.manager;
 
 public class Manager {
 
