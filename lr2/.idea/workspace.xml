@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f827c58c-56b0-4a8c-9d54-9eacde15504f" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1fbKWd9zcdcJDvKcoz7pGt4DxqY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="F:/JavaForum" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="by.bstu.shichko.fit.Main" />
+      <module name="lr2" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f827c58c-56b0-4a8c-9d54-9eacde15504f" name="Default Changelist" comment="" />
+      <created>1596481385239</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1596481385239</updated>
+      <workItem from="1596481389164" duration="634000" />
+      <workItem from="1596559791405" duration="16000" />
+      <workItem from="1599323279920" duration="2455000" />
+      <workItem from="1599398417885" duration="1117000" />
+      <workItem from="1599502950082" duration="3238000" />
+      <workItem from="1599541130201" duration="3038000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1599542176608">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1599542176608" />
+    <state x="397" y="71" key="#toString()_Generation_Settings" timestamp="1599503826931">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="397" y="71" key="#toString()_Generation_Settings/0.0.1536.824@0.0.1536.824" timestamp="1599503826931" />
+    <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1599504956715">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599504956715" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1599506207271">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599506207271" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1599506207271">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599506207271" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1599506207271">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599506207271" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1599506207271">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599506207271" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1596481800104">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1596481800104" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1599541146491">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1599541146491" />
+    <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1596481767996">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1596481767996" />
+  </component>
+</project>
