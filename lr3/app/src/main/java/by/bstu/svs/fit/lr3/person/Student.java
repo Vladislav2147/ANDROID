@@ -16,4 +16,11 @@ public class Student extends Person {
         this.mark = mark;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "university=" + university +
+                ", mark=" + mark +
+                "} " + super.toString();
+    }
 }

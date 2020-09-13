@@ -27,8 +27,8 @@ public interface Action {
 
         if(rand.nextBoolean()) {
             person = new Employee();
-            List<String> organisations = PersonManager.getOrganisations();
-            String organisation = organisations.get(rand.nextInt(organisations.size()));
+            String[] organisations = PersonManager.getOrganisations();
+            String organisation = organisations[rand.nextInt(organisations.length)];
             ((Employee)person).setOrganisation(organisation);
         }
         else {
@@ -38,12 +38,12 @@ public interface Action {
         }
 
         int age = rand.nextInt(PersonManager.maxAge - PersonManager.minAge) + PersonManager.minAge;
-        List<String> firstNames = PersonManager.getFirstNames();
-        List<String> secondNames = PersonManager.getSecondNames();
+        String[] firstNames = PersonManager.getFirstNames();
+        String[] secondNames = PersonManager.getSecondNames();
 
         person.setAge(age);
-        person.setFirstName(firstNames.get(rand.nextInt(firstNames.size())));
-        person.setSecondName(secondNames.get(rand.nextInt(secondNames.size())));
+        person.setFirstName(firstNames[rand.nextInt(firstNames.length)]);
+        person.setSecondName(secondNames[rand.nextInt(secondNames.length)]);
 
         return person;
     }
@@ -51,7 +51,7 @@ public interface Action {
     class PersonManager {
 
         private static final int minAge = 16;
-        private static final int maxAge = 99;
+        private static final int maxAge = 30;
 
 
         public static String[] getFirstNames() {

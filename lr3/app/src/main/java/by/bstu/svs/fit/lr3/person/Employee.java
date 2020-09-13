@@ -17,4 +17,10 @@ public class Employee extends Person {
 
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "organisation='" + organisation + '\'' +
+                "} " + super.toString();
+    }
 }
