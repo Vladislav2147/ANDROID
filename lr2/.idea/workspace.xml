@@ -76,6 +76,7 @@
       <workItem from="1599541130201" duration="3038000" />
       <workItem from="1599545940479" duration="2212000" />
       <workItem from="1599565117057" duration="517000" />
+      <workItem from="1599801835500" duration="1280000" />
     </task>
     <task id="LOCAL-00001" summary="decided to go to 3lr">
       <created>1599565599247</created>
@@ -107,10 +108,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="393" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1599565597655" />
-    <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1599504956715">
+    <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1599801923471">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599504956715" />
+    <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599801923471" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1599506207271">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -135,13 +136,17 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1599565601405" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1599565118212">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1599801866212">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1599565118212" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1599801866212" />
     <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1596481767996">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1596481767996" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1599805568452">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1599805568452" />
   </component>
 </project>
