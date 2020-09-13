@@ -17,42 +17,41 @@ public interface Action {
         return "Interface Action contains methods for working with course";
     }
 
-    Course generateCourse(String courseName, String organisationName, int studentsAmount);
-    Course generateCourse(String courseName, String organisationName, String fileName);
+    Course generateCourse(String courseName, String organisationName, File file);
+    Course generateCourse(int studentsAmount);
 
-    default Person personGenerator() {
+    default Person generateListener() {
 
-        Person person;
+        Person listener;
         Random rand = new Random();
 
         if(rand.nextBoolean()) {
-            person = new Employee();
+            listener = new Employee();
             String[] organisations = PersonManager.getOrganisations();
             String organisation = organisations[rand.nextInt(organisations.length)];
-            ((Employee)person).setOrganisation(organisation);
+            ((Employee)listener).setOrganisation(organisation);
         }
         else {
-            person = new Student();
+            listener = new Student();
             University university = University.values()[rand.nextInt(University.values().length)];
-            ((Student)person).setUniversity(university);
+            ((Student)listener).setUniversity(university);
         }
 
         int age = rand.nextInt(PersonManager.maxAge - PersonManager.minAge) + PersonManager.minAge;
         String[] firstNames = PersonManager.getFirstNames();
         String[] secondNames = PersonManager.getSecondNames();
 
-        person.setAge(age);
-        person.setFirstName(firstNames[rand.nextInt(firstNames.length)]);
-        person.setSecondName(secondNames[rand.nextInt(secondNames.length)]);
+        listener.setAge(age);
+        listener.setFirstName(firstNames[rand.nextInt(firstNames.length)]);
+        listener.setSecondName(secondNames[rand.nextInt(secondNames.length)]);
 
-        return person;
+        return listener;
     }
     
     class PersonManager {
 
         private static final int minAge = 16;
         private static final int maxAge = 30;
-
 
         public static String[] getFirstNames() {
             return new String[]{"Ivan", "Michael", "Vladimir", "Anton", "Nikolai", "Nikita", "Paul"};
@@ -66,5 +65,8 @@ public interface Action {
             return new String[]{"ITechArt", "EPAM", "ITransition", "Wargaming", "Mail.ru", "Yandex"};
         }
 
+        public static String[] getCourseNames() {
+            return new String[]{"Java", "C#", "Python", "frontend", "backend"};
+        }
     }
 }

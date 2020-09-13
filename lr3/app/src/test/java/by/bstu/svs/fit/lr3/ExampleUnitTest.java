@@ -1,12 +1,10 @@
 package by.bstu.svs.fit.lr3;
 
-import android.util.Log;
-
 import org.junit.Test;
 
-import java.util.Random;
-
+import by.bstu.svs.fit.lr3.course.Course;
 import by.bstu.svs.fit.lr3.manager.Manager;
+import by.bstu.svs.fit.lr3.person.Person;
 
 import static org.junit.Assert.*;
 
@@ -25,10 +23,12 @@ public class ExampleUnitTest {
     public void test() {
 
         Manager manager = new Manager();
-        for (int i = 0; i < 100; i++) {
 
-            System.out.println(manager.personGenerator());
+        Course course = manager.generateCourse(35);
 
+        for (Person person :
+                course.getListeners()) {
+            System.out.println(person);
         }
 
     }
