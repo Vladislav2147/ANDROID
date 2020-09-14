@@ -8,6 +8,7 @@ import by.bstu.svs.fit.lr3.person.University;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public interface Action {
         return "Interface Action contains methods for working with course";
     }
 
-    Course generateCourse(String courseName, String organisationName, File file);
+    Course generateCourse(File file) throws IOException;
     Course generateCourse(int studentsAmount);
 
     default Person generateListener() {
