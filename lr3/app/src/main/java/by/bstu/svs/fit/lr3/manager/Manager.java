@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -50,11 +51,10 @@ public class Manager implements Action {
 
     }
 
-    public List<Person> sortByAgeThenBySecondName(List<Person> listeners) {
+    public void sortByAgeThenBySecondName(List<Person> listeners) {
 
         Comparator<Person> comparator = new PersonAgeComparator().thenComparing(person -> person.getSecondName());
-        listeners.sort(comparator);
-        return listeners;
+        Collections.sort(listeners, comparator);
 
     }
 }

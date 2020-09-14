@@ -5,12 +5,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import by.bstu.svs.fit.lr3.course.Course;
 import by.bstu.svs.fit.lr3.manager.Manager;
@@ -28,24 +23,23 @@ public class MainActivity extends AppCompatActivity {
 
         Manager manager = new Manager();
         Course course = manager.generateCourse(file);
+
+
         for (Person person :
                 course.getListeners()) {
-            Log.d("Person", person.toString());
+            Log.d("Person", person.getAge() + " " + person.getSecondName());
         }
+
+        manager.sortByAgeThenBySecondName(course.getListeners());
+
+        for (Person person :
+                course.getListeners()) {
+            Log.d("Sorted", person.getAge() + " " + person.getSecondName());
+        }
+
+
     }
 
-    public void generateFile() throws IOException {
 
-        Manager manager = new Manager();
-        Course course = manager.generateCourse(25);
-        File file = new File(getExternalFilesDir(null),"json.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String json = objectMapper.writeValueAsString(course);
-
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(json);
-        fileWriter.close();
-    }
 
 }
