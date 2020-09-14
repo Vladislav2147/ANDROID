@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import by.bstu.svs.fit.lr3.comparators.PersonAgeComparator;
 import by.bstu.svs.fit.lr3.course.Course;
 import by.bstu.svs.fit.lr3.person.Person;
 
@@ -45,6 +47,14 @@ public class Manager implements Action {
 
         course.setListeners(listeners);
         return course;
+
+    }
+
+    public List<Person> sortByAgeThenBySecondName(List<Person> listeners) {
+
+        Comparator<Person> comparator = new PersonAgeComparator().thenComparing(person -> person.getSecondName());
+        listeners.sort(comparator);
+        return listeners;
 
     }
 }

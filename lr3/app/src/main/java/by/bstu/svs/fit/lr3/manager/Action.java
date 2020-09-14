@@ -1,16 +1,14 @@
 package by.bstu.svs.fit.lr3.manager;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
+
 import by.bstu.svs.fit.lr3.course.Course;
 import by.bstu.svs.fit.lr3.person.Employee;
 import by.bstu.svs.fit.lr3.person.Person;
 import by.bstu.svs.fit.lr3.person.Student;
 import by.bstu.svs.fit.lr3.person.University;
-
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Random;
 
 public interface Action {
 
@@ -36,6 +34,7 @@ public interface Action {
             listener = new Student();
             University university = University.values()[rand.nextInt(University.values().length)];
             ((Student)listener).setUniversity(university);
+            ((Student)listener).setMark(rand.nextInt(10) + 1);
         }
 
         int age = rand.nextInt(PersonManager.maxAge - PersonManager.minAge) + PersonManager.minAge;
