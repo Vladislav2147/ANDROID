@@ -13,11 +13,12 @@ import java.util.Random;
 import by.bstu.svs.fit.lr3.comparators.PersonAgeComparator;
 import by.bstu.svs.fit.lr3.course.Course;
 import by.bstu.svs.fit.lr3.person.Person;
+import by.bstu.svs.fit.lr3.person.Student;
 
 public class Manager implements Action {
 
-    //TODO lambdas
-    //TODO sorting method and comparator
+    //TODO log
+    //TODO UI
 
     @Override
     public Course generateCourse(File file) throws IOException {
@@ -51,10 +52,21 @@ public class Manager implements Action {
 
     }
 
-    public void sortByAgeThenBySecondName(List<Person> listeners) {
+    public void sortByAgeThenBySecondName(Course course) {
 
         Comparator<Person> comparator = new PersonAgeComparator().thenComparing(person -> person.getSecondName());
-        Collections.sort(listeners, comparator);
+        Collections.sort(course.getListeners(), comparator);
+
+    }
+
+    public List<Student> getTopThreeStudentsByMark(Course course) {
+
+        List<Student> studentsCollection = new ArrayList<>();
+        course.getListeners().stream().filter((person -> person instanceof Student)).forEach(student -> studentsCollection.add((Student) student));
+
+        studentsCollection.sort((a, b) -> b.getMark().compareTo(a.getMark()));
+
+        return studentsCollection.subList(0,3);
 
     }
 }

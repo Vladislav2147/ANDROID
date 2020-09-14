@@ -6,10 +6,12 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
+import java.util.List;
 
 import by.bstu.svs.fit.lr3.course.Course;
 import by.bstu.svs.fit.lr3.manager.Manager;
 import by.bstu.svs.fit.lr3.person.Person;
+import by.bstu.svs.fit.lr3.person.Student;
 import lombok.SneakyThrows;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,16 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
         for (Person person :
                 course.getListeners()) {
-            Log.d("Person", person.getAge() + " " + person.getSecondName());
+            Log.d("Person", person.toString());
         }
 
-        manager.sortByAgeThenBySecondName(course.getListeners());
+//        manager.sortByAgeThenBySecondName(course);
+//
+//        for (Person person :
+//                course.getListeners()) {
+//            Log.d("Sorted", person.getAge() + " " + person.getSecondName());
+//        }
 
-        for (Person person :
-                course.getListeners()) {
-            Log.d("Sorted", person.getAge() + " " + person.getSecondName());
+        List<Student> topThree = manager.getTopThreeStudentsByMark(course);
+
+        for (Student student:
+             topThree) {
+            Log.d("top three", student.toString());
         }
-
 
     }
 
