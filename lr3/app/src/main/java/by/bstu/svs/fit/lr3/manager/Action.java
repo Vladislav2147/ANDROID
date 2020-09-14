@@ -54,7 +54,7 @@ public interface Action {
         private static final int maxAge = 30;
 
         public static String[] getFirstNames() {
-            return new String[]{"Ivan", "Michael", "Vladimir", "Anton", "Nikolai", "Nikita", "Paul"};
+            return new String[]{"Ivan", "Michael", "Vladimir", "Anton", "Nikolai", "Hukuma", "Paul"};
         }
 
         public static String[] getSecondNames() {

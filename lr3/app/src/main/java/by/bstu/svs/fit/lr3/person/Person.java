@@ -1,7 +1,18 @@
 package by.bstu.svs.fit.lr3.person;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.Objects;
 
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes(value = {
+        @JsonSubTypes.Type(value = Employee.class),
+        @JsonSubTypes.Type(value = Student.class),
+})
 public abstract class Person {
 
     private String firstName;
