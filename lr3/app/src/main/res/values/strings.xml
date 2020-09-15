@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">lr3</string>
+    <string name="next">Next</string>
+    <string name="age">Age</string>
+    <string name="second_name">Second name</string>
+    <string name="first_name">First name</string>
+    <string name="student">Student</string>
+    <string name="employee">Employee</string>
+    <string name="back">Back</string>
 </resources>

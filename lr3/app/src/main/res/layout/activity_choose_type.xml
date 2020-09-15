@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseTypeActivity">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:rowCount="2"
+        android:columnCount="2">
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_columnSpan="2">
+
+            <RadioButton
+                android:id="@+id/radioStudent"
+                style="@style/MarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/student"
+                android:textSize="24sp"/>
+            <RadioButton
+                android:id="@+id/radioEmployee"
+                style="@style/MarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/employee"
+                android:textSize="24sp"/>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/backButton2"
+            android:onClick="onClickBackButton"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_columnWeight="1"
+            android:text="@string/back"/>
+
+        <Button
+            android:id="@+id/nextButton2"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_height="48dp"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
+            android:text="@string/next"/>
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

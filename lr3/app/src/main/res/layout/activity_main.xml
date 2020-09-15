@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/firstName"
+            style="@style/MarginStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/secondName"
+            style="@style/MarginStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/second_name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/age"
+            style="@style/MarginStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/age"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/nextButton1"
+            style="@style/MarginStyle"
+            android:onClick="onClickNextButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/next" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
