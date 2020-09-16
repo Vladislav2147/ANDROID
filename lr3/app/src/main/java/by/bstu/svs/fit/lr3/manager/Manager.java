@@ -18,7 +18,6 @@ import by.bstu.svs.fit.lr3.person.Student;
 public class Manager implements Action {
 
     //TODO log
-    //TODO UI
 
     @Override
     public Course generateCourse(File file) throws IOException {

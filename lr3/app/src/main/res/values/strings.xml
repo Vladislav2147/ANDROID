@@ -17,7 +17,6 @@
     <string name="second_name1">Second name:</string>
     <string name="age1">Age:</string>
     <string name="organisation1">Organisation:</string>
-    <string name="university">University:</string>
     <string name="mark1">"Mark: "</string>
-    <string name="save">Save</string>
+
 </resources>
