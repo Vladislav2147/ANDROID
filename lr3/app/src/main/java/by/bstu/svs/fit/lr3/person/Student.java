@@ -10,7 +10,7 @@ public class Student extends Person {
     private University university;
     private Integer mark;
 
-    public Student(String firstName, String secondName, int age, University university, Integer mark) {
+    public Student(String firstName, String secondName, Integer age, University university, Integer mark) {
         super(firstName, secondName, age);
         this.university = university;
         this.mark = mark;

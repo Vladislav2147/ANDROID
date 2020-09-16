@@ -28,7 +28,7 @@ public class EmployeeActivity extends AppCompatActivity {
         intent.putExtra("activity", this.getClass().getName());
         intent.putExtra("firstName", arguments.getString("firstName"));
         intent.putExtra("secondName", arguments.getString("secondName"));
-        intent.putExtra("age", arguments.getInt("age"));
+        intent.putExtra("age", arguments.getString("age"));
         intent.putExtra("organisation", ((TextView)findViewById(R.id.organisation)).getText().toString());
         startActivity(intent);
     }

@@ -37,20 +37,11 @@ public class StudentActivity extends AppCompatActivity {
         intent.putExtra("activity", this.getClass().getName());
         intent.putExtra("firstName", arguments.getString("firstName"));
         intent.putExtra("secondName", arguments.getString("secondName"));
-        intent.putExtra("age", arguments.getInt("age"));
-
-        Integer mark;
-
-        try {
-            mark = Integer.parseInt(((EditText)findViewById(R.id.mark)).getText().toString());
-        }
-        catch (NumberFormatException ex) {
-            mark = null;
-        }
+        intent.putExtra("age", arguments.getString("age"));
 
         String university = ((Spinner)findViewById(R.id.university)).getSelectedItem().toString();
 
-        intent.putExtra("mark", mark);
+        intent.putExtra("mark", ((EditText)findViewById(R.id.mark)).getText().toString());
         intent.putExtra("university", university);
 
         startActivity(intent);

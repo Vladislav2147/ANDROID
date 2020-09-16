@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     String firstName;
     String secondName;
-    Integer age;
+    String age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +24,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChooseTypeActivity.class);
         firstName = ((EditText)findViewById(R.id.firstName)).getText().toString();
         secondName = ((EditText)findViewById(R.id.secondName)).getText().toString();
-        try {
-            age = Integer.parseInt(((EditText)findViewById(R.id.age)).getText().toString());
-        }
-        catch (NumberFormatException ex) {
-            age = null;
-        }
+        age = ((EditText)findViewById(R.id.age)).getText().toString();
+
 
         intent.putExtra("firstName", firstName);
         intent.putExtra("secondName", secondName);

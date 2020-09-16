@@ -48,7 +48,7 @@ public class ChooseTypeActivity extends AppCompatActivity {
 
             intent.putExtra("firstName", arguments.getString("firstName"));
             intent.putExtra("secondName", arguments.getString("secondName"));
-            intent.putExtra("age", arguments.getInt("age"));
+            intent.putExtra("age", arguments.getString("age"));
             startActivity(intent);
 
         } catch (Exception ex) {
