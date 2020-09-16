@@ -19,6 +19,7 @@ import by.bstu.svs.fit.lr3.person.Person;
 import by.bstu.svs.fit.lr3.person.Student;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class ManagerTest {
@@ -101,4 +102,34 @@ public class ManagerTest {
         assertEquals(4, course.getListeners().indexOf(maxAgeCName));
     }
 
+    @Test
+    public void getTopThreeStudentsByMarkTest() {
+
+        Course course = manager.generateCourse(100);
+
+        Student bestStudent = new Student();
+        bestStudent.setMark(10);
+        course.getListeners().add(bestStudent);
+        course.getListeners().add(bestStudent);
+        course.getListeners().add(bestStudent);
+
+        assertTrue(
+                manager
+                .getTopThreeStudentsByMark(course)
+                .stream()
+                .allMatch(student -> student.getMark().equals(10))
+        );
+
+    }
+
+    @Test
+    public void readWriteFileTest() {
+
+        Course courseToFile = manager.generateCourse(20);
+        manager.writeToFile(courseToFile, json);
+        Course courseFromFile = manager.getCourseFromFile(json).orElse(new Course());
+
+        assertEquals(courseToFile, courseFromFile);
+
+    }
 }

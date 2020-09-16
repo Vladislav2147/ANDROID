@@ -113,6 +113,5 @@ public class Manager implements Action {
             Log.e("Manager", "addPersonToCourseInFile: " + ex.getMessage());
         }
 
-
     }
 }
