@@ -65,9 +65,9 @@ public abstract class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return age == person.age &&
-                Objects.equals(firstName, person.firstName) &&
-                Objects.equals(secondName, person.secondName);
+        return Objects.equals(firstName, person.firstName) &&
+                Objects.equals(secondName, person.secondName) &&
+                Objects.equals(age, person.age);
     }
 
     @Override

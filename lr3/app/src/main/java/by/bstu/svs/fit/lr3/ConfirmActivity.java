@@ -8,14 +8,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
 import java.util.Optional;
 
+import by.bstu.svs.fit.lr3.manager.Manager;
 import by.bstu.svs.fit.lr3.person.Employee;
 import by.bstu.svs.fit.lr3.person.Person;
 import by.bstu.svs.fit.lr3.person.Student;
 import by.bstu.svs.fit.lr3.person.University;
 
 public class ConfirmActivity extends AppCompatActivity {
+
+    Manager manager = new Manager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,13 @@ public class ConfirmActivity extends AppCompatActivity {
 
     public void onClickBackButton(View view) {
         finish();
+    }
+
+    public void onClickSaveButton(View view) {
+        getPersonFromIntent(getIntent()).ifPresent(person -> {
+            File file = new File(getExternalFilesDir(null), "json.json");
+            manager.addPersonToCourseInFile(file, person);
+        });
     }
 
     private Optional<Person> getPersonFromIntent(Intent intent) {
@@ -115,10 +126,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         }
 
-
-
-
-
-
     }
+
+
 }

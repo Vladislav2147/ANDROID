@@ -1,7 +1,5 @@
 package by.bstu.svs.fit.lr3;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -12,7 +10,7 @@ import by.bstu.svs.fit.lr3.course.Course;
 import by.bstu.svs.fit.lr3.manager.Manager;
 import by.bstu.svs.fit.lr3.person.Person;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -42,4 +40,6 @@ public class ExampleUnitTest {
             System.out.println(person);
         }
     }
+
+
 }
