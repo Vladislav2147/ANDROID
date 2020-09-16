@@ -2,6 +2,7 @@ package by.bstu.svs.fit.lr3.person;
 
 public enum University {
 
+    OTHER("Other universities"),
     BSTU("Belarusian State University of Technologies"),
     BNTU("Belarusian National University of Technologies"),
     BSUIR("Belarusian State University of Informatics and Radioelectronics"),

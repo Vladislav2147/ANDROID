@@ -9,8 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChooseTypeActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ConfirmActivity"
+            android:label="@string/save" />
+        <activity
+            android:name=".EmployeeActivity"
+            android:label="@string/employee" />
+        <activity
+            android:name=".StudentActivity"
+            android:label="@string/student" />
+        <activity
+            android:name=".ChooseTypeActivity"
+            android:label="@string/listener" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

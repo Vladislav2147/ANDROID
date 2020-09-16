@@ -3,44 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChooseTypeActivity">
+    tools:context=".StudentActivity">
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
         android:orientation="vertical"
-        android:rowCount="2"
+        android:rowCount="3"
         android:columnCount="2">
 
-        <RadioGroup
+        <EditText
+            android:id="@+id/mark"
+            style="@style/MarginStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:ems="10"
+            android:hint="@string/mark"
+            android:inputType="number" />
+
+        <LinearLayout
+            style="@style/MarginStyle"
+            android:layout_row="1"
+            android:layout_columnSpan="2"
             android:layout_width="match_parent"
-            android:layout_column="0"
-            android:layout_row="0"
-            android:layout_columnSpan="2">
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/radioStudent"
-                style="@style/MarginStyle"
-                android:onClick="enableNextButton"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/student"
-                android:textSize="24sp"/>
-            <RadioButton
-                android:id="@+id/radioEmployee"
-                style="@style/MarginStyle"
-                android:onClick="enableNextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/employee"
-                android:textSize="24sp"/>
+                android:text="@string/university"
+                android:layout_marginLeft="4dp"/>
 
-        </RadioGroup>
+            <Spinner
+                android:id="@+id/university"
+                android:layout_width="match_parent"
+                android:layout_height="36dp" />
+
+        </LinearLayout>
 
         <Button
             android:onClick="onClickBackButton"
-            android:layout_row="1"
+            android:layout_row="2"
             android:layout_column="0"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -48,15 +53,13 @@
             android:text="@string/back"/>
 
         <Button
-            android:id="@+id/nextButton"
-            android:onClick="onClickNextButton"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_row="1"
+            android:layout_row="2"
             android:layout_column="1"
             android:layout_columnWeight="1"
-            android:enabled="false"
             android:text="@string/next" />
+
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

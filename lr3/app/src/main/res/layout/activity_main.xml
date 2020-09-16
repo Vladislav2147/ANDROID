@@ -39,7 +39,6 @@
             android:inputType="number" />
 
         <Button
-            android:id="@+id/nextButton1"
             style="@style/MarginStyle"
             android:onClick="onClickNextButton"
             android:layout_width="match_parent"

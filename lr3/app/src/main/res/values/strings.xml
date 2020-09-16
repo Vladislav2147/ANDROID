@@ -7,4 +7,17 @@
     <string name="student">Student</string>
     <string name="employee">Employee</string>
     <string name="back">Back</string>
+    <string name="mark">Mark</string>
+    <string name="university">University:</string>
+    <string name="listener">Listener</string>
+    <string name="main">Main</string>
+    <string name="organisation">Organisation</string>
+    <string name="save">Save</string>
+    <string name="first_name1">First name:</string>
+    <string name="second_name1">Second name:</string>
+    <string name="age1">Age:</string>
+    <string name="organisation1">Organisation:</string>
+    <string name="university">University:</string>
+    <string name="mark1">"Mark: "</string>
+    <string name="save">Save</string>
 </resources>
