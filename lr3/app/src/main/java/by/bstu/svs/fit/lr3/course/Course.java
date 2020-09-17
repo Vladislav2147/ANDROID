@@ -2,10 +2,11 @@ package by.bstu.svs.fit.lr3.course;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import by.bstu.svs.fit.lr3.exception.PersonAlreadyOnCourseException;
 import by.bstu.svs.fit.lr3.person.Person;
+import by.bstu.svs.fit.lr3.person.Student;
+import by.bstu.svs.fit.lr3.person.University;
 import lombok.Data;
 
 @Data
@@ -23,17 +24,21 @@ public class Course {
 
         this.company = company;
         this.name = name;
-        this.listeners = new CopyOnWriteArrayList<>(listeners);
+        this.listeners = new ArrayList<>(listeners);
 
     }
 
     public void add(Person person) throws PersonAlreadyOnCourseException {
 
         if (listeners.stream().anyMatch(listener -> listener.equals(person))) {
-            throw new PersonAlreadyOnCourseException("person" + person.getFirstName() + " " +
+            throw new PersonAlreadyOnCourseException("person " + person.getFirstName() + " " +
                     person.getSecondName() + " is already on course!");
         }
         else {
+            if(person instanceof Student && ((Student)person).getUniversity() != null) {
+                University university = ((Student)person).getUniversity();
+                university.addStudent();
+            }
             listeners.add(person);
         }
 

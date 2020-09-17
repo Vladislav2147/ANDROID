@@ -36,7 +36,7 @@ public class Manager implements Action {
             Log.e("Manager", "generateCourse: " + e.getMessage());
             return Optional.empty();
         }
-        return Optional.of(course);
+        return Optional.ofNullable(course);
 
     }
 
@@ -88,7 +88,11 @@ public class Manager implements Action {
     public List<Student> getTopThreeStudentsByMark(Course course) {
 
         List<Student> studentsCollection = new ArrayList<>();
-        course.getListeners().stream().filter((person -> person instanceof Student)).forEach(student -> studentsCollection.add((Student) student));
+        course
+                .getListeners()
+                .stream()
+                .filter((person -> person instanceof Student))
+                .forEach(student -> studentsCollection.add((Student) student));
 
         studentsCollection.sort((a, b) -> b.getMark().compareTo(a.getMark()));
 

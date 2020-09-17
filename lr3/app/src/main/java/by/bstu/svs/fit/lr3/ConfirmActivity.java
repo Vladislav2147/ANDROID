@@ -2,6 +2,7 @@ package by.bstu.svs.fit.lr3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
 
@@ -31,10 +33,12 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
     public void onClickBackButton(View view) {
+        Log.i("ConfirmActivity", "onClickBackButton");
         finish();
     }
 
     public void onClickSaveButton(View view) {
+        Log.i("ConfirmActivity", "onClickSaveButton");
         getPersonFromIntent(getIntent()).ifPresent(person -> {
             File file = new File(getExternalFilesDir(null), "json.json");
             manager.addPersonToCourseInFile(file, person);
@@ -57,7 +61,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 student.setMark(mark);
             }
             catch (NumberFormatException ex) {
-                //TODO log
+                Log.e("ConfirmActivity", "getPersonFromIntent: " + ex.getMessage());
             }
 
             savingPerson = student;
@@ -82,10 +86,12 @@ public class ConfirmActivity extends AppCompatActivity {
             savingPerson.setAge(age);
         }
         catch (NumberFormatException ex) {
-            //TODO log
+            Log.e("ConfirmActivity", "getPersonFromIntent: " + ex.getMessage());
         }
 
-        return Optional.of(savingPerson);
+        Log.i("ConfirmActivity", savingPerson.toString());
+
+        return Optional.ofNullable(savingPerson);
 
     }
 
