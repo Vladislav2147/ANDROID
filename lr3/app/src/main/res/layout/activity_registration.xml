@@ -5,46 +5,85 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent" >
 
-        <EditText
-            android:id="@+id/firstName"
-            style="@style/MarginStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/first_name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/secondName"
-            style="@style/MarginStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/second_name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/age"
-            style="@style/MarginStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/age"
-            android:inputType="number" />
-
-        <Button
-            style="@style/MarginStyle"
-            android:onClick="onClickNextButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="@string/next" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/firstName"
+                style="@style/MarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/first_name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/secondName"
+                style="@style/MarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/second_name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/age"
+                style="@style/MarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/age"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/MarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/phone"
+                style="@style/MarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/phone"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/social"
+                style="@style/MarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/social"
+                android:inputType="text" />
+
+            <ImageView
+                android:id="@+id/image"
+                style="@style/MarginStyle"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/empty_photo"
+                android:onClick="chooseImage"
+                android:scaleType="centerCrop"/>
+            <Button
+                style="@style/MarginStyle"
+                android:onClick="onClickNextButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/next" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

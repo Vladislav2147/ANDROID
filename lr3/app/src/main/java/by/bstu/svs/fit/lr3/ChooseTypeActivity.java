@@ -11,15 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
-public class ChooseTypeActivity extends AppCompatActivity {
+import by.bstu.svs.fit.lr3.person.Person;
 
-    Bundle arguments;
+public class ChooseTypeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_type);
-        arguments = getIntent().getExtras();
     }
 
     public void onClickBackButton(View view) {
@@ -46,9 +45,7 @@ public class ChooseTypeActivity extends AppCompatActivity {
                 throw new Exception("Something goes wrong");
             }
 
-            intent.putExtra("firstName", arguments.getString("firstName"));
-            intent.putExtra("secondName", arguments.getString("secondName"));
-            intent.putExtra("age", arguments.getString("age"));
+            intent.putExtra("person", (Person)getIntent().getSerializableExtra("person"));
             startActivity(intent);
 
         } catch (Exception ex) {

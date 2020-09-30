@@ -3,7 +3,13 @@ package by.bstu.svs.fit.lr3.person;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
 import java.util.Objects;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
@@ -13,43 +19,19 @@ import java.util.Objects;
         @JsonSubTypes.Type(value = Employee.class),
         @JsonSubTypes.Type(value = Student.class),
 })
-public abstract class Person {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Person implements Serializable {
 
     private String firstName;
     private String secondName;
     private Integer age;
+    private String email;
+    private String number;
+    private String image;
 
-    public  Person() { }
-
-    public Person(String firstName, String secondName, Integer age) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.age = age;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 
     @Override
     public String toString() {
@@ -57,6 +39,9 @@ public abstract class Person {
                 "firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", age=" + age +
+                ", email='" + email + '\'' +
+                ", number='" + number + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 

@@ -19,5 +19,8 @@
     <string name="organisation1">Organisation:</string>
     <string name="mark1">"Mark: "</string>
     <string name="registration">Registration</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="social">Social Network</string>
 
 </resources>
