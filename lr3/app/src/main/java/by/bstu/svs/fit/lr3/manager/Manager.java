@@ -24,7 +24,6 @@ import by.bstu.svs.fit.lr3.person.Student;
 
 public class Manager implements Action {
 
-    //TODO log
 
     public Optional<Course> getCourseFromFile(File file) {
 
@@ -80,7 +79,8 @@ public class Manager implements Action {
 
     public void sortByAgeThenBySecondName(Course course) {
 
-        Comparator<Person> comparator = new PersonAgeComparator().thenComparing(person -> person.getSecondName());
+        Comparator<Person> comparator = new PersonAgeComparator()
+                .thenComparing(person -> person.getSecondName());
         Collections.sort(course.getListeners(), comparator);
 
     }

@@ -18,5 +18,6 @@
     <string name="age1">Age:</string>
     <string name="organisation1">Organisation:</string>
     <string name="mark1">"Mark: "</string>
+    <string name="registration">Registration</string>
 
 </resources>

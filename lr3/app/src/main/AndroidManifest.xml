@@ -22,8 +22,8 @@
             android:name=".ChooseTypeActivity"
             android:label="@string/listener" />
         <activity
-            android:name=".MainActivity"
-            android:label="@string/main">
+            android:name=".RegistrationActivity"
+            android:label="@string/registration">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
