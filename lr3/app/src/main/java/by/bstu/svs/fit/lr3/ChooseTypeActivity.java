@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
-import by.bstu.svs.fit.lr3.person.Person;
-
 public class ChooseTypeActivity extends AppCompatActivity {
 
     @Override
@@ -45,7 +43,7 @@ public class ChooseTypeActivity extends AppCompatActivity {
                 throw new Exception("Something goes wrong");
             }
 
-            intent.putExtra("person", (Person)getIntent().getSerializableExtra("person"));
+            intent.putExtra("person", getIntent().getSerializableExtra("person"));
             startActivity(intent);
 
         } catch (Exception ex) {

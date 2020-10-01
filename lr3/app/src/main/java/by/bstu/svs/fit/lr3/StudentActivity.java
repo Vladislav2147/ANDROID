@@ -10,7 +10,6 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import by.bstu.svs.fit.lr3.person.Person;
-import by.bstu.svs.fit.lr3.person.Student;
 import by.bstu.svs.fit.lr3.person.University;
 
 public class StudentActivity extends AppCompatActivity {
@@ -41,7 +40,7 @@ public class StudentActivity extends AppCompatActivity {
         intent.putExtra("mark", ((EditText)findViewById(R.id.mark)).getText().toString());
         intent.putExtra("university", university);
 
-        Student student = new Student(person, );
+        //Student student = new Student(person, );
 
         startActivity(intent);
 
