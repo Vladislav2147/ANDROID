@@ -22,6 +22,7 @@ public class Student extends Person implements Serializable {
         this.setAge(person.getAge());
         this.setEmail(person.getEmail());
         this.setNumber(person.getNumber());
+        this.setSocialNetwork(person.getSocialNetwork());
         this.setImage(person.getImage());
         this.mark = mark;
         this.university = university;

@@ -30,6 +30,7 @@ public class Person implements Serializable {
     private Integer age;
     private String email;
     private String number;
+    private String socialNetwork;
     private String image;
 
 
@@ -41,6 +42,7 @@ public class Person implements Serializable {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", number='" + number + '\'' +
+                ", socialNetwork='" + socialNetwork + '\'' +
                 ", image='" + image + '\'' +
                 '}';
     }

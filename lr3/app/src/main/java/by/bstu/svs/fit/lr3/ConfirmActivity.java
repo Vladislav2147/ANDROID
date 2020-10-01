@@ -3,6 +3,7 @@ package by.bstu.svs.fit.lr3;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.util.Optional;
 
+import by.bstu.svs.fit.lr3.manager.ImageManager;
 import by.bstu.svs.fit.lr3.manager.Manager;
 import by.bstu.svs.fit.lr3.person.Employee;
 import by.bstu.svs.fit.lr3.person.Person;
@@ -38,7 +40,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     public void onClickSaveButton(View view) {
         Log.i("ConfirmActivity", "onClickSaveButton");
-        File file = new File(getExternalFilesDir(null), "json.json");
+        File file = new File(super.getFilesDir(), "json.json");
         manager.addPersonToCourseInFile(file, person);
     }
 
@@ -52,12 +54,25 @@ public class ConfirmActivity extends AppCompatActivity {
         TextView organisationTextView = findViewById(R.id.organisationTextView);
         TextView markTextView = findViewById(R.id.markTextView);
         TextView universityTextView = findViewById(R.id.universityTextView);
+        TextView emailTextView = findViewById(R.id.emailTextView);
+        TextView phoneTextView = findViewById(R.id.numberTextView);
+        TextView socialTextView = findViewById(R.id.socialTextView);
+        ImageView image = findViewById(R.id.imageConfirm);
 
+        if (person.getImage() != null) {
+            File file = new File(super.getFilesDir().getAbsolutePath() + "/images", person.getImage());
+            ImageManager.getBitMapFromFile(file).ifPresent(image::setImageBitmap);
+        }
 
         firstNameTextView.setText(person.getFirstName());
         secondNameTextView.setText(person.getSecondName());
         ageTextView.setText(String.valueOf(person.getAge())
                 .replace("null", ""));
+        emailTextView.setText(person.getEmail());
+        phoneTextView.setText(person.getNumber());
+        socialTextView.setText(person.getSocialNetwork());
+
+
 
         if (person instanceof Student) {
 

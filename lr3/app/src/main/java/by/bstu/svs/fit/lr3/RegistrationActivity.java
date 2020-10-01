@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
+import java.io.IOException;
 
 import by.bstu.svs.fit.lr3.manager.ImageManager;
+import by.bstu.svs.fit.lr3.manager.Manager;
 import by.bstu.svs.fit.lr3.person.Person;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class RegistrationActivity extends AppCompatActivity {
     String age;
     String email;
     String number;
+    String socialNetwork;
     String image;
 
     File imageDirectory;
@@ -38,6 +41,16 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        File json = new File(super.getFilesDir(), "json.json");
+        if (!json.exists())  {
+            try {
+                json.createNewFile();
+                Manager manager = new Manager();
+                manager.writeToFile(manager.generateCourse(0), json);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         String imageDir = super.getFilesDir().getAbsolutePath() + "/images";
         imageDirectory = new File(imageDir);
         imageDirectory.mkdirs();
@@ -52,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
         age = ((EditText)findViewById(R.id.age)).getText().toString();
         email = ((EditText)findViewById(R.id.email)).getText().toString();
         number = ((EditText)findViewById(R.id.phone)).getText().toString();
+        socialNetwork = ((EditText)findViewById(R.id.social)).getText().toString();
 
         Integer ageInt = null;
         try {
@@ -61,7 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Log.e(TAG, "onClickNextButton: ", ex);
         }
 
-        Person person = new Person(firstName, secondName, ageInt, email, number, image);
+        Person person = new Person(firstName, secondName, ageInt, email, number, socialNetwork, image);
         intent.putExtra("person", person);
         startActivity(intent);
 

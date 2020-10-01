@@ -1,5 +1,7 @@
 package by.bstu.svs.fit.lr3.manager;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -10,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Optional;
 
 public class ImageManager {
 
@@ -28,5 +31,17 @@ public class ImageManager {
         } catch (IOException e) {
             Log.e(TAG, "copy: ", e);
         }
+    }
+
+    public static Optional<Bitmap> getBitMapFromFile(File file) {
+
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            return Optional.of(bitmap);
+        } catch (Exception e) {
+            Log.e(TAG, "getBitMapFromFile: ", e);
+        }
+        return Optional.empty();
+
     }
 }

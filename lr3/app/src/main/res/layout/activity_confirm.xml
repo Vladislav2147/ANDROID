@@ -5,147 +5,222 @@
     android:layout_height="match_parent"
     tools:context=".ConfirmActivity">
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:rowCount="2"
-        android:columnCount="2">
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+          <GridLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:rowCount="2"
+              android:columnCount="2">
 
-        <LinearLayout
-            style="@style/MarginStyle"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:orientation="vertical">
+              <LinearLayout
+                  style="@style/MarginStyle"
+                  android:layout_row="0"
+                  android:layout_column="0"
+                  android:layout_columnSpan="2"
+                  android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/firstNameLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                  <LinearLayout
+                      android:id="@+id/firstNameLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/first_name1"/>
-                <TextView
-                    android:id="@+id/firstNameTextView"
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/first_name1"/>
+                      <TextView
+                          android:id="@+id/firstNameTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                  </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/secondNameLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                  <LinearLayout
+                      android:id="@+id/secondNameLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/second_name1"/>
-                <TextView
-                    android:id="@+id/secondNameTextView"
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/second_name1"/>
+                      <TextView
+                          android:id="@+id/secondNameTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                  </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ageLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                  <LinearLayout
+                      android:id="@+id/ageLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/age1"/>
-                <TextView
-                    android:id="@+id/ageTextView"
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/age1"/>
+                      <TextView
+                          android:id="@+id/ageTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                  </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/organisationLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                  <LinearLayout
+                      android:id="@+id/organisationLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/organisation1"/>
-                <TextView
-                    android:id="@+id/organisationTextView"
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/organisation1"/>
+                      <TextView
+                          android:id="@+id/organisationTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                  </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/universityLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                  <LinearLayout
+                      android:id="@+id/universityLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/university"/>
-                <TextView
-                    android:id="@+id/universityTextView"
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/university"/>
+                      <TextView
+                          android:id="@+id/universityTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                  </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/markLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                  <LinearLayout
+                      android:id="@+id/markLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mark1"/>
-                <TextView
-                    android:id="@+id/markTextView"
-                    style="@style/MarginStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/mark1"/>
+                      <TextView
+                          android:id="@+id/markTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
 
-            </LinearLayout>
 
-        </LinearLayout>
+                  </LinearLayout>
 
-        <Button
-            android:onClick="onClickBackButton"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_columnWeight="1"
-            android:text="@string/back"/>
+                  <LinearLayout
+                      android:id="@+id/emailLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
 
-        <Button
-            android:onClick="onClickSaveButton"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:text="@string/save" />
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/email"/>
+                      <TextView
+                          android:id="@+id/emailTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
 
-    </GridLayout>
+
+                  </LinearLayout>
+
+                  <LinearLayout
+                      android:id="@+id/numberLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/phone"/>
+                      <TextView
+                          android:id="@+id/numberTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
+
+
+                  </LinearLayout>
+
+                  <LinearLayout
+                      android:id="@+id/socialLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+
+                      <TextView
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/social"/>
+                      <TextView
+                          android:id="@+id/socialTextView"
+                          style="@style/MarginStyle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" />
+
+
+                  </LinearLayout>
+
+                  <ImageView
+                      android:id="@+id/imageConfirm"
+                      style="@style/MarginStyle"
+                      android:layout_width="200dp"
+                      android:layout_height="200dp"
+                      android:src="@drawable/empty_photo"
+                      android:scaleType="centerCrop"/>
+
+              </LinearLayout>
+
+              <Button
+                  android:onClick="onClickBackButton"
+                  android:layout_row="1"
+                  android:layout_column="0"
+                  android:layout_width="0dp"
+                  android:layout_height="48dp"
+                  android:layout_columnWeight="1"
+                  android:text="@string/back"/>
+
+              <Button
+                  android:onClick="onClickSaveButton"
+                  android:layout_width="0dp"
+                  android:layout_height="48dp"
+                  android:layout_row="1"
+                  android:layout_column="1"
+                  android:layout_columnWeight="1"
+                  android:text="@string/save" />
+
+          </GridLayout>
+      </LinearLayout>
+  </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
