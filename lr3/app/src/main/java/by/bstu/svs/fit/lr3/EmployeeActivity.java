@@ -7,16 +7,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class EmployeeActivity extends AppCompatActivity {
+import by.bstu.svs.fit.lr3.person.Employee;
+import by.bstu.svs.fit.lr3.person.Person;
 
-    Bundle arguments;
+public class EmployeeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee);
 
-        arguments = getIntent().getExtras();
     }
 
     public void onClickBackButton(View view) {
@@ -24,12 +24,18 @@ public class EmployeeActivity extends AppCompatActivity {
     }
 
     public void onClickNextButton(View view) {
+
         Intent intent = new Intent(this, ConfirmActivity.class);
-        intent.putExtra("activity", this.getClass().getName());
-        intent.putExtra("firstName", arguments.getString("firstName"));
-        intent.putExtra("secondName", arguments.getString("secondName"));
-        intent.putExtra("age", arguments.getString("age"));
-        intent.putExtra("organisation", ((TextView)findViewById(R.id.organisation)).getText().toString());
+
+        Person person = (Person)getIntent().getSerializableExtra("person");
+
+        String organisation = ((TextView)findViewById(R.id.organisation)).getText().toString();
+
+        if (person != null) {
+            Employee employee = new Employee(person, organisation);
+            intent.putExtra("person", employee);
+        }
+
         startActivity(intent);
     }
 }

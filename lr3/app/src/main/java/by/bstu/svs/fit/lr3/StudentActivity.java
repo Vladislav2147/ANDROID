@@ -2,6 +2,7 @@ package by.bstu.svs.fit.lr3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import by.bstu.svs.fit.lr3.person.Person;
+import by.bstu.svs.fit.lr3.person.Student;
 import by.bstu.svs.fit.lr3.person.University;
 
 public class StudentActivity extends AppCompatActivity {
@@ -35,12 +37,23 @@ public class StudentActivity extends AppCompatActivity {
 
         Person person = (Person)getIntent().getSerializableExtra("person");
 
-        String university = ((Spinner)findViewById(R.id.university)).getSelectedItem().toString();
+        University university = University.valueOf(((Spinner)findViewById(R.id.university))
+                .getSelectedItem()
+                .toString()
+        );
 
-        intent.putExtra("mark", ((EditText)findViewById(R.id.mark)).getText().toString());
-        intent.putExtra("university", university);
+        Integer mark = null;
+        try {
+            mark = Integer.parseInt(((EditText)findViewById(R.id.mark)).getText().toString());
+        }
+        catch (NumberFormatException ex) {
+            Log.e("StudentAcrivity", "onClickNextButton: ", ex);
+        }
 
-        //Student student = new Student(person, );
+        if (person != null) {
+            Student student = new Student(person, mark, university);
+            intent.putExtra("person", student);
+        }
 
         startActivity(intent);
 
