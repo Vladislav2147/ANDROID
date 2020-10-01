@@ -1,5 +1,6 @@
 package by.bstu.svs.fit.lr3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,11 @@ public class ConfirmActivity extends AppCompatActivity {
         Log.i("ConfirmActivity", "onClickSaveButton");
         File file = new File(super.getFilesDir(), "json.json");
         manager.addPersonToCourseInFile(file, person);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 
 

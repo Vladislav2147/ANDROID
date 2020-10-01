@@ -11,7 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_mine"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ConfirmActivity"
             android:label="@string/save" />
@@ -27,11 +35,6 @@
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/registration">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
