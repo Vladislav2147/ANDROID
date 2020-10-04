@@ -16,7 +16,7 @@ import by.bstu.svs.fit.lr3.recycler.ListenerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    //TODO changePhoto
+    //TODO refactoring
     //TODO long list
     private static final String json = "json.json";
     private RecyclerView listenersRecycleView;

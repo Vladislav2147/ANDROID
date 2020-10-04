@@ -1,6 +1,13 @@
 package by.bstu.svs.fit.lr3;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,24 +18,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 
 import by.bstu.svs.fit.lr3.manager.ImageManager;
+import by.bstu.svs.fit.lr3.manager.Manager;
 import by.bstu.svs.fit.lr3.person.Employee;
 import by.bstu.svs.fit.lr3.person.Person;
 import by.bstu.svs.fit.lr3.person.Student;
 
 public class PersonActivity extends AppCompatActivity {
 
-    TextView firstNameTextView;
-    TextView secondNameTextView;
-    TextView ageTextView;
-    TextView organisationTextView;
-    TextView universityTextView;
-    TextView markTextView;
-    TextView emailTextView;
-    TextView numberTextView;
-    TextView socialTextView;
-    ImageView imageView;
+    private TextView firstNameTextView;
+    private TextView secondNameTextView;
+    private TextView ageTextView;
+    private TextView organisationTextView;
+    private TextView universityTextView;
+    private TextView markTextView;
+    private TextView emailTextView;
+    private TextView numberTextView;
+    private TextView socialTextView;
+    private ImageView imageView;
 
-    Person person;
+    private Person person;
+    private File jsonFile;
+    private static int RESULT_LOAD_IMG = 1;
+    private static final String TAG = "PersonActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,8 @@ public class PersonActivity extends AppCompatActivity {
         socialTextView = findViewById(R.id.socialTextView);
         imageView = findViewById(R.id.imageConfirm);
 
+        jsonFile = new File(super.getFilesDir(), "json.json");
+
         showPerson(person);
 
     }
@@ -66,8 +79,6 @@ public class PersonActivity extends AppCompatActivity {
         emailTextView.setText(person.getEmail());
         numberTextView.setText(person.getNumber());
         socialTextView.setText(person.getSocialNetwork());
-
-
 
         if (person instanceof Student) {
 
@@ -90,6 +101,55 @@ public class PersonActivity extends AppCompatActivity {
             ((LinearLayout)universityTextView.getParent()).setVisibility(View.GONE);
 
         }
+
+    }
+
+    public void changeImage(View view) {
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, RESULT_LOAD_IMG);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        try {
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+                    File file = new File(picturePath);
+                    if (file.exists()) {
+                        String image = file.getName();
+                        String imageDir = super.getFilesDir().getAbsolutePath() + "/images";
+                        File imageDirectory = new File(imageDir);
+                        File imageFile = new File(imageDirectory, image);
+                        imageFile.createNewFile();
+                        ImageManager.copy(file, imageFile);
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                        ImageView myImage = (ImageView) findViewById(R.id.imageConfirm);
+                        myImage.setImageBitmap(myBitmap);
+                        Manager manager = new Manager();
+                        manager.updatePersonImage(jsonFile, person, image);
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            Log.e(TAG, "onActivityResult: ", e);
+        }
+
 
     }
 }

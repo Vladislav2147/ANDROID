@@ -175,7 +175,8 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:src="@drawable/empty_photo"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:onClick="changeImage"/>
 
         </LinearLayout>
     </ScrollView>
