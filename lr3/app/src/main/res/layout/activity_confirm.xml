@@ -143,12 +143,13 @@
                           style="@style/MarginStyle"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="@string/email"/>
+                          android:text="@string/email1" />
                       <TextView
                           android:id="@+id/emailTextView"
                           style="@style/MarginStyle"
                           android:layout_width="wrap_content"
-                          android:layout_height="wrap_content" />
+                          android:layout_height="wrap_content"
+                          android:autoLink="email"/>
 
 
                   </LinearLayout>
@@ -162,12 +163,13 @@
                           style="@style/MarginStyle"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="@string/phone"/>
+                          android:text="@string/phone1"/>
                       <TextView
                           android:id="@+id/numberTextView"
                           style="@style/MarginStyle"
                           android:layout_width="wrap_content"
-                          android:layout_height="wrap_content" />
+                          android:layout_height="wrap_content"
+                          android:autoLink="phone"/>
 
 
                   </LinearLayout>
@@ -181,12 +183,13 @@
                           style="@style/MarginStyle"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="@string/social"/>
+                          android:text="@string/social1"/>
                       <TextView
                           android:id="@+id/socialTextView"
                           style="@style/MarginStyle"
                           android:layout_width="wrap_content"
-                          android:layout_height="wrap_content" />
+                          android:layout_height="wrap_content"
+                          android:autoLink="web"/>
 
 
                   </LinearLayout>

@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_mine"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PersonActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/main">
@@ -34,8 +35,7 @@
             android:label="@string/listener" />
         <activity
             android:name=".RegistrationActivity"
-            android:label="@string/registration">
-        </activity>
+            android:label="@string/registration"></activity>
     </application>
 
 </manifest>

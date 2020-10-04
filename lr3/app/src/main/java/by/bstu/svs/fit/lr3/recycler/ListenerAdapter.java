@@ -34,9 +34,24 @@ public class ListenerAdapter extends RecyclerView.Adapter<ListenerAdapter.Listen
         notifyDataSetChanged();
     }
 
-    public void clearItems() {
-        listeners.clear();
-        notifyDataSetChanged();
+
+    public interface onClickListener{
+        void onVariantClick(Person person);
+    }
+
+    private onClickListener listener;
+
+    @Override
+    public void onBindViewHolder(@NonNull ListenerViewHolder holder, int position) {
+        final Person person = listeners.get(position);
+        holder.bind(person);
+        if(listener != null){
+            holder.itemView.setOnClickListener(view -> listener.onVariantClick(person));
+        }
+    }
+
+    public void setListener(onClickListener listener) {
+        this.listener = listener;
     }
 
 
@@ -48,10 +63,6 @@ public class ListenerAdapter extends RecyclerView.Adapter<ListenerAdapter.Listen
         return new ListenerViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ListenerViewHolder holder, int position) {
-        holder.bind(listeners.get(position));
-    }
 
     @Override
     public int getItemCount() {
@@ -86,6 +97,7 @@ public class ListenerAdapter extends RecyclerView.Adapter<ListenerAdapter.Listen
             }
 
         }
+
     }
 
 }

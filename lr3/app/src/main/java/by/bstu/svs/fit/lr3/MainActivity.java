@@ -16,18 +16,20 @@ import by.bstu.svs.fit.lr3.recycler.ListenerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    //TODO personList and unique person activity
+    //TODO changePhoto
+    //TODO long list
     private static final String json = "json.json";
     private RecyclerView listenersRecycleView;
-    private ListenerAdapter listenersAdepter;
+    private ListenerAdapter listenerAdapter;
     private Manager manager;
     private Course course;
+    Intent personIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        personIntent = new Intent(this, PersonActivity.class);
         manager = new Manager();
         course = manager.getCourseFromFile(new File(super.getFilesDir(), json)).orElse(new Course());
         initRecycleView();
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         course = manager.getCourseFromFile(new File(super.getFilesDir(), json)).orElse(new Course());
-        listenersAdepter.setItems(course.getListeners());
+        listenerAdapter.setItems(course.getListeners());
     }
 
     public void goToRegistration(View view) {
@@ -48,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
     public void initRecycleView() {
 
 
-        listenersAdepter = new ListenerAdapter(course.getListeners(), super.getFilesDir());
+        listenerAdapter = new ListenerAdapter(course.getListeners(), super.getFilesDir());
+        listenerAdapter.setListener(person -> {
+            personIntent.putExtra("person", person);
+            startActivity(personIntent);
+        });
         listenersRecycleView = findViewById(R.id.listeners_recycler_view);
         listenersRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        listenersRecycleView.setAdapter(listenersAdepter);
+        listenersRecycleView.setAdapter(listenerAdapter);
 
     }
 
