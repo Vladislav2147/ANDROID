@@ -110,7 +110,6 @@ public class PersonActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent, RESULT_LOAD_IMG);
 
-
     }
 
     @Override
@@ -119,37 +118,63 @@ public class PersonActivity extends AppCompatActivity {
 
         try {
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                if (cursor != null) {
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
-                    cursor.close();
-                    File file = new File(picturePath);
-                    if (file.exists()) {
-                        String image = file.getName();
-                        String imageDir = super.getFilesDir().getAbsolutePath() + "/images";
-                        File imageDirectory = new File(imageDir);
-                        File imageFile = new File(imageDirectory, image);
-                        imageFile.createNewFile();
-                        ImageManager.copy(file, imageFile);
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                        ImageView myImage = (ImageView) findViewById(R.id.imageConfirm);
-                        myImage.setImageBitmap(myBitmap);
-                        Manager manager = new Manager();
-                        manager.updatePersonImage(jsonFile, person, image);
-                    }
+                File galleryImageFile = getImageFileFromIntentData(data);
+
+                if (galleryImageFile.exists()) {
+                    String imageName = galleryImageFile.getName();
+                    File internalImageDirectory =
+                            new File(super.getFilesDir().getAbsolutePath() + "/images");
+                    File internalImageFile = new File(internalImageDirectory, imageName);
+                    internalImageFile.createNewFile();
+                    ImageManager.copy(galleryImageFile, internalImageFile);
+                    Bitmap myBitmap = BitmapFactory.decodeFile(internalImageFile.getAbsolutePath());
+                    ImageView myImage = findViewById(R.id.imageConfirm);
+                    myImage.setImageBitmap(myBitmap);
+
+                    updateImage(imageName);
                 }
+
             }
         }
         catch (Exception e) {
             Log.e(TAG, "onActivityResult: ", e);
         }
 
+    }
+
+    private void updateImage (String newImage) {
+        Manager manager = new Manager();
+        manager.getCourseFromFile(jsonFile).ifPresent(course -> {
+
+            course.getListeners()
+                    .stream()
+                    .filter(listener -> listener.equals(person))
+                    .findFirst()
+                    .ifPresent(foundPerson -> foundPerson.setImage(newImage));
+            manager.writeToFile(course, jsonFile);
+
+        });
+    }
+
+    private File getImageFileFromIntentData(Intent data) {
+
+        Uri selectedImage = data.getData();
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            return new File(picturePath);
+        }
+        return null;
 
     }
+
+
 }

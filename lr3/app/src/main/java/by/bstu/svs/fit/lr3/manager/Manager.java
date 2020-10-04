@@ -119,18 +119,4 @@ public class Manager implements Action {
 
     }
 
-    public void updatePersonImage(File jsonFile, Person person, String newImage) {
-
-        getCourseFromFile(jsonFile).ifPresent(course -> {
-
-            course.getListeners()
-                    .stream()
-                    .filter(listener -> listener.equals(person))
-                    .findFirst()
-                    .ifPresent(foundPerson -> foundPerson.setImage(newImage));
-            writeToFile(course, jsonFile);
-
-        });
-
-    }
 }
