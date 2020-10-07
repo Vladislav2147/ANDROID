@@ -45,7 +45,7 @@ public class ListenerAdapter extends RecyclerView.Adapter<ListenerAdapter.Listen
     public void onBindViewHolder(@NonNull ListenerViewHolder holder, int position) {
         final Person person = listeners.get(position);
         holder.bind(person);
-        if(listener != null){
+        if (listener != null) {
             holder.itemView.setOnClickListener(view -> listener.onVariantClick(person));
         }
     }
@@ -62,7 +62,6 @@ public class ListenerAdapter extends RecyclerView.Adapter<ListenerAdapter.Listen
                 .inflate(R.layout.listener_view, parent, false);
         return new ListenerViewHolder(view);
     }
-
 
     @Override
     public int getItemCount() {

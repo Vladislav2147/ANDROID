@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RegistrationActivity">
 
     <ScrollView
@@ -10,6 +11,7 @@
         android:layout_height="match_parent" >
 
         <LinearLayout
+            android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -40,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/age"
-                android:inputType="number" />
+                android:inputType="phone" />
 
             <EditText
                 android:id="@+id/email"
@@ -51,14 +53,14 @@
                 android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
-            <EditText
+            <br.com.sapereaude.maskedEditText.MaskedEditText
                 android:id="@+id/phone"
                 style="@style/MarginStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/phone"
-                android:inputType="phone" />
+                android:inputType="number"
+                app:mask="+375 (##) ### ## ##" />
 
             <EditText
                 android:id="@+id/social"

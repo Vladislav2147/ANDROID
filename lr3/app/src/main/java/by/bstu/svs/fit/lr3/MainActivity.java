@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void initRecycleView() {
 
-
         listenerAdapter = new ListenerAdapter(course.getListeners(), super.getFilesDir());
         listenerAdapter.setListener(person -> {
             personIntent.putExtra("person", person);
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         listenersRecycleView = findViewById(R.id.listeners_recycler_view);
         listenersRecycleView.setLayoutManager(new LinearLayoutManager(this));
         listenersRecycleView.setAdapter(listenerAdapter);
+
 
     }
 
