@@ -32,19 +32,34 @@ public class RegistrationTextWatcher implements TextWatcher {
         switch (editText.getId()) {
             case R.id.firstName:
             case R.id.secondName:
-                if (isNameValid(editable.toString())) editText.setError("name should be between 3 and 20");
+                if (!isNameValid(editable.toString()))
+                    editText.setError("name should be between 3 and 20");
+                else
+                    editText.setError(null);
                 break;
             case R.id.age:
-                if (isAgeValid(editable.toString())) editText.setError("age should be between 18 and 100");
+                if (!isAgeValid(editable.toString()))
+                    editText.setError("age should be between 18 and 100");
+                else
+                    editText.setError(null);
                 break;
             case R.id.email:
-                if (isEmailValid(editable.toString())) editText.setError("invalid email");
+                if (!isEmailValid(editable.toString()))
+                    editText.setError("invalid email");
+                else
+                    editText.setError(null);
                 break;
             case R.id.phone:
-                if (isPhoneValid(editable.toString())) editText.setError("invalid phone");
+                if (!isPhoneValid(editable.toString()))
+                    editText.setError("invalid phone");
+                else
+                    editText.setError(null);
                 break;
             case R.id.social:
-                if (isLinkValid(editable.toString())) editText.setError("invalid link");
+                if (!isLinkValid(editable.toString()))
+                    editText.setError("invalid link");
+                else
+                    editText.setError(null);
                 break;
             default:
                 break;
@@ -70,7 +85,7 @@ public class RegistrationTextWatcher implements TextWatcher {
     }
     private boolean isLinkValid(String link) {
         if (link.length() == 0) return true;
-        String regexp = "^[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$";
+        String regexp = "^[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$";
         Pattern pattern = Pattern.compile(regexp);
         return pattern.matcher(link).matches();
     }
