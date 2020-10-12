@@ -32,8 +32,10 @@ public class RegistrationTextWatcher implements TextWatcher {
         switch (editText.getId()) {
             case R.id.firstName:
             case R.id.secondName:
-                if (!isNameValid(editable.toString()))
+                if (!isNameLengthValid(editable.toString()))
                     editText.setError("name should be between 3 and 20");
+                else if (!isNameCharsValid(editable.toString()))
+                    editText.setError("invalid name");
                 else
                     editText.setError(null);
                 break;
@@ -67,8 +69,13 @@ public class RegistrationTextWatcher implements TextWatcher {
 
     }
 
-    public boolean isNameValid(String name) {
-        return name.length() >= 3 && name.length() < 20;
+    public boolean isNameLengthValid(String name) {
+        return name.length() >= 2 && name.length() < 20;
+    }
+    public boolean isNameCharsValid(String name) {
+        String regexp = "^[a-zA-Z ,.'-]+$";
+        Pattern pattern = Pattern.compile(regexp);
+        return pattern.matcher(name).matches();
     }
     public boolean isAgeValid(String ageText) {
         if (ageText.length() == 0) return true;

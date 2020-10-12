@@ -43,7 +43,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMG = 1;
     private static final String TAG = "RegistrationActivity";
-    private static final int VALID_PHONE_LENGTH = 19;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +177,5 @@ public class RegistrationActivity extends AppCompatActivity {
 
         return editTextList;
     }
-
-
-
 
 }
