@@ -35,20 +35,31 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ListenerVi
     public interface onClickListener{
         void onVariantClick(Recipe recipe);
     }
+    public interface onLongClickListener{
+        boolean onLongVariantClick(Recipe recipe, View view);
+    }
 
-    private onClickListener listener;
+    private onClickListener onClickListener;
+    private onLongClickListener onLongClickListener;
 
     @Override
     public void onBindViewHolder(@NonNull ListenerViewHolder holder, int position) {
         final Recipe recipe = book.getRecipes().get(position);
         holder.bind(recipe);
-        if (listener != null) {
-            holder.itemView.setOnClickListener(view -> listener.onVariantClick(recipe));
+        if (onClickListener != null) {
+            holder.itemView.setOnClickListener(view -> onClickListener.onVariantClick(recipe));
+        }
+        if (onLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(view -> onLongClickListener.onLongVariantClick(recipe, view));
         }
     }
 
-    public void setListener(onClickListener listener) {
-        this.listener = listener;
+    public void setOnClickListener(onClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public void setOnLongClickListener(onLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
     }
 
 

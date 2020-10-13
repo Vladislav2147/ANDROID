@@ -2,7 +2,9 @@ package by.bstu.svs.stpms.myrecipes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,9 +51,15 @@ public class MainActivity extends AppCompatActivity {
     public void initRecycleView() {
 
         recipeAdapter = new RecipeAdapter(cookingBook, super.getFilesDir());
-        recipeAdapter.setListener(recipe -> {
+        recipeAdapter.setOnClickListener(recipe -> {
             recipeIntent.putExtra("recipe", recipe);
             startActivity(recipeIntent);
+        });
+        recipeAdapter.setOnLongClickListener((recipe, view) -> {
+            PopupMenu popupMenu = new PopupMenu(this, view, Gravity.END);
+            popupMenu.inflate(R.menu.recipe_popup_menu);
+            popupMenu.show();
+            return true;
         });
 
         recipesRecyclerView = findViewById(R.id.recipe_recycler_view);
