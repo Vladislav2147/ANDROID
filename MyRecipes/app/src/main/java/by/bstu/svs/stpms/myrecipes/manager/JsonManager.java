@@ -14,12 +14,13 @@ import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 
 public class JsonManager {
 
-    private File jsonFile;
+    private final File jsonFile;
     private final static String TAG = "JsonManager";
 
     public JsonManager(File jsonFile) {
         if (!jsonFile.exists()) {
             try {
+                //noinspection ResultOfMethodCallIgnored
                 jsonFile.createNewFile();
             } catch (IOException e) {
                 Log.e(TAG, "ctor: " + e.getMessage());

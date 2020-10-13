@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">My Recipes</string>
+    <string name="submit">Submit</string>
+    <string name="title">Title</string>
+    <string name="steps">Steps</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="save">Save</string>
+    <string name="category">Category:</string>
 </resources>

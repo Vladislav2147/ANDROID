@@ -22,7 +22,7 @@ public class ImageManager {
         try (InputStream in = new BufferedInputStream(new FileInputStream(fromFile));
              OutputStream out = new BufferedOutputStream(new FileOutputStream(toFile))) {
 
-            byte[] buffer = new byte[4096];
+            byte[] buffer = new byte[1024];
             int lengthRead;
             while ((lengthRead = in.read(buffer)) > 0) {
                 out.write(buffer, 0, lengthRead);

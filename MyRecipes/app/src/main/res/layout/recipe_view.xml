@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:layout_columnSpan="2">
+
+    <ImageView
+        android:id="@+id/picture"
+        style="@style/MarginStyle"
+        android:layout_marginBottom="0dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/ic_no_image"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        style="@style/MarginStyle"
+        android:layout_marginBottom="0dp"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:maxLines="3"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+</GridLayout>

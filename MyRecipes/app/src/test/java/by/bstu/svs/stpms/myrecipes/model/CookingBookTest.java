@@ -60,7 +60,7 @@ public class CookingBookTest {
         Recipe updateRecipe = cookingBook.getById(3L);
         updateRecipe.setTitle(newTitle);
         cookingBook.update(updateRecipe.getId(), updateRecipe);
-        Assert.assertTrue(cookingBook.getById(3L).getTitle().equals(newTitle));
+        Assert.assertEquals(cookingBook.getById(3L).getTitle(), newTitle);
     }
 
     @Test

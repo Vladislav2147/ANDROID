@@ -1,9 +1,13 @@
 package by.bstu.svs.stpms.myrecipes.model;
 
+import java.io.Serializable;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class Time {
+@NoArgsConstructor
+public class Time implements Serializable {
 
     private int hours;
     private int minutes;
