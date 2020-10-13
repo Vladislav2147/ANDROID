@@ -1,9 +1,10 @@
 package by.bstu.svs.stpms.myrecipes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+//TODO ui
 public class MainActivity extends AppCompatActivity {
 
     @Override

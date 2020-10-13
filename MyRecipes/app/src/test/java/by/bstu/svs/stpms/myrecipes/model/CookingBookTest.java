@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 public class CookingBookTest {
@@ -46,6 +47,11 @@ public class CookingBookTest {
         Long idToFind = 1L;
         Recipe recipe = cookingBook.getById(idToFind);
         Assert.assertEquals(idToFind, recipe.getId());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetByInvalidId() {
+        cookingBook.getById(100L);
     }
 
     @Test
