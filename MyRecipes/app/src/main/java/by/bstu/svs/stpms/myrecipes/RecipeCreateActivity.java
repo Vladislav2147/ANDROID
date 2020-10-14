@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -28,6 +29,7 @@ import by.bstu.svs.stpms.myrecipes.model.Category;
 import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.model.Time;
+import by.bstu.svs.stpms.myrecipes.model.TimeFormatException;
 
 public class RecipeCreateActivity extends AppCompatActivity {
 
@@ -37,10 +39,14 @@ public class RecipeCreateActivity extends AppCompatActivity {
     private Spinner categorySpinner;
     private TimePicker timePicker;
     private ImageView imageView;
+    private Button confirmButton;
 
     private String image;
+    private Long recipeId;
 
-    File imageDirectory;
+    private File imageDirectory;
+    private File json;
+    private JsonManager manager;
 
     private static int RESULT_LOAD_IMG = 1;
     private static final String TAG = "RecipeCreateActivity";
@@ -50,43 +56,17 @@ public class RecipeCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_create);
 
-        titleEditText = findViewById(R.id.title);
-        ingredientsEditText = findViewById(R.id.ingredients);
-        stepsEditText = findViewById(R.id.steps);
-        categorySpinner = findViewById(R.id.category);
-        timePicker = findViewById(R.id.time_to_cook);
-        imageView = findViewById(R.id.image);
+        initViews();
 
-        String imageDir = super.getFilesDir().getAbsolutePath() + "/images";
-        imageDirectory = new File(imageDir);
-        imageDirectory.mkdirs();
+        json = new File(super.getFilesDir(), "cooking_book.json");
+        manager = new JsonManager(json);
 
-        titleEditText.setError("Required");
-        titleEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (titleEditText.getText().length() != 0) {
-                    titleEditText.setError(null);
-                } else {
-                    titleEditText.setError("Required");
-                }
-            }
-        });
-
-        categorySpinner.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,
-                Category.values()));
-        categorySpinner.setSelection(Category.OTHER.ordinal());
-
-        timePicker.setIs24HourView(true);
-        timePicker.setHour(0);
-        timePicker.setMinute(0);
+        recipeId = (Long) getIntent().getSerializableExtra("recipeId");
+        if (recipeId != null) {
+            showRecipeById(recipeId);
+            confirmButton.setOnClickListener(this::updateRecipe);
+            confirmButton.setText(R.string.update);
+        }
     }
 
     public void chooseImage(View view) {
@@ -105,15 +85,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
         }
 
         try {
-            Recipe recipe = new Recipe();
-            recipe.setTitle(titleEditText.getText().toString());
-            recipe.setCategory((Category)categorySpinner.getSelectedItem());
-            recipe.setIngredients(ingredientsEditText.getText().toString());
-            recipe.setSteps(stepsEditText.getText().toString());
-
-            Time timeToCook = new Time(timePicker.getHour(), timePicker.getMinute());
-            recipe.setTimeToCook(timeToCook);
-            recipe.setPicture(image);
+            Recipe recipe = getRecipeFromForm();
 
             File json = new File(super.getFilesDir(), "cooking_book.json");
             JsonManager manager = new JsonManager(json);
@@ -125,6 +97,28 @@ public class RecipeCreateActivity extends AppCompatActivity {
             finish();
         } catch (Exception e) {
             Log.e(TAG, "saveRecipe: ", e);
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void updateRecipe(View view) {
+
+        if (titleEditText.getError() != null) {
+            Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            image = manager.getFromFile().orElse(new CookingBook()).getById(recipeId).getPicture();
+            Recipe recipe = getRecipeFromForm();
+
+            CookingBook book = manager.getFromFile().orElse(new CookingBook());
+            book.update(recipe.getId(), recipe);
+            manager.writeToFile(book);
+            Toast.makeText(this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        } catch (Exception e) {
+            Log.e(TAG, "updateRecipe: ", e);
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
 
@@ -160,6 +154,81 @@ public class RecipeCreateActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             Log.e(TAG, "onActivityResult: ", e);
+        }
+
+    }
+
+    private Recipe getRecipeFromForm() throws TimeFormatException {
+        Recipe recipe = new Recipe();
+        recipe.setId(recipeId);
+        recipe.setTitle(titleEditText.getText().toString());
+        recipe.setCategory((Category)categorySpinner.getSelectedItem());
+        recipe.setIngredients(ingredientsEditText.getText().toString());
+        recipe.setSteps(stepsEditText.getText().toString());
+
+        Time timeToCook = new Time(timePicker.getHour(), timePicker.getMinute());
+        recipe.setTimeToCook(timeToCook);
+        recipe.setPicture(image);
+
+        return recipe;
+    }
+
+    private void initViews() {
+        titleEditText = findViewById(R.id.title);
+        ingredientsEditText = findViewById(R.id.ingredients);
+        stepsEditText = findViewById(R.id.steps);
+        categorySpinner = findViewById(R.id.category);
+        timePicker = findViewById(R.id.time_to_cook);
+        imageView = findViewById(R.id.image);
+        confirmButton = findViewById(R.id.confirm_button);
+
+        String imageDir = super.getFilesDir().getAbsolutePath() + "/images";
+        imageDirectory = new File(imageDir);
+        imageDirectory.mkdirs();
+
+        titleEditText.setError("Required");
+        titleEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (titleEditText.getText().length() != 0) {
+                    titleEditText.setError(null);
+                } else {
+                    titleEditText.setError("Required");
+                }
+            }
+        });
+
+        categorySpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item,
+                Category.values()));
+        categorySpinner.setSelection(Category.OTHER.ordinal());
+
+        timePicker.setIs24HourView(true);
+        timePicker.setHour(0);
+        timePicker.setMinute(0);
+    }
+
+    private void showRecipeById(Long recipeId) {
+        Recipe recipe = manager.getFromFile().orElse(new CookingBook()).getById(recipeId);
+        titleEditText.setText(recipe.getTitle());
+        categorySpinner.setSelection(recipe.getCategory().ordinal());
+        ingredientsEditText.setText(recipe.getIngredients());
+        stepsEditText.setText(recipe.getSteps());
+        timePicker.setHour(recipe.getTimeToCook().getHours());
+        timePicker.setMinute(recipe.getTimeToCook().getMinutes());
+
+        if (recipe.getPicture() == null) {
+            imageView.setImageResource(R.drawable.ic_no_image);
+        }
+        else {
+            ImageManager.getBitMapFromFile(new File(imageDirectory, recipe.getPicture()))
+                    .ifPresent(imageView::setImageBitmap);
         }
 
     }

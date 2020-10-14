@@ -1,5 +1,6 @@
 package by.bstu.svs.stpms.myrecipes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -52,12 +53,25 @@ public class MainActivity extends AppCompatActivity {
 
         recipeAdapter = new RecipeAdapter(cookingBook, super.getFilesDir());
         recipeAdapter.setOnClickListener(recipe -> {
-            recipeIntent.putExtra("recipe", recipe);
+            recipeIntent.putExtra("recipeId", recipe.getId());
             startActivity(recipeIntent);
         });
         recipeAdapter.setOnLongClickListener((recipe, view) -> {
-            PopupMenu popupMenu = new PopupMenu(this, view, Gravity.END);
+
+            Context context = this;
+            PopupMenu popupMenu = new PopupMenu(context, view, Gravity.END);
             popupMenu.inflate(R.menu.recipe_popup_menu);
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.edit_item:
+                        editItem(recipe.getId());
+                        break;
+                    case R.id.delete_item:
+                        deleteItem(recipe.getId());
+                        break;
+                }
+                return true;
+            });
             popupMenu.show();
             return true;
         });
@@ -65,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
         recipesRecyclerView = findViewById(R.id.recipe_recycler_view);
         recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         recipesRecyclerView.setAdapter(recipeAdapter);
+
+    }
+
+    public void editItem(Long recipeId) {
+        Intent recipeUpdateIntent = new Intent(this, RecipeCreateActivity.class);
+        recipeUpdateIntent.putExtra("recipeId", recipeId);
+        startActivity(recipeUpdateIntent);
+    }
+
+    public void deleteItem(Long recipeId) {
 
     }
 }

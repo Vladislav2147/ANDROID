@@ -3,10 +3,10 @@
     android:layout_height="match_parent">
 
     <item
-        android:id="@+id/menu1"
+        android:id="@+id/edit_item"
         android:icon="@mipmap/ic_launcher"
-        android:title="Popup menu item 1"/>
+        android:title="@string/edit"/>
     <item
-        android:id="@+id/menu2"
-        android:title="Popup menu item 2"/>
+        android:id="@+id/delete_item"
+        android:title="@string/delete"/>
 </menu>

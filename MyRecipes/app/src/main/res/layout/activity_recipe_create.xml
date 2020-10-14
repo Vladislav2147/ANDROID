@@ -75,6 +75,7 @@
                 android:onClick="chooseImage"
                 android:scaleType="centerCrop"/>
             <Button
+                android:id="@+id/confirm_button"
                 style="@style/MarginStyle"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"

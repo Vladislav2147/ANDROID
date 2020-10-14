@@ -6,4 +6,7 @@
     <string name="ingredients">Ingredients</string>
     <string name="save">Save</string>
     <string name="category">Category:</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="update">Update</string>
 </resources>
