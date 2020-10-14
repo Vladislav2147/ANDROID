@@ -109,7 +109,10 @@ public class RecipeCreateActivity extends AppCompatActivity {
             return;
         }
         try {
-            image = manager.getFromFile().orElse(new CookingBook()).getById(recipeId).getPicture();
+            if (image == null) {
+                image = manager.getFromFile().orElse(new CookingBook()).getById(recipeId).getPicture();
+            }
+
             Recipe recipe = getRecipeFromForm();
 
             CookingBook book = manager.getFromFile().orElse(new CookingBook());

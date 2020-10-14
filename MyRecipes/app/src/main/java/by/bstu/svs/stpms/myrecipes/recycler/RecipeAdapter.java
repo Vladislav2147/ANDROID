@@ -26,7 +26,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ListenerVi
         this.filesDir = filesDir;
     }
 
-
     public void setBook(CookingBook book) {
         this.book = book;
         notifyDataSetChanged();
@@ -35,6 +34,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ListenerVi
     public interface onClickListener{
         void onVariantClick(Recipe recipe);
     }
+
     public interface onLongClickListener{
         boolean onLongVariantClick(Recipe recipe, View view);
     }
