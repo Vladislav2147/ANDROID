@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupMenu;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,6 +90,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteItem(Long recipeId) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setTitle("Delete")
+                .setIcon(R.drawable.ic_sharp_warning_18)
+                .setMessage("Delete item?")
+                .setPositiveButton("Ok", (dialogInterface, i) -> {
+                    CookingBook book = jsonManager.getFromFile().orElse(new CookingBook());
+                    book.removeById(recipeId);
+                    jsonManager.writeToFile(book);
+                    recipeAdapter.setBook(book);
+                })
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
 
     }
 }
