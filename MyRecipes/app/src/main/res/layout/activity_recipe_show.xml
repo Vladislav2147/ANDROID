@@ -4,5 +4,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecipeShowActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:src="@drawable/ic_no_image"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:id="@+id/title"
+                style="@style/MarginStyle"
+                android:textAlignment="center"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+            <TextView
+                style="@style/MarginStyle"
+                android:id="@+id/category"
+                android:drawableLeft="@drawable/ic_sharp_category"
+                android:drawablePadding="8dp"
+                android:textSize="24sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+            <TextView
+                android:id="@+id/time_to_cook"
+                style="@style/MarginStyle"
+                android:drawableLeft="@drawable/ic_sharp_time_to_cook"
+                android:drawablePadding="8dp"
+                android:textSize="24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+            <TextView
+                android:id="@+id/ingredients"
+                style="@style/MarginStyle"
+                android:drawableStart="@drawable/ic_sharp_ingredients"
+                android:drawablePadding="8dp"
+                android:textSize="24sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+            <TextView
+                android:id="@+id/steps"
+                style="@style/MarginStyle"
+                android:drawableLeft="@drawable/ic_sharp_description"
+                android:drawablePadding="8dp"
+                android:textSize="24sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
 import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 import by.bstu.svs.stpms.myrecipes.recycler.RecipeAdapter;
 
-//TODO menus
+//TODO action bar menu
 public class MainActivity extends AppCompatActivity {
 
     private static final String json = "cooking_book.json";

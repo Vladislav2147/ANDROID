@@ -4,11 +4,11 @@
 
     <ImageView
         android:id="@+id/picture"
-        style="@style/MarginStyle"
-        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_no_image"
         android:scaleType="centerCrop"/>
 
@@ -38,5 +38,10 @@
             android:maxLines="3" />
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
