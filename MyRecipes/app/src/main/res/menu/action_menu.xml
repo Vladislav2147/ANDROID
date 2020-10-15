@@ -12,6 +12,18 @@
         android:id="@+id/sort"
         android:icon="@drawable/ic_baseline_sort_24"
         app:showAsAction="ifRoom"
-        android:title="@string/sort"/>
+        android:title="@string/sort" >
+        <menu>
+            <item
+                android:id="@+id/sorting_default"
+                android:title="@string/sorting_default"/>
+            <item
+                android:id="@+id/sorting_by_name"
+                android:title="@string/by_name_a_z"/>
+            <item
+                android:id="@+id/sorting_by_name_desc"
+                android:title="@string/by_name_z_a"/>
+        </menu>
+    </item>
 
 </menu>

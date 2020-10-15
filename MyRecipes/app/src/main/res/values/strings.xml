@@ -11,4 +11,7 @@
     <string name="update">Update</string>
     <string name="search">Search</string>
     <string name="sort">Sort</string>
+    <string name="by_name_z_a">By name Z-A</string>
+    <string name="by_name_a_z">By name A-Z</string>
+    <string name="sorting_default">Default</string>
 </resources>

@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.recycler.RecipeAdapter;
 
-//TODO action bar menu
+//TODO sorting
 public class MainActivity extends AppCompatActivity {
 
     private static final String json = "cooking_book.json";
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         recipeIntent = new Intent(this, RecipeShowActivity.class);
         jsonManager = new JsonManager(new File(super.getFilesDir(), json));
         cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
-        searchedList = new ArrayList<>();
+        searchedList = cookingBook.getRecipes();
         initRecycleView();
     }
 
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            recipeAdapter.setRecipes(cookingBook.getRecipes());
+            searchedList = new ArrayList<>(cookingBook.getRecipes());
+            recipeAdapter.setRecipes(searchedList);
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -92,10 +94,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.sort) {
-            Toast.makeText(this, "sort", Toast.LENGTH_SHORT).show();
+
+        Comparator<Recipe> comparator = null;
+        switch (item.getItemId()) {
+            case R.id.sorting_default:
+                searchedList = new ArrayList<>(cookingBook.getRecipes());
+                recipeAdapter.setRecipes(searchedList);
+                break;
+            case R.id.sorting_by_name:
+                comparator = (recipe, recipe2) -> recipe.getTitle().compareTo(recipe2.getTitle());
+                break;
+            case R.id.sorting_by_name_desc:
+                comparator = (recipe, recipe2) -> recipe2.getTitle().compareTo(recipe.getTitle());
+                break;
+        }
+        if (comparator != null) {
+            Collections.sort(searchedList, comparator);
+            recipeAdapter.setRecipes(searchedList);
         }
         return true;
+
     }
 
     public void createRecipe(View view) {
