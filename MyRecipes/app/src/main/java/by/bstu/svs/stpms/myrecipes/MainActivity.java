@@ -1,14 +1,20 @@
 package by.bstu.svs.stpms.myrecipes;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private CookingBook cookingBook;
     private Intent recipeIntent;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         recipeAdapter.setBook(jsonManager.getFromFile().orElse(new CookingBook()));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+        Context context = this;
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnCloseListener(() -> {
+            Toast.makeText(context, "close", Toast.LENGTH_SHORT).show();
+            return false;
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.sort) {
+            Toast.makeText(this, "sort", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     public void createRecipe(View view) {
