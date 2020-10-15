@@ -19,9 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
 import by.bstu.svs.stpms.myrecipes.model.CookingBook;
+import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.recycler.RecipeAdapter;
 
 //TODO action bar menu
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private CookingBook cookingBook;
     private Intent recipeIntent;
 
-
+    private List<Recipe> searchedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +48,44 @@ public class MainActivity extends AppCompatActivity {
         recipeIntent = new Intent(this, RecipeShowActivity.class);
         jsonManager = new JsonManager(new File(super.getFilesDir(), json));
         cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
+        searchedList = new ArrayList<>();
         initRecycleView();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        recipeAdapter.setBook(jsonManager.getFromFile().orElse(new CookingBook()));
+        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
+        recipeAdapter.setRecipes(cookingBook.getRecipes());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_menu, menu);
-        Context context = this;
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            Toast.makeText(context, "close", Toast.LENGTH_SHORT).show();
+            recipeAdapter.setRecipes(cookingBook.getRecipes());
             return false;
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchedList = cookingBook
+                        .getRecipes()
+                        .stream()
+                        .filter(recipe -> recipe.getTitle().contains(query))
+                        .collect(Collectors.toList());
+                recipeAdapter.setRecipes(searchedList);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.length() == 0) recipeAdapter.setRecipes(cookingBook.getRecipes());
+                return false;
+            }
         });
         return true;
     }
@@ -82,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initRecycleView() {
 
-        recipeAdapter = new RecipeAdapter(cookingBook, super.getFilesDir());
+        recipeAdapter = new RecipeAdapter(cookingBook.getRecipes(), super.getFilesDir());
         recipeAdapter.setOnClickListener(recipe -> {
             recipeIntent.putExtra("recipeId", recipe.getId());
             startActivity(recipeIntent);
@@ -130,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     CookingBook book = jsonManager.getFromFile().orElse(new CookingBook());
                     book.removeById(recipeId);
                     jsonManager.writeToFile(book);
-                    recipeAdapter.setBook(book);
+                    recipeAdapter.setRecipes(book.getRecipes());
                 })
                 .setNegativeButton("Cancel", null)
                 .create()

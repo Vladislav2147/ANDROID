@@ -10,24 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.util.List;
 
 import by.bstu.svs.stpms.myrecipes.R;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
-import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ListenerViewHolder> {
 
-    private CookingBook book;
+    private List<Recipe> recipes;
     private File filesDir;
 
-    public RecipeAdapter(CookingBook book, File filesDir) {
-        this.book = book;
+    public RecipeAdapter(List<Recipe> recipes, File filesDir) {
+        this.recipes = recipes;
         this.filesDir = filesDir;
     }
 
-    public void setBook(CookingBook book) {
-        this.book = book;
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
         notifyDataSetChanged();
     }
 
@@ -44,7 +44,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ListenerVi
 
     @Override
     public void onBindViewHolder(@NonNull ListenerViewHolder holder, int position) {
-        final Recipe recipe = book.getRecipes().get(position);
+        final Recipe recipe = recipes.get(position);
         holder.bind(recipe);
         if (onClickListener != null) {
             holder.itemView.setOnClickListener(view -> onClickListener.onVariantClick(recipe));
@@ -73,7 +73,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ListenerVi
 
     @Override
     public int getItemCount() {
-        return book == null ? 0 : book.getRecipes().size();
+        return recipes == null ? 0 : recipes.size();
     }
 
     class ListenerViewHolder extends RecyclerView.ViewHolder {
