@@ -29,7 +29,6 @@ import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.recycler.RecipeAdapter;
 
-//TODO sorting
 public class MainActivity extends AppCompatActivity {
 
     private static final String json = "cooking_book.json";
