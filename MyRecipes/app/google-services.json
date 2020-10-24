@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "550522963800",
+    "firebase_url": "https://my-recipes-176ce.firebaseio.com",
+    "project_id": "my-recipes-176ce",
+    "storage_bucket": "my-recipes-176ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550522963800:android:ced72c97d1831bfb65c72d",
+        "android_client_info": {
+          "package_name": "by.bstu.svs.stpms.myrecipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550522963800-g342f0ernpq87ha8t97n44vm06dl1f00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWae8WdqB5pnoOL5aBSR4E_U6h66hXuOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550522963800-g342f0ernpq87ha8t97n44vm06dl1f00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

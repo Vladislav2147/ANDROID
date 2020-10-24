@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,9 +18,12 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Recipe> searchedList;
 
+    DatabaseReference myRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         jsonManager = new JsonManager(new File(super.getFilesDir(), json));
         cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
         searchedList = cookingBook.getRecipes();
+
+        //TODO вынести в отдельный метод
+        String userUid = getIntent().getStringExtra("user");
+        myRef = FirebaseDatabase.getInstance().getReference();
+        myRef.child(userUid).child("cooking_book").setValue(cookingBook, (error, ref) -> Toast.makeText(MainActivity.this, "successful write", Toast.LENGTH_SHORT).show());
+
+
         initRecycleView();
     }
 
@@ -76,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 searchedList = cookingBook
                         .getRecipes()
                         .stream()
-                        .filter(recipe -> recipe.getTitle().contains(query))
+                        .filter(recipe -> recipe.getTitle().toLowerCase().contains(query.toLowerCase()))
                         .collect(Collectors.toList());
                 recipeAdapter.setRecipes(searchedList);
                 return false;
@@ -96,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
 
         Comparator<Recipe> comparator = null;
         switch (item.getItemId()) {
+            case R.id.exit:
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                FirebaseAuth.getInstance().signOut();
+                startActivity(intent);
+                break;
             case R.id.sorting_default:
                 searchedList = new ArrayList<>(cookingBook.getRecipes());
                 recipeAdapter.setRecipes(searchedList);
@@ -108,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         if (comparator != null) {
-            Collections.sort(searchedList, comparator);
+            searchedList.sort(comparator);
             recipeAdapter.setRecipes(searchedList);
         }
         return true;
@@ -167,10 +186,11 @@ public class MainActivity extends AppCompatActivity {
                 .setIcon(R.drawable.ic_sharp_warning_18)
                 .setMessage("Delete item?")
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
-                    CookingBook book = jsonManager.getFromFile().orElse(new CookingBook());
-                    book.removeById(recipeId);
-                    jsonManager.writeToFile(book);
-                    recipeAdapter.setRecipes(book.getRecipes());
+                    cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
+                    cookingBook.removeById(recipeId);
+                    jsonManager.writeToFile(cookingBook);
+                    searchedList = cookingBook.getRecipes();
+                    recipeAdapter.setRecipes(searchedList);
                 })
                 .setNegativeButton("Cancel", null)
                 .create()
