@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
         jsonManager = new JsonManager(new File(super.getFilesDir(), json));
         cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
         searchedList = cookingBook.getRecipes();
-
-        //TODO вынести в отдельный метод
-        String userUid = getIntent().getStringExtra("user");
-        myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.child(userUid).child("cooking_book").setValue(cookingBook, (error, ref) -> Toast.makeText(MainActivity.this, "successful write", Toast.LENGTH_SHORT).show());
-
 
         initRecycleView();
     }
@@ -111,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.exit:
                 Intent intent = new Intent(this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 FirebaseAuth.getInstance().signOut();
                 startActivity(intent);
                 break;

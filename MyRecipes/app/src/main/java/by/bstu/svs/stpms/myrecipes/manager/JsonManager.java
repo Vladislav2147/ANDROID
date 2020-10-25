@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 
+@Deprecated
 public class JsonManager {
 
     private final File jsonFile;
