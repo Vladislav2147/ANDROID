@@ -11,16 +11,10 @@ import lombok.Getter;
 @Getter
 public class CookingBook {
 
-    private String ownerUid;
     private List<Recipe> recipes;
 
     public CookingBook() {
         recipes = new ArrayList<>();
-    }
-
-    public CookingBook(String ownerUid) {
-        this();
-        this.ownerUid = ownerUid;
     }
 
     public void addWithoutId(Recipe recipe) {

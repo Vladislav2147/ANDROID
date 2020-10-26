@@ -18,7 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import by.bstu.svs.stpms.myrecipes.model.CookingBook;
+import java.util.ArrayList;
+import java.util.List;
+
+import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -90,13 +93,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateUI(FirebaseUser user) {
         if(user != null) {
-            DatabaseReference userBookRef = FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("cooking_book");
+            DatabaseReference userBookRef = FirebaseDatabase.getInstance().getReference().child(user.getUid());
 
             userBookRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (!snapshot.exists()) {
-                        userBookRef.setValue(new CookingBook(user.getUid()));
+                        //TODO delete it
+                        List<Recipe> recipes = new ArrayList<>();
+                        recipes.add(new Recipe(1L, "title1"));
+                        recipes.add(new Recipe(2L, "title2"));
+                        recipes.add(new Recipe(3L, "title3"));
+                        userBookRef.setValue(recipes);
                     }
                 }
 

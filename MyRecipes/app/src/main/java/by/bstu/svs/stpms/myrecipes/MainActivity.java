@@ -4,11 +4,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,18 +15,21 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
-import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
+import by.bstu.svs.stpms.myrecipes.recycler.FireRecipeAdapter;
 import by.bstu.svs.stpms.myrecipes.recycler.RecipeAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recipesRecyclerView;
     private RecipeAdapter recipeAdapter;
     private JsonManager jsonManager;
-    private CookingBook cookingBook;
+    private List<Recipe> recipes;
     private Intent recipeIntent;
+
+    FirebaseRecyclerAdapter mAdapter;
+    private String userUid;
 
     private List<Recipe> searchedList;
 
@@ -50,18 +54,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recipeIntent = new Intent(this, RecipeShowActivity.class);
-        jsonManager = new JsonManager(new File(super.getFilesDir(), json));
-        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
-        searchedList = cookingBook.getRecipes();
+//        jsonManager = new JsonManager(new File(super.getFilesDir(), json));
+//        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
+//        searchedList = cookingBook.getRecipes();
 
-        initRecycleView();
+        userUid = getIntent().getStringExtra("user");
+        myRef = FirebaseDatabase.getInstance().getReference();
+        Query query = myRef.child(userUid);
+        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
+                .setQuery(query, Recipe.class)
+                .setLifecycleOwner(MainActivity.this)
+                .build();
+        mAdapter = new FireRecipeAdapter(options);
+        recipesRecyclerView = findViewById(R.id.recipe_recycler_view);
+        recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recipesRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
-        recipeAdapter.setRecipes(cookingBook.getRecipes());
+//        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
+//        recipeAdapter.setRecipes(cookingBook.getRecipes());
     }
 
     @Override
@@ -71,15 +86,14 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            searchedList = new ArrayList<>(cookingBook.getRecipes());
+            searchedList = new ArrayList<>(recipes);
             recipeAdapter.setRecipes(searchedList);
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchedList = cookingBook
-                        .getRecipes()
+                searchedList = recipes
                         .stream()
                         .filter(recipe -> recipe.getTitle().toLowerCase().contains(query.toLowerCase()))
                         .collect(Collectors.toList());
@@ -89,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.length() == 0) recipeAdapter.setRecipes(cookingBook.getRecipes());
+                if (newText.length() == 0) recipeAdapter.setRecipes(recipes);
                 return false;
             }
         });
@@ -108,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.sorting_default:
-                searchedList = new ArrayList<>(cookingBook.getRecipes());
+                searchedList = new ArrayList<>(recipes);
                 recipeAdapter.setRecipes(searchedList);
                 break;
             case R.id.sorting_by_name:
@@ -131,38 +145,38 @@ public class MainActivity extends AppCompatActivity {
         startActivity(recipeCreateIntent);
     }
 
-    public void initRecycleView() {
-
-        recipeAdapter = new RecipeAdapter(cookingBook.getRecipes(), super.getFilesDir());
-        recipeAdapter.setOnClickListener(recipe -> {
-            recipeIntent.putExtra("recipeId", recipe.getId());
-            startActivity(recipeIntent);
-        });
-        recipeAdapter.setOnLongClickListener((recipe, view) -> {
-
-            Context context = this;
-            PopupMenu popupMenu = new PopupMenu(context, view, Gravity.END);
-            popupMenu.inflate(R.menu.recipe_popup_menu);
-            popupMenu.setOnMenuItemClickListener(menuItem -> {
-                switch (menuItem.getItemId()) {
-                    case R.id.edit_item:
-                        editItem(recipe.getId());
-                        break;
-                    case R.id.delete_item:
-                        deleteItem(recipe.getId());
-                        break;
-                }
-                return true;
-            });
-            popupMenu.show();
-            return true;
-        });
-
-        recipesRecyclerView = findViewById(R.id.recipe_recycler_view);
-        recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recipesRecyclerView.setAdapter(recipeAdapter);
-
-    }
+//    public void initRecycleView() {
+//
+//        recipeAdapter = new RecipeAdapter(cookingBook.getRecipes(), super.getFilesDir());
+//        recipeAdapter.setOnClickListener(recipe -> {
+//            recipeIntent.putExtra("recipeId", recipe.getId());
+//            startActivity(recipeIntent);
+//        });
+//        recipeAdapter.setOnLongClickListener((recipe, view) -> {
+//
+//            Context context = this;
+//            PopupMenu popupMenu = new PopupMenu(context, view, Gravity.END);
+//            popupMenu.inflate(R.menu.recipe_popup_menu);
+//            popupMenu.setOnMenuItemClickListener(menuItem -> {
+//                switch (menuItem.getItemId()) {
+//                    case R.id.edit_item:
+//                        editItem(recipe.getId());
+//                        break;
+//                    case R.id.delete_item:
+//                        deleteItem(recipe.getId());
+//                        break;
+//                }
+//                return true;
+//            });
+//            popupMenu.show();
+//            return true;
+//        });
+//
+//        recipesRecyclerView = findViewById(R.id.recipe_recycler_view);
+//        recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recipesRecyclerView.setAdapter(mAdapter);
+//
+//    }
 
     public void editItem(Long recipeId) {
         Intent recipeUpdateIntent = new Intent(this, RecipeCreateActivity.class);
@@ -178,11 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 .setIcon(R.drawable.ic_sharp_warning_18)
                 .setMessage("Delete item?")
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
-                    cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
-                    cookingBook.removeById(recipeId);
-                    jsonManager.writeToFile(cookingBook);
-                    searchedList = cookingBook.getRecipes();
-                    recipeAdapter.setRecipes(searchedList);
+                    FirebaseDatabase.getInstance().getReference().child(userUid).child("recipes").orderByChild("id").equalTo(recipeId);
                 })
                 .setNegativeButton("Cancel", null)
                 .create()
