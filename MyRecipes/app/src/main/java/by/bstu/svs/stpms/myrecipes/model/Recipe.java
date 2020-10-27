@@ -1,5 +1,7 @@
 package by.bstu.svs.stpms.myrecipes.model;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 
 import lombok.Getter;
@@ -22,5 +24,15 @@ public class Recipe implements Serializable {
     public Recipe(Long id, String title) {
         this.id = id;
         this.title = title;
+        this.category = Category.OTHER;
+    }
+
+    public void setCategory(String category) {
+        this.category = Category.getEnumFromString(category);
+    }
+
+    @Exclude
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

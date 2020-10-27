@@ -15,7 +15,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Recipe> recipes;
     private Intent recipeIntent;
 
-    FirebaseRecyclerAdapter mAdapter;
+    FireRecipeAdapter mAdapter;
     private String userUid;
 
     private List<Recipe> searchedList;
@@ -63,9 +62,13 @@ public class MainActivity extends AppCompatActivity {
         Query query = myRef.child(userUid);
         FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
                 .setQuery(query, Recipe.class)
-                .setLifecycleOwner(MainActivity.this)
                 .build();
         mAdapter = new FireRecipeAdapter(options);
+        mAdapter.setOnClickListener(recipe -> {
+            recipeIntent.putExtra("recipeId", recipe.getId());
+            recipeIntent.putExtra("user", userUid);
+            startActivity(recipeIntent);
+        });
         recipesRecyclerView = findViewById(R.id.recipe_recycler_view);
         recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         recipesRecyclerView.setAdapter(mAdapter);
@@ -75,8 +78,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        mAdapter.startListening();
 //        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
 //        recipeAdapter.setRecipes(cookingBook.getRecipes());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
     }
 
     @Override

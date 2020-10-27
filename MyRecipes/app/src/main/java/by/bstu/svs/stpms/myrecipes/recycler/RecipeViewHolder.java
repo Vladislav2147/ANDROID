@@ -30,12 +30,13 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder {
         tv_steps.setText(recipe.getSteps());
 
         iv_picture.setImageResource(R.drawable.ic_no_image);
+        //TODO picture
 //        if (recipe.getPicture() == null) {
 //            iv_picture.setImageResource(R.drawable.ic_no_image);
 //        } else {
 //            ImageManager.getBitMapFromFile(new File(filesDir.getAbsolutePath() + "/images", recipe.getPicture()))
 //                    .ifPresent(iv_picture::setImageBitmap);
-        }
+//        }
 
     }
 }
