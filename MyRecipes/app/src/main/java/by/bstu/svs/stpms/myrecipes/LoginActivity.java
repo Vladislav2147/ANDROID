@@ -22,13 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
-
+//TODO fix crashes (Toasts in catch)
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
     EditText etPassword;
     EditText etEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -4,17 +4,11 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 
+import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
@@ -27,32 +21,8 @@ public class RecipeShowActivity extends AppCompatActivity {
 
         Long recipeId = (Long) getIntent().getSerializableExtra("recipeId");
         String userUid = getIntent().getStringExtra("user");
-        DatabaseReference ref = FirebaseDatabase
-                .getInstance()
-                .getReference();
-
-                ref.child(userUid)
-                .orderByChild("id")
-                .equalTo(recipeId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot recipeKey: snapshot.getChildren()) {
-                            Recipe recipe = recipeKey.getValue(Recipe.class);
-                            showRecipe(recipe);
-                            break;
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        throw error.toException();
-                    }
-                });
-
-
+        FirebaseManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
     }
-
 
     private void showRecipe(Recipe recipe) {
         TextView titleTextView = findViewById(R.id.title);
@@ -64,6 +34,7 @@ public class RecipeShowActivity extends AppCompatActivity {
 
         titleTextView.setText(recipe.getTitle());
         categoryTextView.setText(recipe.getCategory().toString());
+        //TODO uncomment when normal objects in firebase
         //timeToCookTextView.setText(recipe.getTimeToCook().toString());
         ingredientsTextView.setText(recipe.getIngredients());
         stepsTextView.setText(recipe.getSteps());
