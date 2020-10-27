@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
+import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
 import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
 import by.bstu.svs.stpms.myrecipes.model.Category;
@@ -63,7 +64,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
         recipeId = (Long) getIntent().getSerializableExtra("recipeId");
         if (recipeId != null) {
-            showRecipeById(recipeId);
+            FirebaseManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
             confirmButton.setOnClickListener(this::updateRecipe);
             confirmButton.setText(R.string.update);
         }
@@ -86,13 +87,13 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
         try {
             Recipe recipe = getRecipeFromForm();
-
-            File json = new File(super.getFilesDir(), "cooking_book.json");
-            JsonManager manager = new JsonManager(json);
-
-            CookingBook book = manager.getFromFile().orElse(new CookingBook());
-            book.addWithoutId(recipe);
-            manager.writeToFile(book);
+            FirebaseManager.getInstance().appendToList(recipe);
+//            File json = new File(super.getFilesDir(), "cooking_book.json");
+//            JsonManager manager = new JsonManager(json);
+//
+//            CookingBook book = manager.getFromFile().orElse(new CookingBook());
+//            book.addWithoutId(recipe);
+//            manager.writeToFile(book);
             Toast.makeText(this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
             finish();
         } catch (Exception e) {
@@ -115,9 +116,9 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
             Recipe recipe = getRecipeFromForm();
 
-            CookingBook book = manager.getFromFile().orElse(new CookingBook());
-            book.update(recipe.getId(), recipe);
-            manager.writeToFile(book);
+//            CookingBook book = manager.getFromFile().orElse(new CookingBook());
+//            book.update(recipe.getId(), recipe);
+//            manager.writeToFile(book);
             Toast.makeText(this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
             finish();
         } catch (Exception e) {
@@ -217,8 +218,8 @@ public class RecipeCreateActivity extends AppCompatActivity {
         timePicker.setMinute(0);
     }
 
-    private void showRecipeById(Long recipeId) {
-        Recipe recipe = manager.getFromFile().orElse(new CookingBook()).getById(recipeId);
+    private void showRecipe(Recipe recipe) {
+
         titleEditText.setText(recipe.getTitle());
         categorySpinner.setSelection(recipe.getCategory().ordinal());
         ingredientsEditText.setText(recipe.getIngredients());

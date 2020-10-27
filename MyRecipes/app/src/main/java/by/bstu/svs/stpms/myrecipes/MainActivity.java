@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
 import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.recycler.FireRecipeAdapter;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recipeIntent = new Intent(this, RecipeShowActivity.class);
+        FirebaseManager.getInstance();
 //        jsonManager = new JsonManager(new File(super.getFilesDir(), json));
 //        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
 //        searchedList = cookingBook.getRecipes();

@@ -20,7 +20,6 @@ public class RecipeShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_show);
 
         Long recipeId = (Long) getIntent().getSerializableExtra("recipeId");
-        String userUid = getIntent().getStringExtra("user");
         FirebaseManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
     }
 
