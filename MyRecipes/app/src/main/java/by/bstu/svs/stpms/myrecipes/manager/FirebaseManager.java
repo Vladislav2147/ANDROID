@@ -19,15 +19,12 @@ public final class FirebaseManager {
     private static FirebaseManager instance;
     private final DatabaseReference databaseReference;
     private final FirebaseUser currentUser;
-    private Long availableId;
 
     private FirebaseManager() {
         databaseReference = FirebaseDatabase
                 .getInstance()
                 .getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        availableId = 0L;
-//        addAvailableIdListener();
     }
 
     public void callOnRecipeById(String recipeId, Consumer<Recipe> recipeConsumer) {
@@ -46,7 +43,6 @@ public final class FirebaseManager {
                         throw error.toException();
                     }
                 });
-
     }
 
     public void appendToList(Recipe recipe) {
@@ -57,34 +53,13 @@ public final class FirebaseManager {
         add.setValue(recipe);
     }
 
-//    private void addAvailableIdListener() {
-//        databaseReference
-//                .child(currentUser.getUid())
-//                .orderByChild("id")
-//                .limitToLast(1)
-//                .addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        for (DataSnapshot recipeKey: snapshot.getChildren()) {
-//                            Recipe recipe = recipeKey.getValue(Recipe.class);
-//                            availableId = recipe.getId() + 1;
-//                            break;
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//                        throw error.toException();
-//                    }
-//                });
-//    }
-
     public void update(Recipe recipe, DatabaseReference.CompletionListener completionListener) {
         DatabaseReference recipeReference = databaseReference
                 .child(currentUser.getUid())
                 .child(recipe.getId());
         recipeReference.setValue(recipe, completionListener);
     }
+
     public void delete(String recipeId, DatabaseReference.CompletionListener completionListener) {
         databaseReference
                 .child(currentUser.getUid())

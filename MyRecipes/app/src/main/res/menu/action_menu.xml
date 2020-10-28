@@ -21,8 +21,8 @@
                 android:id="@+id/sorting_by_name"
                 android:title="@string/by_name_a_z"/>
             <item
-                android:id="@+id/sorting_by_name_desc"
-                android:title="@string/by_name_z_a"/>
+                android:id="@+id/sorting_by_category"
+                android:title="@string/by_category"/>
         </menu>
     </item>
     <item

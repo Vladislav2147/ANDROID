@@ -23,8 +23,8 @@ public class FireRecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeVie
         boolean onLongVariantClick(Recipe recipe, View view);
     }
 
-    private RecipeAdapter.onClickListener onClickListener;
-    private RecipeAdapter.onLongClickListener onLongClickListener;
+    private onClickListener onClickListener;
+    private onLongClickListener onLongClickListener;
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -36,11 +36,11 @@ public class FireRecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeVie
         super(options);
     }
 
-    public void setOnClickListener(RecipeAdapter.onClickListener onClickListener) {
+    public void setOnClickListener(onClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
-    public void setOnLongClickListener(RecipeAdapter.onLongClickListener onLongClickListener) {
+    public void setOnLongClickListener(onLongClickListener onLongClickListener) {
         this.onLongClickListener = onLongClickListener;
     }
 
