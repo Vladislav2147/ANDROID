@@ -24,29 +24,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import java.util.List;
-
 import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
-import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.recycler.FireRecipeAdapter;
-import by.bstu.svs.stpms.myrecipes.recycler.RecipeAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String json = "cooking_book.json";
     private RecyclerView recipesRecyclerView;
-    private RecipeAdapter recipeAdapter;
-    private JsonManager jsonManager;
-    private List<Recipe> recipes;
     private Intent recipeIntent;
 
-    FireRecipeAdapter mAdapter;
+    private FireRecipeAdapter mAdapter;
     private String userUid;
-
-    private List<Recipe> searchedList;
-
-    DatabaseReference db;
+    private DatabaseReference db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

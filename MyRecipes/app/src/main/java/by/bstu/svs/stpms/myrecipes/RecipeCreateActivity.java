@@ -25,7 +25,6 @@ import java.io.File;
 
 import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
-import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
 import by.bstu.svs.stpms.myrecipes.model.Category;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.model.Time;
@@ -45,8 +44,6 @@ public class RecipeCreateActivity extends AppCompatActivity {
     private String recipeId;
 
     private File imageDirectory;
-    private File json;
-    private JsonManager manager;
 
     private static int RESULT_LOAD_IMG = 1;
     private static final String TAG = "RecipeCreateActivity";
@@ -57,9 +54,6 @@ public class RecipeCreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_create);
 
         initViews();
-
-        json = new File(super.getFilesDir(), "cooking_book.json");
-        manager = new JsonManager(json);
 
         recipeId = (String) getIntent().getSerializableExtra("recipeId");
         if (recipeId != null) {
@@ -103,10 +97,6 @@ public class RecipeCreateActivity extends AppCompatActivity {
             return;
         }
         try {
-            if (image == null) {
-                //TODO picture logic
-//                image = manager.getFromFile().orElse(new CookingBook()).getById(recipeId).getPicture();
-            }
 
             Recipe recipe = getRecipeFromForm();
             FirebaseManager.getInstance().update(recipe, (error, ref) -> {
