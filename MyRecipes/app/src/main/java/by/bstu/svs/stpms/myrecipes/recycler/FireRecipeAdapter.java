@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import java.io.File;
+
 import by.bstu.svs.stpms.myrecipes.R;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
@@ -50,8 +52,8 @@ public class FireRecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeVie
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recipe_view, parent, false);
-
-        return new RecipeViewHolder(view);
+        File file = parent.getContext().getFilesDir();
+        return new RecipeViewHolder(view, file);
     }
 
     @Override

@@ -87,12 +87,6 @@ public class RecipeCreateActivity extends AppCompatActivity {
         try {
             Recipe recipe = getRecipeFromForm();
             FirebaseManager.getInstance().appendToList(recipe);
-//            File json = new File(super.getFilesDir(), "cooking_book.json");
-//            JsonManager manager = new JsonManager(json);
-//
-//            CookingBook book = manager.getFromFile().orElse(new CookingBook());
-//            book.addWithoutId(recipe);
-//            manager.writeToFile(book);
             Toast.makeText(this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
             finish();
         } catch (Exception e) {

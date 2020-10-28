@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.sorting_by_name:
                 query = db.child(userUid).orderByChild("title");
                 break;
-            //TODO rename to category
             case R.id.sorting_by_category:
                 query = db.child(userUid).orderByChild("category");
                 break;

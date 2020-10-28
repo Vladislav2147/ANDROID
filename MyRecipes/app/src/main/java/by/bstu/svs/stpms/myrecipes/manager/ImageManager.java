@@ -37,7 +37,7 @@ public class ImageManager {
 
         try {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-            return Optional.of(bitmap);
+            return Optional.ofNullable(bitmap);
         } catch (Exception e) {
             Log.e(TAG, "getBitMapFromFile: ", e);
         }
