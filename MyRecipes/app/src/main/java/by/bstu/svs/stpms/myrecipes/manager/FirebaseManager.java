@@ -80,25 +80,10 @@ public final class FirebaseManager {
 //    }
 
     public void update(Recipe recipe) {
-        databaseReference
+        DatabaseReference recipeReference = databaseReference
                 .child(currentUser.getUid())
-                .orderByChild("id")
-                .equalTo(recipe.getId())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot recipeKey: snapshot.getChildren()) {
-                            String a = recipeKey.getKey();
-                            Recipe recipe = recipeKey.getValue(Recipe.class);
-                            break;
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                .child(recipe.getId());
+        recipeReference.setValue(recipe);
     }
 
     public static FirebaseManager getInstance() {

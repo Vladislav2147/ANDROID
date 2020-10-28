@@ -115,6 +115,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
             }
 
             Recipe recipe = getRecipeFromForm();
+            FirebaseManager.getInstance().update(recipe);
 
 //            CookingBook book = manager.getFromFile().orElse(new CookingBook());
 //            book.update(recipe.getId(), recipe);
