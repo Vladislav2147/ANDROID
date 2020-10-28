@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -220,7 +221,13 @@ public class MainActivity extends AppCompatActivity {
                 .setIcon(R.drawable.ic_sharp_warning_18)
                 .setMessage("Delete item?")
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
-                    FirebaseDatabase.getInstance().getReference().child(userUid).child("recipes").orderByChild("id").equalTo(recipeId);
+                    FirebaseManager.getInstance().delete(recipeId, (error, ref) ->
+                            Toast.makeText(
+                                    MainActivity.this,
+                                    "Recipe deleted successfully",
+                                    Toast.LENGTH_SHORT)
+                                    .show()
+                    );
                 })
                 .setNegativeButton("Cancel", null)
                 .create()

@@ -79,11 +79,17 @@ public final class FirebaseManager {
 //                });
 //    }
 
-    public void update(Recipe recipe) {
+    public void update(Recipe recipe, DatabaseReference.CompletionListener completionListener) {
         DatabaseReference recipeReference = databaseReference
                 .child(currentUser.getUid())
                 .child(recipe.getId());
-        recipeReference.setValue(recipe);
+        recipeReference.setValue(recipe, completionListener);
+    }
+    public void delete(String recipeId, DatabaseReference.CompletionListener completionListener) {
+        databaseReference
+                .child(currentUser.getUid())
+                .child(recipeId)
+                .removeValue(completionListener);
     }
 
     public static FirebaseManager getInstance() {

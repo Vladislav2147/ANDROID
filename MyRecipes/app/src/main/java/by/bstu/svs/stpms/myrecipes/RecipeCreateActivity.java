@@ -115,13 +115,11 @@ public class RecipeCreateActivity extends AppCompatActivity {
             }
 
             Recipe recipe = getRecipeFromForm();
-            FirebaseManager.getInstance().update(recipe);
+            FirebaseManager.getInstance().update(recipe, (error, ref) -> {
+                Toast.makeText(RecipeCreateActivity.this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
+                finish();
+            });
 
-//            CookingBook book = manager.getFromFile().orElse(new CookingBook());
-//            book.update(recipe.getId(), recipe);
-//            manager.writeToFile(book);
-            Toast.makeText(this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
-            finish();
         } catch (Exception e) {
             Log.e(TAG, "updateRecipe: ", e);
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
