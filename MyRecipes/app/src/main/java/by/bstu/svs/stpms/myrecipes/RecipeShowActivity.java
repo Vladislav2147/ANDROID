@@ -19,7 +19,7 @@ public class RecipeShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_show);
 
-        Long recipeId = (Long) getIntent().getSerializableExtra("recipeId");
+        String  recipeId = (String) getIntent().getSerializableExtra("recipeId");
         FirebaseManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
     }
 
@@ -32,9 +32,8 @@ public class RecipeShowActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.image);
 
         titleTextView.setText(recipe.getTitle());
-        categoryTextView.setText(recipe.getCategory().toString());
-        //TODO uncomment when normal objects in firebase
-        //timeToCookTextView.setText(recipe.getTimeToCook().toString());
+        categoryTextView.setText(recipe.getCategory().getName());
+        timeToCookTextView.setText(recipe.getTimeToCook().toString());
         ingredientsTextView.setText(recipe.getIngredients());
         stepsTextView.setText(recipe.getSteps());
 

@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
         recipeIntent = new Intent(this, RecipeShowActivity.class);
         FirebaseManager.getInstance();
-//        jsonManager = new JsonManager(new File(super.getFilesDir(), json));
-//        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
-//        searchedList = cookingBook.getRecipes();
 
         userUid = getIntent().getStringExtra("user");
         myRef = FirebaseDatabase.getInstance().getReference();
@@ -71,6 +70,25 @@ public class MainActivity extends AppCompatActivity {
             recipeIntent.putExtra("user", userUid);
             startActivity(recipeIntent);
         });
+        mAdapter.setOnLongClickListener((recipe, view) -> {
+
+            Context context = this;
+            PopupMenu popupMenu = new PopupMenu(context, view, Gravity.END);
+            popupMenu.inflate(R.menu.recipe_popup_menu);
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.edit_item:
+                        editItem(recipe.getId());
+                        break;
+                    case R.id.delete_item:
+                        deleteItem(recipe.getId());
+                        break;
+                }
+                return true;
+            });
+            popupMenu.show();
+            return true;
+        });
         recipesRecyclerView = findViewById(R.id.recipe_recycler_view);
         recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         recipesRecyclerView.setAdapter(mAdapter);
@@ -81,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mAdapter.startListening();
-//        cookingBook = jsonManager.getFromFile().orElse(new CookingBook());
-//        recipeAdapter.setRecipes(cookingBook.getRecipes());
     }
 
     @Override
@@ -190,13 +206,13 @@ public class MainActivity extends AppCompatActivity {
 //
 //    }
 
-    public void editItem(Long recipeId) {
+    public void editItem(String recipeId) {
         Intent recipeUpdateIntent = new Intent(this, RecipeCreateActivity.class);
         recipeUpdateIntent.putExtra("recipeId", recipeId);
         startActivity(recipeUpdateIntent);
     }
 
-    public void deleteItem(Long recipeId) {
+    public void deleteItem(String recipeId) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder

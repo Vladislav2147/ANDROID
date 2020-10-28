@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Recipe implements Serializable {
 
-    private Long id;
+    private String id;
     private String title;
     private Category category;
     private String ingredients;
@@ -21,7 +21,7 @@ public class Recipe implements Serializable {
     private String picture;
     private Time timeToCook;
 
-    public Recipe(Long id, String title) {
+    public Recipe(String id, String title) {
         this.id = id;
         this.title = title;
         this.category = Category.OTHER;

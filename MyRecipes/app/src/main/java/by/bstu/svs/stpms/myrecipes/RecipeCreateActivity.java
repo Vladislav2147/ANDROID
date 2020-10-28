@@ -27,7 +27,6 @@ import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
 import by.bstu.svs.stpms.myrecipes.manager.JsonManager;
 import by.bstu.svs.stpms.myrecipes.model.Category;
-import by.bstu.svs.stpms.myrecipes.model.CookingBook;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.model.Time;
 import by.bstu.svs.stpms.myrecipes.model.TimeFormatException;
@@ -43,7 +42,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
     private Button confirmButton;
 
     private String image;
-    private Long recipeId;
+    private String recipeId;
 
     private File imageDirectory;
     private File json;
@@ -62,7 +61,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
         json = new File(super.getFilesDir(), "cooking_book.json");
         manager = new JsonManager(json);
 
-        recipeId = (Long) getIntent().getSerializableExtra("recipeId");
+        recipeId = (String) getIntent().getSerializableExtra("recipeId");
         if (recipeId != null) {
             FirebaseManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
             confirmButton.setOnClickListener(this::updateRecipe);
@@ -111,7 +110,8 @@ public class RecipeCreateActivity extends AppCompatActivity {
         }
         try {
             if (image == null) {
-                image = manager.getFromFile().orElse(new CookingBook()).getById(recipeId).getPicture();
+                //TODO picture logic
+//                image = manager.getFromFile().orElse(new CookingBook()).getById(recipeId).getPicture();
             }
 
             Recipe recipe = getRecipeFromForm();

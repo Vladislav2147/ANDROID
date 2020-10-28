@@ -27,23 +27,18 @@ public final class FirebaseManager {
                 .getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         availableId = 0L;
-        addAvailableIdListener();
+//        addAvailableIdListener();
     }
 
-    public void callOnRecipeById(Long recipeId, Consumer<Recipe> recipeConsumer) {
+    public void callOnRecipeById(String recipeId, Consumer<Recipe> recipeConsumer) {
         databaseReference
                 .child(currentUser.getUid())
-                .orderByChild("id")
-                .equalTo(recipeId)
+                .child(recipeId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot recipeKey: snapshot.getChildren()) {
-                            String a = recipeKey.getKey();
-                            Recipe recipe = recipeKey.getValue(Recipe.class);
-                            recipeConsumer.accept(recipe);
-                            break;
-                        }
+                        Recipe recipe = snapshot.getValue(Recipe.class);
+                        recipeConsumer.accept(recipe);
                     }
 
                     @Override
@@ -55,40 +50,56 @@ public final class FirebaseManager {
     }
 
     public void appendToList(Recipe recipe) {
-        recipe.setId(availableId);
-        databaseReference
+        DatabaseReference add = databaseReference
                 .child(currentUser.getUid())
-                .push()
-                .setValue(recipe);
+                .push();
+        recipe.setId(add.getKey());
+        add.setValue(recipe);
     }
 
-    public void addAvailableIdListener() {
+//    private void addAvailableIdListener() {
+//        databaseReference
+//                .child(currentUser.getUid())
+//                .orderByChild("id")
+//                .limitToLast(1)
+//                .addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot recipeKey: snapshot.getChildren()) {
+//                            Recipe recipe = recipeKey.getValue(Recipe.class);
+//                            availableId = recipe.getId() + 1;
+//                            break;
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                        throw error.toException();
+//                    }
+//                });
+//    }
+
+    public void update(Recipe recipe) {
         databaseReference
                 .child(currentUser.getUid())
                 .orderByChild("id")
-                .limitToLast(1)
-                .addValueEventListener(new ValueEventListener() {
+                .equalTo(recipe.getId())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot recipeKey: snapshot.getChildren()) {
+                            String a = recipeKey.getKey();
                             Recipe recipe = recipeKey.getValue(Recipe.class);
-                            availableId = recipe.getId() + 1;
                             break;
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        throw error.toException();
+
                     }
                 });
     }
-
-//    public void update(Recipe recipe) {
-//        databaseReference
-//                .child(currentUser.getUid())
-//                .
-//    }
 
     public static FirebaseManager getInstance() {
         if (instance == null) {
