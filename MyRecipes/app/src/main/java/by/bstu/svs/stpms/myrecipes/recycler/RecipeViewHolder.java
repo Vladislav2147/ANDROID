@@ -17,14 +17,14 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView iv_picture;
     private TextView tv_title;
-    private TextView tv_steps;
+    private TextView tv_category;
     private File filesDir;
 
     public RecipeViewHolder(@NonNull View itemView, File filesDir) {
         super(itemView);
         iv_picture = itemView.findViewById(R.id.picture);
         tv_title = itemView.findViewById(R.id.title);
-        tv_steps = itemView.findViewById(R.id.steps);
+        tv_category = itemView.findViewById(R.id.category);
         this.filesDir = filesDir;
     }
 
@@ -32,7 +32,7 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
         String title = recipe.getTitle();
         tv_title.setText(title);
-        tv_steps.setText(recipe.getSteps());
+        tv_category.setText(recipe.getCategory().getName());
 
         iv_picture.setImageResource(R.drawable.ic_no_image);
 

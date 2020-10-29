@@ -1,5 +1,6 @@
 package by.bstu.svs.stpms.myrecipes;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 
@@ -61,12 +63,17 @@ public class RecipeCreateActivity extends AppCompatActivity {
             confirmButton.setOnClickListener(this::updateRecipe);
             confirmButton.setText(R.string.update);
         }
+
+        ActivityCompat.requestPermissions(RecipeCreateActivity.this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                1);
     }
 
     public void chooseImage(View view) {
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
+
         startActivityForResult(intent, RESULT_LOAD_IMG);
 
     }

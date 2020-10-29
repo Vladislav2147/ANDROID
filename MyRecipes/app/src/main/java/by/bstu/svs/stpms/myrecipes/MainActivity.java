@@ -196,4 +196,10 @@ public class MainActivity extends AppCompatActivity {
         recipesRecyclerView.setAdapter(mAdapter);
         mAdapter.startListening();
     }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        super.onBackPressed();
+    }
 }
