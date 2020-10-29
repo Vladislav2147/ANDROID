@@ -47,7 +47,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
     private File imageDirectory;
 
-    private static int RESULT_LOAD_IMG = 1;
+    private static final int RESULT_LOAD_IMG = 1;
     private static final String TAG = "RecipeCreateActivity";
 
     @Override

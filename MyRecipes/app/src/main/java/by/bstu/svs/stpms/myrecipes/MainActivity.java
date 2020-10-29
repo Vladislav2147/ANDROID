@@ -146,15 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Delete")
                 .setIcon(R.drawable.ic_sharp_warning_18)
                 .setMessage("Delete item?")
-                .setPositiveButton("Ok", (dialogInterface, i) -> {
-                    FirebaseManager.getInstance().delete(recipeId, (error, ref) ->
-                            Toast.makeText(
-                                    MainActivity.this,
-                                    "Recipe deleted successfully",
-                                    Toast.LENGTH_SHORT)
-                                    .show()
-                    );
-                })
+                .setPositiveButton("Ok", (dialogInterface, i) -> FirebaseManager.getInstance().delete(recipeId, (error, ref) ->
+                        Toast.makeText(
+                                MainActivity.this,
+                                "Recipe deleted successfully",
+                                Toast.LENGTH_SHORT)
+                                .show()
+                ))
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();

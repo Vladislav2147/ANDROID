@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 public class CookingBook {
 
-    private List<Recipe> recipes;
+    private final List<Recipe> recipes;
 
     public CookingBook() {
         recipes = new ArrayList<>();

@@ -15,10 +15,10 @@ import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView iv_picture;
-    private TextView tv_title;
-    private TextView tv_category;
-    private File filesDir;
+    private final ImageView iv_picture;
+    private final TextView tv_title;
+    private final TextView tv_category;
+    private final File filesDir;
 
     public RecipeViewHolder(@NonNull View itemView, File filesDir) {
         super(itemView);
