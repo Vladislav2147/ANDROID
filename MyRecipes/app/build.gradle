@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'com.google.firebase:firebase-database:19.5.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     compileOnly "org.projectlombok:lombok:1.18.12"
     testImplementation 'junit:junit:4.12'

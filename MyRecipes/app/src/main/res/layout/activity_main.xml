@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipe_recycler_view"
+    <fragment
+        android:id="@+id/recipe_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        class="by.bstu.svs.stpms.myrecipes.RecipeFragment"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
