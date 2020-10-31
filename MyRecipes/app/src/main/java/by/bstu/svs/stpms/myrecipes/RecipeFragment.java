@@ -117,9 +117,9 @@ public class RecipeFragment extends Fragment {
             popupMenu.show();
             return true;
         });
-
-        recipesRecyclerView.setAdapter(mAdapter);
         mAdapter.startListening();
+        recipesRecyclerView.setAdapter(mAdapter);
+
     }
 
     public void editItem(String recipeId) {

@@ -11,6 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -23,13 +24,18 @@ public class MainActivity extends AppCompatActivity {
 
     private String userUid;
     private DatabaseReference db;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        recipeListFragment = (RecipeFragment) getSupportFragmentManager().findFragmentById(R.id.recipe_fragment);
+        fragmentManager =  getSupportFragmentManager();
+        recipeListFragment = new RecipeFragment();
+        fragmentManager
+                .beginTransaction()
+                .add(R.id.recipe_container, recipeListFragment)
+                .commit();
         userUid = getIntent().getStringExtra("user");
         db = FirebaseDatabase.getInstance().getReference();
 

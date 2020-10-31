@@ -51,7 +51,7 @@ public class FireRecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeVie
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_view, parent, false);
+                .inflate(R.layout.fragment_recipe, parent, false);
         File file = parent.getContext().getFilesDir();
         return new RecipeViewHolder(view, file);
     }

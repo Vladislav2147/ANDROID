@@ -6,11 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/recipe_fragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="by.bstu.svs.stpms.myrecipes.RecipeFragment"/>
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/recipe_container"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/recipe_details_fragment"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:visibility="gone"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
