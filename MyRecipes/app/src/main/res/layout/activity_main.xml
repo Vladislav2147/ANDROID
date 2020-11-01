@@ -14,9 +14,12 @@
             android:layout_width="0dp"
             android:layout_weight="5"
             android:layout_height="match_parent" />
-
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
         <FrameLayout
-            android:id="@+id/recipe_details_fragment"
+            android:id="@+id/recipe_details_container"
             android:layout_width="0dp"
             android:layout_weight="5"
             android:visibility="gone"

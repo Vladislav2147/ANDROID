@@ -3,10 +3,12 @@ package by.bstu.svs.stpms.myrecipes;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,10 @@ import com.google.firebase.database.Query;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FrameLayout listContainer;
+    private FrameLayout detailsContainer;
+
+
     private RecipeFragment recipeListFragment;
 
     private String userUid;
@@ -30,11 +36,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listContainer = findViewById(R.id.recipe_container);
+        detailsContainer = findViewById(R.id.recipe_details_container);
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            detailsContainer.setVisibility(View.VISIBLE);
+
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // In portrait
+            detailsContainer.setVisibility(View.GONE);
+        }
+
         fragmentManager =  getSupportFragmentManager();
         recipeListFragment = new RecipeFragment();
         fragmentManager
                 .beginTransaction()
-                .add(R.id.recipe_container, recipeListFragment)
+                .replace(R.id.recipe_container, recipeListFragment)
                 .commit();
         userUid = getIntent().getStringExtra("user");
         db = FirebaseDatabase.getInstance().getReference();
@@ -104,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(recipeCreateIntent);
     }
 
-    @Override
-    public void onBackPressed() {
-        finishAffinity();
-        super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        finishAffinity();
+//        super.onBackPressed();
+//    }
 }

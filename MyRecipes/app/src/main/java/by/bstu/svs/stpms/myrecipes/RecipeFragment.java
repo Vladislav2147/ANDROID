@@ -117,8 +117,10 @@ public class RecipeFragment extends Fragment {
             popupMenu.show();
             return true;
         });
+
+        recipesRecyclerView.swapAdapter(mAdapter, true);
         mAdapter.startListening();
-        recipesRecyclerView.setAdapter(mAdapter);
+//        mAdapter.notifyDataSetChanged();
 
     }
 
