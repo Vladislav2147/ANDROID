@@ -5,13 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
 
@@ -20,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
+
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout listContainer;
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private RecipeFragment recipeListFragment;
+    private RecipeDetailsFragment recipeDetailsFragment;
 
     private String userUid;
     private DatabaseReference db;
@@ -40,16 +47,6 @@ public class MainActivity extends AppCompatActivity {
         listContainer = findViewById(R.id.recipe_container);
         detailsContainer = findViewById(R.id.recipe_details_container);
 
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // In landscape
-            detailsContainer.setVisibility(View.VISIBLE);
-
-        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // In portrait
-            detailsContainer.setVisibility(View.GONE);
-        }
-
         fragmentManager =  getSupportFragmentManager();
         recipeListFragment = new RecipeFragment();
         fragmentManager
@@ -58,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
         userUid = getIntent().getStringExtra("user");
         db = FirebaseDatabase.getInstance().getReference();
+
+        int orientation = getResources().getConfiguration().orientation;
+        initShowingDetails(orientation);
 
     }
 
@@ -122,6 +122,75 @@ public class MainActivity extends AppCompatActivity {
     public void createRecipe(View view) {
         Intent recipeCreateIntent = new Intent(this, RecipeCreateActivity.class);
         startActivity(recipeCreateIntent);
+    }
+
+    private void initShowingDetails(int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            detailsContainer.setVisibility(View.VISIBLE);
+
+            recipeListFragment.setOnClickListener(recipe -> {
+                recipeDetailsFragment = RecipeDetailsFragment.newInstance(recipe.getId());
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.recipe_details_container, recipeDetailsFragment)
+                        .commit();
+            });
+
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // In portrait
+            detailsContainer.setVisibility(View.GONE);
+            recipeListFragment.setOnClickListener(recipe -> {
+                Intent recipeIntent = new Intent(this, RecipeShowActivity.class);
+                recipeIntent.putExtra("recipeId", recipe.getId());
+                startActivity(recipeIntent);
+            });
+        }
+
+        recipeListFragment.setOnLongClickListener((recipe, view) -> {
+
+            PopupMenu popupMenu = new PopupMenu(this, view, Gravity.END);
+            popupMenu.inflate(R.menu.recipe_popup_menu);
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.edit_item:
+                        editItem(recipe.getId());
+                        break;
+                    case R.id.delete_item:
+                        deleteItem(recipe.getId());
+                        break;
+                }
+                return true;
+            });
+            popupMenu.show();
+            return true;
+        });
+    }
+
+    public void editItem(String recipeId) {
+        Intent recipeUpdateIntent = new Intent(this, RecipeCreateActivity.class);
+        recipeUpdateIntent.putExtra("recipeId", recipeId);
+        startActivity(recipeUpdateIntent);
+    }
+
+    public void deleteItem(String recipeId) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setTitle("Delete")
+                .setIcon(R.drawable.ic_sharp_warning_18)
+                .setMessage("Delete item?")
+                .setPositiveButton("Ok", (dialogInterface, i) -> FirebaseManager.getInstance().delete(recipeId, (error, ref) ->
+                        Toast.makeText(
+                                MainActivity.this,
+                                "Recipe deleted successfully",
+                                Toast.LENGTH_SHORT)
+                                .show()
+                ))
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+
     }
 
 //    @Override

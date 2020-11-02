@@ -17,16 +17,16 @@ import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 public class FireRecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeViewHolder> {
 
-    public interface onClickListener{
+    public interface OnClickListener {
         void onVariantClick(Recipe recipe);
     }
 
-    public interface onLongClickListener{
+    public interface OnLongClickListener {
         boolean onLongVariantClick(Recipe recipe, View view);
     }
 
-    private onClickListener onClickListener;
-    private onLongClickListener onLongClickListener;
+    private OnClickListener onClickListener;
+    private OnLongClickListener onLongClickListener;
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -38,11 +38,11 @@ public class FireRecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeVie
         super(options);
     }
 
-    public void setOnClickListener(onClickListener onClickListener) {
+    public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
-    public void setOnLongClickListener(onLongClickListener onLongClickListener) {
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
         this.onLongClickListener = onLongClickListener;
     }
 
