@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.recipe_details_container, recipeDetailsFragment)
+                        .addToBackStack(null)
                         .commit();
             });
 
@@ -192,10 +193,4 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        finishAffinity();
-//        super.onBackPressed();
-//    }
 }
