@@ -9,6 +9,11 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:title="@string/search"/>
     <item
+        android:id="@+id/scroll_up"
+        android:icon="@drawable/ic_sharp_arrow_upward_24"
+        app:showAsAction="ifRoom"
+        android:title="@string/scroll_up"/>
+    <item
         android:id="@+id/sort"
         android:icon="@drawable/ic_baseline_sort_24"
         app:showAsAction="ifRoom"

@@ -100,6 +100,10 @@ public class RecipeFragment extends Fragment {
 
     }
 
+    public RecyclerView getRecipesRecyclerView() {
+        return recipesRecyclerView;
+    }
+
     public void setOnClickListener(FireRecipeAdapter.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }

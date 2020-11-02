@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(intent);
                 break;
+            case R.id.scroll_up:
+                recipeListFragment.getRecipesRecyclerView().smoothScrollToPosition(0);
+                break;
             case R.id.sorting_default:
                 query = db.child(userUid);
                 break;
