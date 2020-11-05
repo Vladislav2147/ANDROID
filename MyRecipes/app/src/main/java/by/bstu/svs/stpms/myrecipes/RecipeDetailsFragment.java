@@ -28,11 +28,10 @@ public class RecipeDetailsFragment extends Fragment {
     private TextView ingredientsTextView;
     private TextView stepsTextView;
     private ImageView imageView;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_RECIPE_ID = "recipeId";
 
-    // TODO: Rename and change types of parameters
+
     private String recipeId;
     private FirebaseManager firebaseManager;
 
@@ -47,7 +46,6 @@ public class RecipeDetailsFragment extends Fragment {
      * @param recipeId selected recipe identifier.
      * @return A new instance of fragment RecipeDetailsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RecipeDetailsFragment newInstance(String recipeId) {
         RecipeDetailsFragment fragment = new RecipeDetailsFragment();
         Bundle args = new Bundle();

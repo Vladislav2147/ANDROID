@@ -24,9 +24,8 @@ import by.bstu.svs.stpms.myrecipes.recycler.FireRecipeAdapter;
  */
 public class RecipeFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
 
     private FireRecipeAdapter mAdapter;
@@ -43,8 +42,7 @@ public class RecipeFragment extends Fragment {
      */
     public RecipeFragment() {
     }
-
-    // TODO: Customize parameter initialization
+    
     @SuppressWarnings("unused")
     public static RecipeFragment newInstance(int columnCount) {
         RecipeFragment fragment = new RecipeFragment();
@@ -83,7 +81,6 @@ public class RecipeFragment extends Fragment {
         return view;
     }
 
-    //TODO implement listeners
     public void updateAdapterByQuery(Query query) {
         if (mAdapter != null) mAdapter.stopListening();
 
@@ -123,4 +120,5 @@ public class RecipeFragment extends Fragment {
         super.onStop();
         if (mAdapter != null) mAdapter.stopListening();
     }
+
 }

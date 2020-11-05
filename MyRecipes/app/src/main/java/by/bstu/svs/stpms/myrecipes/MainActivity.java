@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
             recipeListFragment.setOnClickListener(recipe -> {
                 recipeDetailsFragment = RecipeDetailsFragment.newInstance(recipe.getId());
+
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.recipe_details_container, recipeDetailsFragment)
