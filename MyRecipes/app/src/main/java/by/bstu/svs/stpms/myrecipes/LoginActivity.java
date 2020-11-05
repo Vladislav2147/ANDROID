@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.btn_sign_in).setOnClickListener(this);
         findViewById(R.id.btn_registration).setOnClickListener(this);
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
+
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -54,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
     }
+
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -71,14 +74,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
     }
+
     @Override
     public void onClick(View v) {
         try {
             if (v.getId() == R.id.btn_sign_in) {
-                signIn(etEmail.getText().toString(),etPassword.getText().toString());
+                signIn(etEmail.getText().toString(), etPassword.getText().toString());
             }
             else if (v.getId() == R.id.btn_registration) {
-                createAccount(etEmail.getText().toString(),etPassword.getText().toString());
+                createAccount(etEmail.getText().toString(), etPassword.getText().toString());
             }
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();

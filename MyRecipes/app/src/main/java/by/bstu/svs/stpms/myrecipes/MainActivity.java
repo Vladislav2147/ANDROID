@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 FirebaseAuth.getInstance().signOut();
                 startActivity(intent);
+                finish();
                 break;
             case R.id.scroll_up:
                 recipeListFragment.getRecipesRecyclerView().smoothScrollToPosition(0);
