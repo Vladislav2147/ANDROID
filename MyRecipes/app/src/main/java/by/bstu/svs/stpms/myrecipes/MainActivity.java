@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -22,7 +23,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.firebase.database.Query;
 
-import by.bstu.svs.stpms.myrecipes.manager.DatabaseOpenHelper;
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseContract;
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private RecipeFragment recipeListFragment;
     private RecipeDetailsFragment recipeDetailsFragment;
 
+    private Cursor defaultCursor;
+    private Cursor currentCursor;
     private SQLiteDatabase database;
     private FragmentManager fragmentManager;
 
@@ -52,10 +55,16 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.recipe_container, recipeListFragment)
                 .commit();
 
-        DatabaseOpenHelper databaseOpenHelper = new DatabaseOpenHelper(this);
-        database = databaseOpenHelper.getReadableDatabase();
-        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance();
-        manager.setDatabase(database);
+        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance(this);
+        defaultCursor = manager.getCursor(
+                DatabaseContract.RecipeTable.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
 
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
@@ -69,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            recipeListFragment.updateAdapterByQuery(database.child(userUid));
+            recipeListFragment.updateAdapterByCursor(defaultCursor);
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -77,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String queryText) {
                 Query fireQuery = database.child(userUid).orderByChild("title").startAt(queryText)
                         .endAt(queryText+"\uf8ff");
-                recipeListFragment.updateAdapterByQuery(fireQuery);
+                recipeListFragment.updateAdapterByCursor(fireQuery);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() == 0) {
-                    recipeListFragment.updateAdapterByQuery(database.child(userUid));
+                    recipeListFragment.updateAdapterByCursor(database.child(userUid));
                 }
                 return false;
             }
@@ -111,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         if (query != null) {
-            recipeListFragment.updateAdapterByQuery(query);
+            recipeListFragment.updateAdapterByCursor(query);
         }
         return true;
 

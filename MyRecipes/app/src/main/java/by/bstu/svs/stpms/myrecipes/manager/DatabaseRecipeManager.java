@@ -16,6 +16,7 @@ import by.bstu.svs.stpms.myrecipes.model.Time;
 public final class DatabaseRecipeManager {
 
     private static DatabaseRecipeManager instance;
+
     private SQLiteDatabase database;
 
     public static DatabaseRecipeManager getInstance(Context context) {
@@ -149,6 +150,10 @@ public final class DatabaseRecipeManager {
 
         return recipe;
 
+    }
+
+    public Cursor getCursor(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+        return database.query(table, columns, selection, selectionArgs, groupBy, having, orderBy);
     }
 
 }
