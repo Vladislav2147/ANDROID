@@ -71,14 +71,14 @@ public class RecipeFragment extends Fragment {
             }
             userUid = getActivity().getIntent().getStringExtra("user");
             db = FirebaseDatabase.getInstance().getReference();
-            updateAdapterByCursor(db.child(userUid));
+            updateAdapterByQuery(db.child(userUid));
         }
         return view;
     }
 
-    public void updateAdapterByCursor(Cursor cursor) {
+    public void updateAdapterByQuery(Cursor query) {
 
-        mAdapter = new DatabaseRecipeAdapter(cursor);
+        mAdapter = new DatabaseRecipeAdapter(query);
 
         mAdapter.setOnClickListener(onClickListener);
         mAdapter.setOnLongClickListener(onLongClickListener);

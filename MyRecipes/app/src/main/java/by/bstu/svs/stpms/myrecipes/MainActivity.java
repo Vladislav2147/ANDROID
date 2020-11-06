@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -19,12 +20,10 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseOpenHelper;
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private RecipeFragment recipeListFragment;
     private RecipeDetailsFragment recipeDetailsFragment;
 
-    private String userUid;
-    private DatabaseReference db;
+    private SQLiteDatabase database;
     private FragmentManager fragmentManager;
 
     @Override
@@ -53,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.recipe_container, recipeListFragment)
                 .commit();
-        userUid = getIntent().getStringExtra("user");
-        db = FirebaseDatabase.getInstance().getReference();
+
+        DatabaseOpenHelper databaseOpenHelper = new DatabaseOpenHelper(this);
+        database = databaseOpenHelper.getReadableDatabase();
+        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance();
+        manager.setDatabase(database);
 
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
@@ -68,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            recipeListFragment.updateAdapterByQuery(db.child(userUid));
+            recipeListFragment.updateAdapterByQuery(database.child(userUid));
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
-                Query fireQuery = db.child(userUid).orderByChild("title").startAt(queryText)
+                Query fireQuery = database.child(userUid).orderByChild("title").startAt(queryText)
                         .endAt(queryText+"\uf8ff");
                 recipeListFragment.updateAdapterByQuery(fireQuery);
                 return false;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() == 0) {
-                    recipeListFragment.updateAdapterByQuery(db.child(userUid));
+                    recipeListFragment.updateAdapterByQuery(database.child(userUid));
                 }
                 return false;
             }
@@ -96,23 +97,17 @@ public class MainActivity extends AppCompatActivity {
 
         Query query = null;
         switch (item.getItemId()) {
-            case R.id.exit:
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                FirebaseAuth.getInstance().signOut();
-                startActivity(intent);
-                break;
             case R.id.scroll_up:
                 recipeListFragment.getRecipesRecyclerView().smoothScrollToPosition(0);
                 break;
             case R.id.sorting_default:
-                query = db.child(userUid);
+                query = database.child(userUid);
                 break;
             case R.id.sorting_by_name:
-                query = db.child(userUid).orderByChild("title");
+                query = database.child(userUid).orderByChild("title");
                 break;
             case R.id.sorting_by_category:
-                query = db.child(userUid).orderByChild("category");
+                query = database.child(userUid).orderByChild("category");
                 break;
         }
         if (query != null) {
@@ -185,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Delete")
                 .setIcon(R.drawable.ic_sharp_warning_18)
                 .setMessage("Delete item?")
-                .setPositiveButton("Ok", (dialogInterface, i) -> FirebaseManager.getInstance().delete(recipeId, (error, ref) ->
+                .setPositiveButton("Ok", (dialogInterface, i) -> DatabaseRecipeManager.getInstance().delete(recipeId, (error, ref) ->
                         Toast.makeText(
                                 MainActivity.this,
                                 "Recipe deleted successfully",
