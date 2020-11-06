@@ -1,5 +1,7 @@
 package by.bstu.svs.stpms.myrecipes.model;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 import lombok.Getter;
@@ -12,9 +14,15 @@ public class Time implements Serializable {
     private int hours;
     private int minutes;
 
-    public Time (int hours, int minutes) throws TimeFormatException {
-        setHours(hours);
-        setMinutes(minutes);
+    public Time (int hours, int minutes){
+        try {
+            setHours(hours);
+            setMinutes(minutes);
+        } catch (TimeFormatException e) {
+            Log.e("Time", "ctor: ", e);
+            this.hours = 0;
+            this.minutes = 0;
+        }
     }
 
     public void setHours(int hours) throws TimeFormatException {

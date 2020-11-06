@@ -25,7 +25,7 @@ import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 
-import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
 import by.bstu.svs.stpms.myrecipes.model.Category;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
@@ -43,7 +43,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
     private Button confirmButton;
 
     private String image;
-    private String recipeId;
+    private Integer recipeId;
 
     private File imageDirectory;
 
@@ -57,9 +57,9 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
         initViews();
 
-        recipeId = (String) getIntent().getSerializableExtra("recipeId");
+        recipeId = (Integer) getIntent().getSerializableExtra("recipeId");
         if (recipeId != null) {
-            FirebaseManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
+            DatabaseRecipeManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
             confirmButton.setOnClickListener(this::updateRecipe);
             confirmButton.setText(R.string.update);
         }
@@ -87,7 +87,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
         try {
             Recipe recipe = getRecipeFromForm();
-            FirebaseManager.getInstance().appendToList(recipe);
+            DatabaseRecipeManager.getInstance().appendToList(recipe);
             Toast.makeText(this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
             finish();
         } catch (Exception e) {
@@ -106,7 +106,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
         try {
 
             Recipe recipe = getRecipeFromForm();
-            FirebaseManager.getInstance().update(recipe, (error, ref) -> {
+            DatabaseRecipeManager.getInstance().update(recipe, (error, ref) -> {
                 Toast.makeText(RecipeCreateActivity.this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
                 finish();
             });

@@ -1,6 +1,7 @@
 package by.bstu.svs.stpms.myrecipes;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-
-import by.bstu.svs.stpms.myrecipes.model.Recipe;
-import by.bstu.svs.stpms.myrecipes.recycler.FireRecipeAdapter;
+import by.bstu.svs.stpms.myrecipes.recycler.DatabaseRecipeAdapter;
 
 /**
  * A fragment representing a list of Items.
@@ -28,13 +23,13 @@ public class RecipeFragment extends Fragment {
 
     private int mColumnCount = 1;
 
-    private FireRecipeAdapter mAdapter;
+    private DatabaseRecipeAdapter mAdapter;
     private String userUid;
     private DatabaseReference db;
     private RecyclerView recipesRecyclerView;
 
-    private FireRecipeAdapter.OnClickListener onClickListener;
-    private FireRecipeAdapter.OnLongClickListener onLongClickListener;
+    private DatabaseRecipeAdapter.OnClickListener onClickListener;
+    private DatabaseRecipeAdapter.OnLongClickListener onLongClickListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -81,19 +76,14 @@ public class RecipeFragment extends Fragment {
         return view;
     }
 
-    public void updateAdapterByQuery(Query query) {
-        if (mAdapter != null) mAdapter.stopListening();
+    public void updateAdapterByQuery(Cursor query) {
 
-        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
-                .setQuery(query, Recipe.class)
-                .build();
-        mAdapter = new FireRecipeAdapter(options);
+        mAdapter = new DatabaseRecipeAdapter(query);
 
         mAdapter.setOnClickListener(onClickListener);
         mAdapter.setOnLongClickListener(onLongClickListener);
 
         recipesRecyclerView.swapAdapter(mAdapter, true);
-        mAdapter.startListening();
 
     }
 
@@ -101,24 +91,14 @@ public class RecipeFragment extends Fragment {
         return recipesRecyclerView;
     }
 
-    public void setOnClickListener(FireRecipeAdapter.OnClickListener onClickListener) {
+    public void setOnClickListener(DatabaseRecipeAdapter.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
-    public void setOnLongClickListener(FireRecipeAdapter.OnLongClickListener onLongClickListener) {
+    public void setOnLongClickListener(DatabaseRecipeAdapter.OnLongClickListener onLongClickListener) {
         this.onLongClickListener = onLongClickListener;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mAdapter != null) mAdapter.startListening();
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAdapter != null) mAdapter.stopListening();
-    }
 
 }

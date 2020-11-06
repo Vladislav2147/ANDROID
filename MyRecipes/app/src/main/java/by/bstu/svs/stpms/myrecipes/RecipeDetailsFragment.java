@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import java.io.File;
 
-import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
@@ -33,7 +33,7 @@ public class RecipeDetailsFragment extends Fragment {
 
 
     private String recipeId;
-    private FirebaseManager firebaseManager;
+    private DatabaseRecipeManager databaseRecipeManager;
 
     public RecipeDetailsFragment() {
         // Required empty public constructor
@@ -60,7 +60,7 @@ public class RecipeDetailsFragment extends Fragment {
         if (getArguments() != null) {
             recipeId = getArguments().getString(ARG_RECIPE_ID);
         }
-        firebaseManager = FirebaseManager.getInstance();
+        databaseRecipeManager = DatabaseRecipeManager.getInstance();
 
     }
 
@@ -77,7 +77,7 @@ public class RecipeDetailsFragment extends Fragment {
         stepsTextView = view.findViewById(R.id.steps);
         imageView = view.findViewById(R.id.image);
 
-        firebaseManager.callOnRecipeById(recipeId, this::showRecipe);
+        databaseRecipeManager.callOnRecipeById(recipeId, this::showRecipe);
 
         return view;
     }

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
-import by.bstu.svs.stpms.myrecipes.manager.FirebaseManager;
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
@@ -20,7 +20,7 @@ public class RecipeShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_show);
 
         String  recipeId = (String) getIntent().getSerializableExtra("recipeId");
-        FirebaseManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
+        DatabaseRecipeManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
     }
 
     private void showRecipe(Recipe recipe) {

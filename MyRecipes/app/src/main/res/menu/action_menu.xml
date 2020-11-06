@@ -30,9 +30,4 @@
                 android:title="@string/by_category"/>
         </menu>
     </item>
-    <item
-        android:id="@+id/exit"
-        android:icon="@drawable/ic_sharp_exit_to_app_24"
-        app:showAsAction="ifRoom"
-        android:title="@string/exit"/>
 </menu>

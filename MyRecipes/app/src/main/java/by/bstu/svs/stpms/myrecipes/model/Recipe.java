@@ -1,7 +1,5 @@
 package by.bstu.svs.stpms.myrecipes.model;
 
-import com.google.firebase.database.Exclude;
-
 import java.io.Serializable;
 
 import lombok.Getter;
@@ -13,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Recipe implements Serializable {
 
-    private String id;
+    private Integer id;
     private String title;
     private Category category;
     private String ingredients;
@@ -21,7 +19,7 @@ public class Recipe implements Serializable {
     private String picture;
     private Time timeToCook;
 
-    public Recipe(String id, String title) {
+    public Recipe(Integer id, String title) {
         this.id = id;
         this.title = title;
         this.category = Category.OTHER;
@@ -31,7 +29,6 @@ public class Recipe implements Serializable {
         this.category = Category.getEnumFromString(category);
     }
 
-    @Exclude
     public void setCategory(Category category) {
         this.category = category;
     }
