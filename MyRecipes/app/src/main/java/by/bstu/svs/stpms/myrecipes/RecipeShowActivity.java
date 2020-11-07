@@ -3,6 +3,7 @@ package by.bstu.svs.stpms.myrecipes;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import java.io.File;
 
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
+import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 public class RecipeShowActivity extends AppCompatActivity {
@@ -19,8 +21,12 @@ public class RecipeShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_show);
 
-        String  recipeId = (String) getIntent().getSerializableExtra("recipeId");
-        DatabaseRecipeManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
+        Integer recipeId = (Integer) getIntent().getSerializableExtra("recipeId");
+        try {
+            showRecipe(DatabaseRecipeManager.getInstance(this).getById(recipeId));
+        } catch (SQLiteDatabaseException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showRecipe(Recipe recipe) {

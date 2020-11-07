@@ -17,8 +17,6 @@ import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 public class DatabaseRecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
-    private Context context;
-
     public interface OnClickListener {
         void onVariantClick(Recipe recipe);
     }
@@ -31,6 +29,7 @@ public class DatabaseRecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder
     private OnLongClickListener onLongClickListener;
 
     private Cursor cursor;
+    private Context context;
 
 
     public DatabaseRecipeAdapter(Cursor cursor) {
@@ -53,6 +52,11 @@ public class DatabaseRecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder
         this.cursor = cursor;
     }
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,7 +69,7 @@ public class DatabaseRecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-
+        cursor.moveToFirst();
         cursor.move(position);
         Recipe recipe = DatabaseRecipeManager.getInstance(context).getRecipeByCursor(cursor);
 

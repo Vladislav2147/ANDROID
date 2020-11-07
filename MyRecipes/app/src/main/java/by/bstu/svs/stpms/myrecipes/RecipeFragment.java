@@ -78,7 +78,7 @@ public class RecipeFragment extends Fragment {
     public void updateAdapterByCursor(Cursor cursor) {
 
         mAdapter = new DatabaseRecipeAdapter(cursor);
-
+        mAdapter.setContext(getActivity());
         mAdapter.setOnClickListener(onClickListener);
         mAdapter.setOnLongClickListener(onLongClickListener);
 

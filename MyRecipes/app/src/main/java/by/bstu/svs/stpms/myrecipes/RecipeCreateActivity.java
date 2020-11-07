@@ -27,6 +27,7 @@ import java.io.File;
 
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
+import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
 import by.bstu.svs.stpms.myrecipes.model.Category;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.model.Time;
@@ -59,7 +60,11 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
         recipeId = (Integer) getIntent().getSerializableExtra("recipeId");
         if (recipeId != null) {
-            DatabaseRecipeManager.getInstance().callOnRecipeById(recipeId, this::showRecipe);
+            try {
+                showRecipe(DatabaseRecipeManager.getInstance(this).getById(recipeId));
+            } catch (SQLiteDatabaseException e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
             confirmButton.setOnClickListener(this::updateRecipe);
             confirmButton.setText(R.string.update);
         }
@@ -87,7 +92,7 @@ public class RecipeCreateActivity extends AppCompatActivity {
 
         try {
             Recipe recipe = getRecipeFromForm();
-            DatabaseRecipeManager.getInstance().appendToList(recipe);
+            DatabaseRecipeManager.getInstance(this).add(recipe);
             Toast.makeText(this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
             finish();
         } catch (Exception e) {
@@ -104,13 +109,10 @@ public class RecipeCreateActivity extends AppCompatActivity {
             return;
         }
         try {
-
             Recipe recipe = getRecipeFromForm();
-            DatabaseRecipeManager.getInstance().update(recipe, (error, ref) -> {
-                Toast.makeText(RecipeCreateActivity.this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
-                finish();
-            });
-
+            DatabaseRecipeManager.getInstance(this).update(recipe);
+            Toast.makeText(this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
+            finish();
         } catch (Exception e) {
             Log.e(TAG, "updateRecipe: ", e);
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();

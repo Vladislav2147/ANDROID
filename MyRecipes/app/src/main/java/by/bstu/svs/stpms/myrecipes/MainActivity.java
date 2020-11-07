@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private RecipeFragment recipeListFragment;
     private RecipeDetailsFragment recipeDetailsFragment;
 
-    private Cursor defaultCursor;
     private FragmentManager fragmentManager;
 
     @Override
@@ -51,13 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.recipe_container, recipeListFragment)
                 .commit();
 
-        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance(this);
-        defaultCursor = manager.getCursorByQuery(
-                null,
-                null,
-                null
-        );
-
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
 
@@ -70,14 +62,15 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            recipeListFragment.updateAdapterByCursor(defaultCursor);
+            recipeListFragment.updateAdapterByCursor(getDefaultCursor());
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
+                queryText = "%" + queryText + "%";
                 Cursor cursor = DatabaseRecipeManager.getInstance(MainActivity.this).getCursorByQuery(
-                        "title like '%?%'",
+                        "title like ?",
                         new String[] {queryText},
                         null
                 );
@@ -88,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() == 0) {
-                    recipeListFragment.updateAdapterByCursor(defaultCursor);
+                    recipeListFragment.updateAdapterByCursor(getDefaultCursor());
                 }
                 return false;
             }
@@ -105,20 +98,20 @@ public class MainActivity extends AppCompatActivity {
                 recipeListFragment.getRecipesRecyclerView().smoothScrollToPosition(0);
                 break;
             case R.id.sorting_default:
-                cursor = defaultCursor;
+                cursor = getDefaultCursor();
                 break;
             case R.id.sorting_by_name:
                 cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
                         null,
                         null,
-                        DatabaseContract.RecipeTable.COLUMN_NAME_TITLE
+                        DatabaseContract.RecipeTable.COLUMN_NAME_TITLE + " COLLATE NOCASE"
                 );
                 break;
             case R.id.sorting_by_category:
                 cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
                         null,
                         null,
-                        DatabaseContract.RecipeTable.COLUMN_NAME_CATEGORY
+                        DatabaseContract.RecipeTable.COLUMN_NAME_CATEGORY + " COLLATE NOCASE"
                 );
                 break;
         }
@@ -196,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                     String message = "Recipe deleted successfully";
                     try {
                         DatabaseRecipeManager.getInstance(this).delete(recipeId);
+                        recipeListFragment.updateAdapterByCursor(getDefaultCursor());
                     } catch (SQLiteDatabaseException e) {
                         message = e.getMessage();
                     }
@@ -206,5 +200,19 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recipeListFragment.updateAdapterByCursor(getDefaultCursor());
+    }
+
+    private Cursor getDefaultCursor() {
+        return DatabaseRecipeManager.getInstance(this).getCursorByQuery(
+                null,
+                null,
+                null
+        );
     }
 }

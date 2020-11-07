@@ -9,6 +9,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@Deprecated
 public class CookingBook {
 
     private final List<Recipe> recipes;
@@ -29,11 +30,11 @@ public class CookingBook {
 //        recipes.add(recipe);
 //    }
 
-    public void removeById(String id) {
+    public void removeById(Integer id) {
         recipes.removeIf(recipe -> recipe.getId().equals(id));
     }
 
-    public Recipe getById(String id) {
+    public Recipe getById(Integer id) {
         return recipes
                 .stream()
                 .filter(recipe -> recipe.getId().equals(id))
@@ -41,7 +42,7 @@ public class CookingBook {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public void update(String id, Recipe recipe) {
+    public void update(Integer id, Recipe recipe) {
         removeById(id);
         recipe.setId(id);
         recipes.add(recipe);
