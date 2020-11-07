@@ -4,7 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -20,10 +20,9 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.firebase.database.Query;
-
-import by.bstu.svs.stpms.myrecipes.manager.DatabaseOpenHelper;
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseContract;
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
+import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private RecipeFragment recipeListFragment;
     private RecipeDetailsFragment recipeDetailsFragment;
 
-    private SQLiteDatabase database;
+    private Cursor defaultCursor;
     private FragmentManager fragmentManager;
 
     @Override
@@ -52,10 +51,12 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.recipe_container, recipeListFragment)
                 .commit();
 
-        DatabaseOpenHelper databaseOpenHelper = new DatabaseOpenHelper(this);
-        database = databaseOpenHelper.getReadableDatabase();
-        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance();
-        manager.setDatabase(database);
+        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance(this);
+        defaultCursor = manager.getCursorByQuery(
+                null,
+                null,
+                null
+        );
 
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
@@ -69,22 +70,25 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            recipeListFragment.updateAdapterByQuery(database.child(userUid));
+            recipeListFragment.updateAdapterByCursor(defaultCursor);
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
-                Query fireQuery = database.child(userUid).orderByChild("title").startAt(queryText)
-                        .endAt(queryText+"\uf8ff");
-                recipeListFragment.updateAdapterByQuery(fireQuery);
+                Cursor cursor = DatabaseRecipeManager.getInstance(MainActivity.this).getCursorByQuery(
+                        "title like '%?%'",
+                        new String[] {queryText},
+                        null
+                );
+                recipeListFragment.updateAdapterByCursor(cursor);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() == 0) {
-                    recipeListFragment.updateAdapterByQuery(database.child(userUid));
+                    recipeListFragment.updateAdapterByCursor(defaultCursor);
                 }
                 return false;
             }
@@ -95,23 +99,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        Query query = null;
+        Cursor cursor = null;
         switch (item.getItemId()) {
             case R.id.scroll_up:
                 recipeListFragment.getRecipesRecyclerView().smoothScrollToPosition(0);
                 break;
             case R.id.sorting_default:
-                query = database.child(userUid);
+                cursor = defaultCursor;
                 break;
             case R.id.sorting_by_name:
-                query = database.child(userUid).orderByChild("title");
+                cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
+                        null,
+                        null,
+                        DatabaseContract.RecipeTable.COLUMN_NAME_TITLE
+                );
                 break;
             case R.id.sorting_by_category:
-                query = database.child(userUid).orderByChild("category");
+                cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
+                        null,
+                        null,
+                        DatabaseContract.RecipeTable.COLUMN_NAME_CATEGORY
+                );
                 break;
         }
-        if (query != null) {
-            recipeListFragment.updateAdapterByQuery(query);
+        if (cursor != null) {
+            recipeListFragment.updateAdapterByCursor(cursor);
         }
         return true;
 
@@ -167,29 +179,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void editItem(String recipeId) {
+    public void editItem(Integer recipeId) {
         Intent recipeUpdateIntent = new Intent(this, RecipeCreateActivity.class);
         recipeUpdateIntent.putExtra("recipeId", recipeId);
         startActivity(recipeUpdateIntent);
     }
 
-    public void deleteItem(String recipeId) {
+    public void deleteItem(Integer recipeId) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
                 .setTitle("Delete")
                 .setIcon(R.drawable.ic_sharp_warning_18)
                 .setMessage("Delete item?")
-                .setPositiveButton("Ok", (dialogInterface, i) -> DatabaseRecipeManager.getInstance().delete(recipeId, (error, ref) ->
-                        Toast.makeText(
-                                MainActivity.this,
-                                "Recipe deleted successfully",
-                                Toast.LENGTH_SHORT)
-                                .show()
-                ))
+                .setPositiveButton("Ok", (dialogInterface, i) -> {
+                    String message = "Recipe deleted successfully";
+                    try {
+                        DatabaseRecipeManager.getInstance(this).delete(recipeId);
+                    } catch (SQLiteDatabaseException e) {
+                        message = e.getMessage();
+                    }
+                    Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                })
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
+
 
     }
 }

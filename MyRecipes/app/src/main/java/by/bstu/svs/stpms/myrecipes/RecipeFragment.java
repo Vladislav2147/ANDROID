@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.recycler.DatabaseRecipeAdapter;
 
 /**
@@ -24,8 +25,7 @@ public class RecipeFragment extends Fragment {
     private int mColumnCount = 1;
 
     private DatabaseRecipeAdapter mAdapter;
-    private String userUid;
-    private DatabaseReference db;
+
     private RecyclerView recipesRecyclerView;
 
     private DatabaseRecipeAdapter.OnClickListener onClickListener;
@@ -69,16 +69,15 @@ public class RecipeFragment extends Fragment {
             } else {
                 recipesRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            userUid = getActivity().getIntent().getStringExtra("user");
-            db = FirebaseDatabase.getInstance().getReference();
-            updateAdapterByQuery(db.child(userUid));
+
+            updateAdapterByCursor(DatabaseRecipeManager.getInstance(getActivity()).getCursorByQuery(null, null, null));
         }
         return view;
     }
 
-    public void updateAdapterByQuery(Cursor query) {
+    public void updateAdapterByCursor(Cursor cursor) {
 
-        mAdapter = new DatabaseRecipeAdapter(query);
+        mAdapter = new DatabaseRecipeAdapter(cursor);
 
         mAdapter.setOnClickListener(onClickListener);
         mAdapter.setOnLongClickListener(onLongClickListener);

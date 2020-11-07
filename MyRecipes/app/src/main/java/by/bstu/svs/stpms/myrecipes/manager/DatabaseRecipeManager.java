@@ -151,4 +151,8 @@ public final class DatabaseRecipeManager {
 
     }
 
+    public Cursor getCursorByQuery(String selection, String[] selectionArgs, String orderBy) {
+        return database.query(DatabaseContract.RecipeTable.TABLE_NAME, null, selection, selectionArgs, null, null, orderBy);
+    }
+
 }

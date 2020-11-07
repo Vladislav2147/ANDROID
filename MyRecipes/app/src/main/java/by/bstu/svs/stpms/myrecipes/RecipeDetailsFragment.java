@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -13,6 +14,7 @@ import java.io.File;
 
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
+import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 /**
@@ -32,7 +34,7 @@ public class RecipeDetailsFragment extends Fragment {
     private static final String ARG_RECIPE_ID = "recipeId";
 
 
-    private String recipeId;
+    private Integer recipeId;
     private DatabaseRecipeManager databaseRecipeManager;
 
     public RecipeDetailsFragment() {
@@ -46,10 +48,10 @@ public class RecipeDetailsFragment extends Fragment {
      * @param recipeId selected recipe identifier.
      * @return A new instance of fragment RecipeDetailsFragment.
      */
-    public static RecipeDetailsFragment newInstance(String recipeId) {
+    public static RecipeDetailsFragment newInstance(Integer recipeId) {
         RecipeDetailsFragment fragment = new RecipeDetailsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_RECIPE_ID, recipeId);
+        args.putSerializable(ARG_RECIPE_ID, recipeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,9 +60,9 @@ public class RecipeDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            recipeId = getArguments().getString(ARG_RECIPE_ID);
+            recipeId = (Integer) getArguments().getSerializable(ARG_RECIPE_ID);
         }
-        databaseRecipeManager = DatabaseRecipeManager.getInstance();
+        databaseRecipeManager = DatabaseRecipeManager.getInstance(getActivity());
 
     }
 
@@ -77,7 +79,11 @@ public class RecipeDetailsFragment extends Fragment {
         stepsTextView = view.findViewById(R.id.steps);
         imageView = view.findViewById(R.id.image);
 
-        databaseRecipeManager.callOnRecipeById(recipeId, this::showRecipe);
+        try {
+            showRecipe(databaseRecipeManager.getById(recipeId));
+        } catch (SQLiteDatabaseException e) {
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
