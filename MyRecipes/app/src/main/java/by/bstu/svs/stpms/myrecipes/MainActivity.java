@@ -114,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
                         DatabaseContract.RecipeTable.COLUMN_NAME_CATEGORY + " COLLATE NOCASE"
                 );
                 break;
+            case R.id.favorite:
+                cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
+                        "is_favorite == 1",
+                        null,
+                        DatabaseContract.RecipeTable.COLUMN_NAME_CATEGORY + " COLLATE NOCASE"
+                );
+                break;
         }
         if (cursor != null) {
             recipeListFragment.updateAdapterByCursor(cursor);
