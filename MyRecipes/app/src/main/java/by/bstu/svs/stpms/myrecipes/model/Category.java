@@ -22,7 +22,7 @@ public enum Category {
     public static Category getEnumFromString(String name) {
 
         for (Category category : values()) {
-            if (category.name().equalsIgnoreCase(name)) return category;
+            if (category.name.equalsIgnoreCase(name)) return category;
         }
         throw new IllegalArgumentException("Category with name " + name + " not found");
 

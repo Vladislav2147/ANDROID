@@ -37,6 +37,7 @@ public final class DatabaseRecipeManager {
         values.put(DatabaseContract.RecipeTable.COLUMN_NAME_PICTURE, recipe.getPicture());
         values.put(DatabaseContract.RecipeTable.COLUMN_NAME_TIME_HOURS, recipe.getTimeToCook().getHours());
         values.put(DatabaseContract.RecipeTable.COLUMN_NAME_TIME_MINUTES, recipe.getTimeToCook().getMinutes());
+        values.put(DatabaseContract.RecipeTable.COLUMN_NAME_IS_FAVORITE, recipe.isFavorite());
 
         if (database.insert(DatabaseContract.RecipeTable.TABLE_NAME, null, values) == -1) {
             throw new SQLiteDatabaseException("insert failed");
@@ -98,6 +99,7 @@ public final class DatabaseRecipeManager {
         values.put(DatabaseContract.RecipeTable.COLUMN_NAME_PICTURE, recipe.getPicture());
         values.put(DatabaseContract.RecipeTable.COLUMN_NAME_TIME_HOURS, recipe.getTimeToCook().getHours());
         values.put(DatabaseContract.RecipeTable.COLUMN_NAME_TIME_MINUTES, recipe.getTimeToCook().getMinutes());
+        values.put(DatabaseContract.RecipeTable.COLUMN_NAME_IS_FAVORITE, recipe.isFavorite());
 
         int updated = database.update(
                 DatabaseContract.RecipeTable.TABLE_NAME,
@@ -138,6 +140,7 @@ public final class DatabaseRecipeManager {
         int picture = cursor.getColumnIndex(DatabaseContract.RecipeTable.COLUMN_NAME_PICTURE);
         int hours = cursor.getColumnIndex(DatabaseContract.RecipeTable.COLUMN_NAME_TIME_HOURS);
         int minutes = cursor.getColumnIndex(DatabaseContract.RecipeTable.COLUMN_NAME_TIME_MINUTES);
+        int isFavorite = cursor.getColumnIndex(DatabaseContract.RecipeTable.COLUMN_NAME_IS_FAVORITE);
 
         recipe.setId(cursor.getInt(id));
         recipe.setTitle(cursor.getString(title));
@@ -146,6 +149,7 @@ public final class DatabaseRecipeManager {
         recipe.setSteps(cursor.getString(steps));
         recipe.setPicture(cursor.getString(picture));
         recipe.setTimeToCook(new Time(cursor.getInt(hours), cursor.getInt(minutes)));
+        recipe.setFavorite(cursor.getInt(isFavorite) > 0);
 
         return recipe;
 

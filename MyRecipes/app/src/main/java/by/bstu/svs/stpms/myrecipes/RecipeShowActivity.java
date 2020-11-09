@@ -1,10 +1,13 @@
 package by.bstu.svs.stpms.myrecipes;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -16,6 +19,8 @@ import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
 public class RecipeShowActivity extends AppCompatActivity {
 
+    private Recipe recipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +28,8 @@ public class RecipeShowActivity extends AppCompatActivity {
 
         Integer recipeId = (Integer) getIntent().getSerializableExtra("recipeId");
         try {
-            showRecipe(DatabaseRecipeManager.getInstance(this).getById(recipeId));
+            recipe = DatabaseRecipeManager.getInstance(this).getById(recipeId);
+            showRecipe(recipe);
         } catch (SQLiteDatabaseException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -50,4 +56,45 @@ public class RecipeShowActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.show_recipe_action_menu, menu);
+        MenuItem item = menu.findItem(R.id.favorite);
+        if (!recipe.isFavorite()) {
+            item.setIcon(R.drawable.ic_baseline_star_border_24);
+        } else if (recipe.isFavorite()) {
+            item.setIcon(R.drawable.ic_baseline_star_24);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.favorite:
+                if (recipe.isFavorite()) {
+                    recipe.setFavorite(false);
+                    item.setIcon(R.drawable.ic_baseline_star_border_24);
+                } else if (!recipe.isFavorite()) {
+                    recipe.setFavorite(true);
+                    item.setIcon(R.drawable.ic_baseline_star_24);
+                }
+        }
+
+        return true;
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            DatabaseRecipeManager.getInstance(this).update(recipe);
+        } catch (SQLiteDatabaseException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -22,7 +22,8 @@ public final class DatabaseContract {
         public static final String COLUMN_NAME_STEPS        = "steps";
         public static final String COLUMN_NAME_PICTURE      = "picture";
         public static final String COLUMN_NAME_TIME_HOURS   = "hours";
-        public static final String COLUMN_NAME_TIME_MINUTES = "minuted";
+        public static final String COLUMN_NAME_TIME_MINUTES = "minutes";
+        public static final String COLUMN_NAME_IS_FAVORITE  = "is_favorite";
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
@@ -33,7 +34,8 @@ public final class DatabaseContract {
                 COLUMN_NAME_STEPS           + TEXT_TYPE + "," +
                 COLUMN_NAME_PICTURE         + TEXT_TYPE + "," +
                 COLUMN_NAME_TIME_HOURS      + INT_TYPE  + "," +
-                COLUMN_NAME_TIME_MINUTES    + INT_TYPE  + " )";
+                COLUMN_NAME_TIME_MINUTES    + INT_TYPE  + "," +
+                COLUMN_NAME_IS_FAVORITE     + INT_TYPE  + " )";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 

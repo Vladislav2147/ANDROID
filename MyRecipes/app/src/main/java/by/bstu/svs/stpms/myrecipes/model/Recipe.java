@@ -18,6 +18,7 @@ public class Recipe implements Serializable {
     private String steps;
     private String picture;
     private Time timeToCook;
+    private boolean isFavorite = false;
 
     public Recipe(Integer id, String title) {
         this.id = id;
