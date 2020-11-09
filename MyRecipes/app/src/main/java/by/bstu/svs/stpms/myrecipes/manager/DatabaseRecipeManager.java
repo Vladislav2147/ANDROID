@@ -10,6 +10,7 @@ import java.util.List;
 
 import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
 import by.bstu.svs.stpms.myrecipes.model.Category;
+import by.bstu.svs.stpms.myrecipes.model.Query;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.model.Time;
 
@@ -155,8 +156,8 @@ public final class DatabaseRecipeManager {
 
     }
 
-    public Cursor getCursorByQuery(String selection, String[] selectionArgs, String orderBy) {
-        return database.query(DatabaseContract.RecipeTable.TABLE_NAME, null, selection, selectionArgs, null, null, orderBy);
+    public Cursor getCursorByQuery(Query query) {
+        return database.query(DatabaseContract.RecipeTable.TABLE_NAME, null, query.getSelection(), query.getSelectionArgs(), null, null, query.getOrderBy());
     }
 
 }

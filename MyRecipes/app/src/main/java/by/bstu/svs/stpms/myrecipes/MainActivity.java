@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,11 +26,14 @@ import androidx.fragment.app.FragmentManager;
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseContract;
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
+import by.bstu.svs.stpms.myrecipes.model.Query;
 
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout listContainer;
     private FrameLayout detailsContainer;
+    private ProgressBar progressBar;
+    private LinearLayout ll_content;
 
 
     private RecipeFragment recipeListFragment;
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         listContainer = findViewById(R.id.recipe_container);
         detailsContainer = findViewById(R.id.recipe_details_container);
+        progressBar = findViewById(R.id.loading);
+        ll_content = findViewById(R.id.container);
 
         fragmentManager =  getSupportFragmentManager();
         recipeListFragment = new RecipeFragment();
@@ -52,6 +60,22 @@ public class MainActivity extends AppCompatActivity {
 
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
+//        Recipe recipe;
+//        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance(this);
+//        for (int i = 0; i < 1000; i++) {
+//            recipe = new Recipe();
+//            recipe.setTitle("Recipe " + i);
+//            recipe.setCategory(Category.values()[i % Category.values().length]);
+//            recipe.setSteps("" + i + i + i);
+//            recipe.setTimeToCook(new Time(1,59));
+//            recipe.setFavorite(i % 2 == 0);
+//            recipe.setPicture("IMG_20201109_181644.jpg");
+//            try {
+//                manager.add(recipe);
+//            } catch (SQLiteDatabaseException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
     }
 
@@ -62,26 +86,26 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnCloseListener(() -> {
-            recipeListFragment.updateAdapterByCursor(getDefaultCursor());
+            new SQLiteAsyncTask().execute(new Query());
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
                 queryText = "%" + queryText + "%";
-                Cursor cursor = DatabaseRecipeManager.getInstance(MainActivity.this).getCursorByQuery(
+                new SQLiteAsyncTask().execute(new Query(
                         "title like ?",
                         new String[] {queryText},
                         null
-                );
-                recipeListFragment.updateAdapterByCursor(cursor);
+                ));
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() == 0) {
-                    recipeListFragment.updateAdapterByCursor(getDefaultCursor());
+                    Cursor cursor = DatabaseRecipeManager.getInstance(MainActivity.this).getCursorByQuery(new Query());
+                    recipeListFragment.updateAdapterByCursor(cursor);
                 }
                 return false;
             }
@@ -91,40 +115,42 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Query query = null;
 
-        Cursor cursor = null;
         switch (item.getItemId()) {
             case R.id.scroll_up:
                 recipeListFragment.getRecipesRecyclerView().smoothScrollToPosition(0);
                 break;
             case R.id.sorting_default:
-                cursor = getDefaultCursor();
+                query = new Query();
                 break;
             case R.id.sorting_by_name:
-                cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
+                query = new Query(
                         null,
                         null,
                         DatabaseContract.RecipeTable.COLUMN_NAME_TITLE + " COLLATE NOCASE"
                 );
                 break;
             case R.id.sorting_by_category:
-                cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
+               query = new Query(
                         null,
                         null,
                         DatabaseContract.RecipeTable.COLUMN_NAME_CATEGORY + " COLLATE NOCASE"
                 );
                 break;
             case R.id.favorite:
-                cursor = DatabaseRecipeManager.getInstance(this).getCursorByQuery(
+                query = new Query(
                         "is_favorite == 1",
                         null,
-                        DatabaseContract.RecipeTable.COLUMN_NAME_CATEGORY + " COLLATE NOCASE"
+                        null
                 );
                 break;
         }
-        if (cursor != null) {
-            recipeListFragment.updateAdapterByCursor(cursor);
+
+        if (query != null) {
+            new SQLiteAsyncTask().execute(query);
         }
+
         return true;
 
     }
@@ -196,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                     String message = "Recipe deleted successfully";
                     try {
                         DatabaseRecipeManager.getInstance(this).delete(recipeId);
-                        recipeListFragment.updateAdapterByCursor(getDefaultCursor());
+                        new SQLiteAsyncTask().execute(new Query());
                     } catch (SQLiteDatabaseException e) {
                         message = e.getMessage();
                     }
@@ -212,15 +238,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        recipeListFragment.updateAdapterByCursor(getDefaultCursor());
+        new SQLiteAsyncTask().execute(new Query());
     }
 
-    private Cursor getDefaultCursor() {
-        return DatabaseRecipeManager.getInstance(this).getCursorByQuery(
-                null,
-                null,
-                null
-        );
+    public class SQLiteAsyncTask extends AsyncTask<Query, Void, Cursor> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            ll_content.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Cursor doInBackground(Query... queries) {
+//            try {
+//                TimeUnit.SECONDS.sleep(2);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            return DatabaseRecipeManager.getInstance(MainActivity.this).getCursorByQuery(queries[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            ll_content.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+            recipeListFragment.updateAdapterByCursor(cursor);
+        }
     }
 
 }

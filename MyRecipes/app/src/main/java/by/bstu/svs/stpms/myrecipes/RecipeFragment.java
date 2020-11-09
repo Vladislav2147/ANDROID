@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
+import by.bstu.svs.stpms.myrecipes.model.Query;
 import by.bstu.svs.stpms.myrecipes.recycler.DatabaseRecipeAdapter;
 
 /**
@@ -70,7 +71,7 @@ public class RecipeFragment extends Fragment {
                 recipesRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            updateAdapterByCursor(DatabaseRecipeManager.getInstance(getActivity()).getCursorByQuery(null, null, null));
+            updateAdapterByCursor(DatabaseRecipeManager.getInstance(getActivity()).getCursorByQuery(new Query()));
         }
         return view;
     }
