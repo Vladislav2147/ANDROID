@@ -60,22 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
-//        Recipe recipe;
-//        DatabaseRecipeManager manager = DatabaseRecipeManager.getInstance(this);
-//        for (int i = 0; i < 1000; i++) {
-//            recipe = new Recipe();
-//            recipe.setTitle("Recipe " + i);
-//            recipe.setCategory(Category.values()[i % Category.values().length]);
-//            recipe.setSteps("" + i + i + i);
-//            recipe.setTimeToCook(new Time(1,59));
-//            recipe.setFavorite(i % 2 == 0);
-//            recipe.setPicture("IMG_20201109_181644.jpg");
-//            try {
-//                manager.add(recipe);
-//            } catch (SQLiteDatabaseException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
     }
 
