@@ -22,8 +22,10 @@ import by.bstu.svs.stpms.myrecipes.recycler.DatabaseRecipeAdapter;
 public class RecipeFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_RECIPE_LAYOUT_ID = "recipe-layout-id";
 
     private int mColumnCount = 1;
+    private int mRecipeLayoutId;
 
     private DatabaseRecipeAdapter mAdapter;
 
@@ -40,10 +42,11 @@ public class RecipeFragment extends Fragment {
     }
     
     @SuppressWarnings("unused")
-    public static RecipeFragment newInstance(int columnCount) {
+    public static RecipeFragment newInstance(int columnCount, int recipeLayoutId) {
         RecipeFragment fragment = new RecipeFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putInt(ARG_RECIPE_LAYOUT_ID, recipeLayoutId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,6 +57,7 @@ public class RecipeFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mRecipeLayoutId = getArguments().getInt(ARG_RECIPE_LAYOUT_ID);
         }
     }
 
@@ -78,7 +82,7 @@ public class RecipeFragment extends Fragment {
 
     public void updateAdapterByCursor(Cursor cursor) {
 
-        mAdapter = new DatabaseRecipeAdapter(cursor);
+        mAdapter = new DatabaseRecipeAdapter(cursor, mRecipeLayoutId);
         mAdapter.setContext(getActivity());
         mAdapter.setOnClickListener(onClickListener);
         mAdapter.setOnLongClickListener(onLongClickListener);

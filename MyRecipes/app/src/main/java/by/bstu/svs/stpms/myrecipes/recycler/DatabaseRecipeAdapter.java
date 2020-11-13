@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 
-import by.bstu.svs.stpms.myrecipes.R;
 import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
@@ -30,10 +29,12 @@ public class DatabaseRecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder
 
     private Cursor cursor;
     private Context context;
+    private int recipeLayoutId;
 
 
-    public DatabaseRecipeAdapter(Cursor cursor) {
+    public DatabaseRecipeAdapter(Cursor cursor, int recipeLayoutId) {
         this.cursor = cursor;
+        this.recipeLayoutId = recipeLayoutId;
     }
 
     public void setOnClickListener(OnClickListener onClickListener) {
@@ -62,7 +63,7 @@ public class DatabaseRecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.fragment_recipe, parent, false);
+                .inflate(recipeLayoutId, parent, false);
         File file = parent.getContext().getFilesDir();
         return new RecipeViewHolder(view, file);
     }

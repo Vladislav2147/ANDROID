@@ -51,12 +51,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.loading);
         ll_content = findViewById(R.id.container);
 
-        fragmentManager =  getSupportFragmentManager();
-        recipeListFragment = new RecipeFragment();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.recipe_container, recipeListFragment)
-                .commit();
+        fragmentManager = getSupportFragmentManager();
 
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
@@ -145,8 +140,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initShowingDetails(int orientation) {
+
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // In landscape
+            recipeListFragment = RecipeFragment.newInstance(1, R.layout.fragment_recipe);
+
             detailsContainer.setVisibility(View.VISIBLE);
 
             recipeListFragment.setOnClickListener(recipe -> {
@@ -161,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             // In portrait
+            recipeListFragment = RecipeFragment.newInstance(2, R.layout.fragment_recipe_2);
+
             detailsContainer.setVisibility(View.GONE);
             recipeListFragment.setOnClickListener(recipe -> {
                 Intent recipeIntent = new Intent(this, RecipeShowActivity.class);
@@ -168,6 +168,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(recipeIntent);
             });
         }
+
+
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.recipe_container, recipeListFragment)
+                .commit();
 
         recipeListFragment.setOnLongClickListener((recipe, view) -> {
 
@@ -235,11 +241,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Cursor doInBackground(Query... queries) {
-//            try {
-//                TimeUnit.SECONDS.sleep(2);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             return DatabaseRecipeManager.getInstance(MainActivity.this).getCursorByQuery(queries[0]);
         }
 
