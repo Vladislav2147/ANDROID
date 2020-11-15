@@ -5,9 +5,24 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="itemBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@color/activityBackground</item>
+        <item name="itemBackgroundColor">@color/itemBackground</item>
+        <item name="android:itemBackground">@color/itemBackground</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="colorAccent">@color/button</item>
     </style>
 
     <style name="MarginStyle">
         <item name="android:layout_margin">8dp</item>
     </style>
+
+    <declare-styleable name="bg">
+        <attr name="itemBackgroundColor" format="color"/>
+    </declare-styleable>
+
+
 </resources>
