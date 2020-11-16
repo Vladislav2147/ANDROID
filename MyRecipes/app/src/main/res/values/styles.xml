@@ -8,7 +8,7 @@
         <item name="itemBackgroundColor">@color/white</item>
     </style>
 
-    <style name="CustomTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@color/activityBackground</item>
         <item name="itemBackgroundColor">@color/itemBackground</item>
         <item name="android:itemBackground">@color/itemBackground</item>
