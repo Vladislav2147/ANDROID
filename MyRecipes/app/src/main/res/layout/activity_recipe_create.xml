@@ -31,11 +31,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/category"/>
+
             <Spinner
-                style="@style/MarginStyle"
                 android:id="@+id/category"
+                style="@style/MarginStyle"
                 android:layout_width="match_parent"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:popupBackground="?attr/itemBackgroundColor"/>
 
             <EditText
                 android:id="@+id/ingredients"
