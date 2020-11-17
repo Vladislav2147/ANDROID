@@ -6,5 +6,6 @@
     <color name="itemBackground">#353535</color>
     <color name="activityBackground">#535353</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="button">#B18E11</color>
 </resources>

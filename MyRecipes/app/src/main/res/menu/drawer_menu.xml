@@ -2,7 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title=""
-        android:actionLayout="@layout/item"
+        android:id="@+id/recipe_nav"
+        android:title="@string/recipes"
+        android:icon="@drawable/ic_sharp_fastfood_24"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/setting_nav"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_sharp_settings_24"
         app:showAsAction="always" />
 </menu>

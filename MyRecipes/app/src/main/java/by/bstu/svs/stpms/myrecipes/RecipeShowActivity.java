@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
@@ -17,7 +16,7 @@ import by.bstu.svs.stpms.myrecipes.manager.ImageManager;
 import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
 import by.bstu.svs.stpms.myrecipes.model.Recipe;
 
-public class RecipeShowActivity extends AppCompatActivity {
+public class RecipeShowActivity extends BaseActivity {
 
     private Recipe recipe;
 

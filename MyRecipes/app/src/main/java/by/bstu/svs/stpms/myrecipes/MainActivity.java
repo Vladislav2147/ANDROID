@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -33,7 +32,7 @@ import by.bstu.svs.stpms.myrecipes.manager.DatabaseRecipeManager;
 import by.bstu.svs.stpms.myrecipes.manager.exception.SQLiteDatabaseException;
 import by.bstu.svs.stpms.myrecipes.model.Query;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private FrameLayout listContainer;
     private FrameLayout detailsContainer;
@@ -61,9 +60,26 @@ public class MainActivity extends AppCompatActivity {
         int orientation = getResources().getConfiguration().orientation;
         initShowingDetails(orientation);
 
+        initDrawer();
+
+    }
+
+    private void initDrawer() {
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.getMenu().getItem(0).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.recipe_nav:
+                    break;
+                case R.id.setting_nav:
+                    Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+            return true;
+        });
 
         setSupportActionBar(toolbar);
 
@@ -77,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
     }
 
     @Override

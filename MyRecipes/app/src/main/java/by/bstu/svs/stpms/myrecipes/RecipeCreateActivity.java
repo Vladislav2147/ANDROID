@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.io.File;
@@ -33,7 +32,7 @@ import by.bstu.svs.stpms.myrecipes.model.Recipe;
 import by.bstu.svs.stpms.myrecipes.model.Time;
 import by.bstu.svs.stpms.myrecipes.model.TimeFormatException;
 
-public class RecipeCreateActivity extends AppCompatActivity {
+public class RecipeCreateActivity extends BaseActivity {
 
     private EditText titleEditText;
     private EditText ingredientsEditText;
