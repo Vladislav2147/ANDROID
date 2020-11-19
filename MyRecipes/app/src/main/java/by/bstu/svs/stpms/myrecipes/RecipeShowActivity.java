@@ -1,13 +1,11 @@
 package by.bstu.svs.stpms.myrecipes;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 
@@ -32,6 +30,7 @@ public class RecipeShowActivity extends BaseActivity {
         } catch (SQLiteDatabaseException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void showRecipe(Recipe recipe) {
@@ -41,6 +40,24 @@ public class RecipeShowActivity extends BaseActivity {
         TextView ingredientsTextView = findViewById(R.id.ingredients);
         TextView stepsTextView = findViewById(R.id.steps);
         ImageView imageView = findViewById(R.id.image);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        if (!recipe.isFavorite()) {
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_star_border_24, getTheme()));
+        } else if (recipe.isFavorite()) {
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_star_24, getTheme()));
+        }
+
+        fab.setOnClickListener(view -> {
+            if (recipe.isFavorite()) {
+                recipe.setFavorite(false);
+                fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_star_border_24, getTheme()));
+            } else if (!recipe.isFavorite()) {
+                recipe.setFavorite(true);
+                fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_star_24, getTheme()));
+            }
+        });
 
         titleTextView.setText(recipe.getTitle());
         categoryTextView.setText(recipe.getCategory().getName());
@@ -52,38 +69,6 @@ public class RecipeShowActivity extends BaseActivity {
             File image = new File(super.getFilesDir().getAbsolutePath() + "/images", recipe.getPicture());
             ImageManager.getBitMapFromFile(image).ifPresent(imageView::setImageBitmap);
         }
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.show_recipe_action_menu, menu);
-        MenuItem item = menu.findItem(R.id.favorite);
-        if (!recipe.isFavorite()) {
-            item.setIcon(R.drawable.ic_baseline_star_border_24);
-        } else if (recipe.isFavorite()) {
-            item.setIcon(R.drawable.ic_baseline_star_24);
-        }
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.favorite:
-                if (recipe.isFavorite()) {
-                    recipe.setFavorite(false);
-                    item.setIcon(R.drawable.ic_baseline_star_border_24);
-                } else if (!recipe.isFavorite()) {
-                    recipe.setFavorite(true);
-                    item.setIcon(R.drawable.ic_baseline_star_24);
-                }
-        }
-
-        return true;
 
     }
 
