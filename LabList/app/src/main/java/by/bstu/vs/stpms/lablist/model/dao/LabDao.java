@@ -1,5 +1,6 @@
 package by.bstu.vs.stpms.lablist.model.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,11 +16,8 @@ public interface LabDao {
     @Insert
     void insert(Lab lab);
 
-    @Query("SELECT * FROM lab")
-    List<Lab> getAll();
-
     @Query("SELECT * FROM lab WHERE id == :id")
-    Lab getById(int id);
+    LiveData<Lab> getById(int id);
 
     @Delete
     void delete(Lab lab);
@@ -28,9 +26,9 @@ public interface LabDao {
     void update(Lab lab);
 
     @Query("SELECT * FROM lab WHERE subject_id == :subjectId")
-    List<Lab> getLabsBySubjectId(int subjectId);
+    LiveData<List<Lab>> getLabsBySubjectId(int subjectId);
 
     @Query("SELECT * FROM lab WHERE subject_id == :subjectId AND is_passed == :isPassed")
-    List<Lab> getLabsByStateAndSubjectId(boolean isPassed, int subjectId);
+    LiveData<List<Lab>> getLabsByStateAndSubjectId(boolean isPassed, int subjectId);
 
 }

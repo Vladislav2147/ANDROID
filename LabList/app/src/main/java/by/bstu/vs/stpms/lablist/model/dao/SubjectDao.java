@@ -1,5 +1,6 @@
 package by.bstu.vs.stpms.lablist.model.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,11 +16,8 @@ public interface SubjectDao {
     @Insert
     void insert(Subject subject);
 
-    @Query("SELECT * FROM subject")
-    List<Subject> getAll();
-
     @Query("SELECT * FROM subject WHERE name == :name")
-    Subject getByName(String name);
+    LiveData<Subject> getByName(String name);
 
     @Delete
     void delete(Subject subject);
@@ -28,5 +26,5 @@ public interface SubjectDao {
     void update(Subject subject);
 
     @Query("SELECT * FROM subject WHERE term_id == :id")
-    List<Subject> getAllByTermId(int id);
+    LiveData<List<Subject>> getAllByTermId(int id);
 }

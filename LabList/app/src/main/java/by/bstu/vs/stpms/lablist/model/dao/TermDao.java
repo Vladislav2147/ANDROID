@@ -1,5 +1,6 @@
 package by.bstu.vs.stpms.lablist.model.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,10 +17,10 @@ public interface TermDao {
     void insert(Term term);
 
     @Query("SELECT * FROM term ORDER BY course DESC, semester DESC")
-    List<Term> getAll();
+    LiveData<List<Term>> getAll();
 
     @Query("SELECT * FROM term WHERE id == :id")
-    Term getById(int id);
+    LiveData<Term> getById(int id);
 
     @Delete
     void delete(Term term);
