@@ -20,7 +20,7 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(tableName = "subject")
 public class Subject {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     @NonNull
     private String name;

@@ -1,7 +1,6 @@
 package by.bstu.vs.stpms.lablist;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,10 +14,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import by.bstu.vs.stpms.lablist.model.LabDatabase;
-import by.bstu.vs.stpms.lablist.model.entity.Subject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,14 +26,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        LabDatabase db = LabDatabase.getDatabase(this);
-//        db.getSubjectDao().insertAll(new Subject("db1", 1, 1));
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-        
+
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
 

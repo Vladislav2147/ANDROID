@@ -17,7 +17,7 @@ import lombok.Setter;
 @Entity(tableName = "term")
 public class Term {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int course;
     private int semester;

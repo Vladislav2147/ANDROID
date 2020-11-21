@@ -16,8 +16,8 @@ public interface SubjectDao {
     @Insert
     void insert(Subject subject);
 
-    @Query("SELECT * FROM subject WHERE name == :name")
-    LiveData<Subject> getByName(String name);
+    @Query("SELECT * FROM subject WHERE id == :id")
+    LiveData<Subject> getById(int id);
 
     @Delete
     void delete(Subject subject);
