@@ -15,6 +15,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
+
+import by.bstu.vs.stpms.lablist.model.LabDatabase;
+import by.bstu.vs.stpms.lablist.model.entity.Subject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        LabDatabase db = Room.databaseBuilder(getApplicationContext(),
+                LabDatabase.class, "lab_database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+//        db.getSubjectDao().insertAll(new Subject("db1", 1, 1));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -40,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setDrawerLayout(drawer)
+                .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
