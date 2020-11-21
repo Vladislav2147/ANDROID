@@ -18,12 +18,19 @@ public interface LabDao {
     @Query("SELECT * FROM lab")
     List<Lab> getAll();
 
-    @Query("SELECT * FROM lab WHERE name == :name")
-    Lab getByName(String name);
+    @Query("SELECT * FROM lab WHERE id == :id")
+    Lab getById(int id);
 
     @Delete
     void delete(Lab lab);
 
     @Update
     void update(Lab lab);
+
+    @Query("SELECT * FROM lab WHERE subject_id == :subjectId")
+    List<Lab> getLabsBySubjectId(int subjectId);
+
+    @Query("SELECT * FROM lab WHERE subject_id == :subjectId AND is_passed == :isPassed")
+    List<Lab> getLabsByStateAndSubjectId(boolean isPassed, int subjectId);
+
 }

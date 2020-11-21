@@ -18,20 +18,19 @@ import static androidx.room.ForeignKey.CASCADE;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(tableName = "subject")
-@ForeignKey(
-        entity = Term.class,
-        parentColumns = {"course", "semester"},
-        childColumns = {"course_id", "semester_id"},
-        onUpdate = CASCADE, onDelete = CASCADE)
 public class Subject {
 
-    @NonNull
     @PrimaryKey
+    private int id;
+    @NonNull
     private String name;
-    @ColumnInfo(name = "course_id")
-    private int courseId;
-    @ColumnInfo(name = "semester_id")
-    private int semesterId;
-
+    @ForeignKey(
+            entity = Term.class,
+            parentColumns = "id",
+            childColumns = "term_id",
+            onUpdate = CASCADE, onDelete = CASCADE
+    )
+    @ColumnInfo(name = "term_id")
+    private int termId;
 
 }

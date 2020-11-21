@@ -18,8 +18,8 @@ public interface TermDao {
     @Query("SELECT * FROM term ORDER BY course DESC, semester DESC")
     List<Term> getAll();
 
-    @Query("SELECT * FROM term WHERE course == :course and semester == :semester")
-    Term getByCourseAndSemester(int course, int semester);
+    @Query("SELECT * FROM term WHERE id == :id")
+    Term getById(int id);
 
     @Delete
     void delete(Term term);

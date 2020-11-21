@@ -26,4 +26,7 @@ public interface SubjectDao {
 
     @Update
     void update(Subject subject);
+
+    @Query("SELECT * FROM subject WHERE term_id == :id")
+    List<Subject> getAllByTermId(int id);
 }

@@ -21,17 +21,20 @@ import static androidx.room.ForeignKey.CASCADE;
 public class Lab {
 
     @PrimaryKey
+    private int id;
+    @NonNull
     private String name;
     @ForeignKey(
             entity = Subject.class,
-            parentColumns = "name",
-            childColumns = "subject_name",
+            parentColumns = "id",
+            childColumns = "subject_id",
             onUpdate = CASCADE, onDelete = CASCADE
     )
     @NonNull
-    private String subject_name;
-    @ColumnInfo(name = "task_reference")
-    private String taskReference;
+    @ColumnInfo(name = "subject_id")
+    private String subjectId;
+    @ColumnInfo(name = "task_file_path")
+    private String taskFilePath;
     @ColumnInfo(name = "code_reference")
     private String codeReference;
     private String screenshot;
