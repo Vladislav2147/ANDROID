@@ -35,5 +35,8 @@ public class Lab {
     @ColumnInfo(name = "code_reference")
     private String codeReference;
     private String screenshot;
+    private Integer mark;
+    @ColumnInfo(name = "is_passed")
+    private boolean isPassed;
 
 }

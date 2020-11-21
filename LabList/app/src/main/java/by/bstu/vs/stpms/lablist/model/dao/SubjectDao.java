@@ -18,6 +18,9 @@ public interface SubjectDao {
     @Query("SELECT * FROM subject")
     List<Subject> getAll();
 
+    @Query("SELECT * FROM subject WHERE name == :name")
+    Subject getByName(String name);
+
     @Delete
     void delete(Subject subject);
 
