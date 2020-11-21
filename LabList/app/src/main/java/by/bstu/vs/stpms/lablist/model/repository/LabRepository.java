@@ -8,12 +8,7 @@ import java.util.List;
 
 import by.bstu.vs.stpms.lablist.model.LabDatabase;
 import by.bstu.vs.stpms.lablist.model.dao.LabDao;
-import by.bstu.vs.stpms.lablist.model.dao.SubjectDao;
-import by.bstu.vs.stpms.lablist.model.dao.TermDao;
 import by.bstu.vs.stpms.lablist.model.entity.Lab;
-import by.bstu.vs.stpms.lablist.model.entity.Subject;
-import by.bstu.vs.stpms.lablist.model.entity.Term;
-import lombok.Getter;
 
 public class LabRepository {
 
