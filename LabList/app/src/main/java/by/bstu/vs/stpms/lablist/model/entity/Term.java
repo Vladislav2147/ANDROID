@@ -18,7 +18,7 @@ import lombok.Setter;
 public class Term {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
     private int course;
     private int semester;
 

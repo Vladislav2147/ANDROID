@@ -18,6 +18,7 @@ import by.bstu.vs.stpms.lablist.model.entity.Term;
 
 @Database(entities = {Lab.class, Subject.class, Term.class}, version = 3)
 public abstract class LabDatabase extends RoomDatabase {
+
     public abstract LabDao getLabDao();
     public abstract SubjectDao getSubjectDao();
     public abstract TermDao getTermDao();

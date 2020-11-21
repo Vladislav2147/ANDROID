@@ -21,7 +21,7 @@ import static androidx.room.ForeignKey.CASCADE;
 public class Subject {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
     @NonNull
     private String name;
     @ForeignKey(
