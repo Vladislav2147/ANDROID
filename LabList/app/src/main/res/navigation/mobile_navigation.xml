@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="by.bstu.vs.stpms.lablist.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="by.bstu.vs.stpms.lablist.ui.term.TermFragment"
+        android:label="@string/menu_term"
+        tools:layout="@layout/fragment_term" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="by.bstu.vs.stpms.lablist.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:name="by.bstu.vs.stpms.lablist.ui.subject.SubjectFragment"
+        android:label="@string/menu_subject"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="by.bstu.vs.stpms.lablist.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:name="by.bstu.vs.stpms.lablist.ui.lab.LabFragment"
+        android:label="@string/menu_lab"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>

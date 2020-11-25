@@ -1,14 +1,14 @@
-package by.bstu.vs.stpms.lablist.ui.gallery;
+package by.bstu.vs.stpms.lablist.ui.subject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class SubjectViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public SubjectViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");
     }

@@ -25,7 +25,7 @@ public class Term {
     @NotNull
     @Override
     public String toString() {
-        return course + " course " + semester + "semester";
+        return course + " Course " + semester + " Semester";
     }
 
 }
