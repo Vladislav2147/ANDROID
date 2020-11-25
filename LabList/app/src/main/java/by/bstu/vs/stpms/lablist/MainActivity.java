@@ -1,7 +1,6 @@
 package by.bstu.vs.stpms.lablist;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,9 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import by.bstu.vs.stpms.lablist.model.entity.Term;
-import by.bstu.vs.stpms.lablist.model.repository.TermRepository;
-
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -30,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-
-        TermRepository repository = new TermRepository(getApplication());
-        repository.insertTerm(new Term());
-        Log.d("term1", "onCreate: ");
 
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());

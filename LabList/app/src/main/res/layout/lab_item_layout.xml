@@ -10,7 +10,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,21 +21,21 @@
                 android:id="@+id/subject_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@{lab.name, default=@string/default_lab}"
                 android:textSize="@dimen/large_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/right_arrow"
+                app:layout_constraintEnd_toStartOf="@+id/is_passed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:lines="1"
-                android:ellipsize="end"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/right_arrow"
+            <CheckBox
+                android:id="@+id/is_passed"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_sharp_keyboard_arrow_right_32"
+                android:layout_height="wrap_content"
+                android:checked="@{lab.passed, default=false}"
+                android:includeFontPadding="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
