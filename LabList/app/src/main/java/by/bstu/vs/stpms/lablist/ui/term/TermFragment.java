@@ -11,11 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-
 import by.bstu.vs.stpms.lablist.R;
-import by.bstu.vs.stpms.lablist.model.entity.Term;
-import by.bstu.vs.stpms.lablist.ui.recyclerview.TermAdapter;
 
 public class TermFragment extends Fragment {
 
@@ -28,13 +24,14 @@ public class TermFragment extends Fragment {
         termViewModel =
                 new ViewModelProvider(this).get(TermViewModel.class);
         View root = inflater.inflate(R.layout.fragment_term, container, false);
+
+        termAdapter = new TermAdapter();
+        termViewModel.getTerms().observe(getViewLifecycleOwner(), terms -> {
+            termAdapter.setTerms(terms);
+        });
         recyclerView = root.findViewById(R.id.rv_term);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Term> terms = new ArrayList<>();
-        terms.add(new Term(1,1,1));
-        terms.add(new Term(2,1,2));
-        terms.add(new Term(3,2,1));
-        recyclerView.setAdapter(new TermAdapter(terms));
+        recyclerView.setAdapter(termAdapter);
 
         return root;
     }

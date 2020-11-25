@@ -1,4 +1,4 @@
-package by.bstu.vs.stpms.lablist.ui.recyclerview;
+package by.bstu.vs.stpms.lablist.ui.subject;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,42 +8,44 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import by.bstu.vs.stpms.lablist.databinding.LabItemLayoutBinding;
-import by.bstu.vs.stpms.lablist.model.entity.Lab;
+import by.bstu.vs.stpms.lablist.databinding.SubjectItemLayoutBinding;
+import by.bstu.vs.stpms.lablist.model.entity.Subject;
+import lombok.Getter;
 
-public class LabAdapter extends RecyclerView.Adapter<LabAdapter.ViewHolder> {
+public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
+    @Getter
+    List<Subject> subjects;
 
-    ArrayList<Lab> labArrayList;
-
-    public LabAdapter(ArrayList<Lab> labArrayList) {
-        this.labArrayList = labArrayList;
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        LabItemLayoutBinding binding = LabItemLayoutBinding.inflate(inflater, parent, false);
+        SubjectItemLayoutBinding binding = SubjectItemLayoutBinding.inflate(inflater, parent, false);
         return new ViewHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Lab lab = labArrayList.get(position);
-        holder.binding.setLab(lab);
+        Subject subject = subjects.get(position);
+        holder.binding.setSubject(subject);
 
     }
 
     @Override
     public int getItemCount() {
-        return labArrayList.size();
+        return subjects == null? 0 : subjects.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        LabItemLayoutBinding binding;
+        SubjectItemLayoutBinding binding;
 
         public ViewHolder(View v) {
             super(v);

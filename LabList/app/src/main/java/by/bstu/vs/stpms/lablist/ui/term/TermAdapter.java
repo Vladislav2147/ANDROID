@@ -1,4 +1,4 @@
-package by.bstu.vs.stpms.lablist.ui.recyclerview;
+package by.bstu.vs.stpms.lablist.ui.term;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,42 +8,44 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import by.bstu.vs.stpms.lablist.databinding.SubjectItemLayoutBinding;
-import by.bstu.vs.stpms.lablist.model.entity.Subject;
+import by.bstu.vs.stpms.lablist.databinding.TermItemLayoutBinding;
+import by.bstu.vs.stpms.lablist.model.entity.Term;
+import lombok.Getter;
 
-public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
+public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
+    @Getter
+    List<Term> terms;
 
-    ArrayList<Subject> subjectArrayList;
-
-    public SubjectAdapter(ArrayList<Subject> subjectArrayList) {
-        this.subjectArrayList = subjectArrayList;
+    public void setTerms(List<Term> terms) {
+        this.terms = terms;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        SubjectItemLayoutBinding binding = SubjectItemLayoutBinding.inflate(inflater, parent, false);
+        TermItemLayoutBinding binding = TermItemLayoutBinding.inflate(inflater, parent, false);
         return new ViewHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Subject subject = subjectArrayList.get(position);
-        holder.binding.setSubject(subject);
+        Term term = terms.get(position);
+        holder.binding.setTerm(term);
 
     }
 
     @Override
     public int getItemCount() {
-        return subjectArrayList.size();
+        return terms == null ? 0 : terms.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        SubjectItemLayoutBinding binding;
+        TermItemLayoutBinding binding;
 
         public ViewHolder(View v) {
             super(v);
