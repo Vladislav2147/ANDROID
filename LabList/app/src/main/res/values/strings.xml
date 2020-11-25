@@ -13,4 +13,8 @@
     <string name="default_term">X course X semester</string>
     <string name="default_subject">Subject name</string>
     <string name="default_lab">Lab name</string>
+    <string name="submit">Submit</string>
+    <string name="course">Course</string>
+    <string name="semester">Semester</string>
+    <string name="invalid">Invalid</string>
 </resources>

@@ -1,6 +1,7 @@
 package by.bstu.vs.stpms.lablist.model.entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +15,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(tableName = "term")
+@Entity(tableName = "term",
+        indices = {@Index(value = {"course", "semester"},
+        unique = true)})
 public class Term {
 
     @PrimaryKey(autoGenerate = true)
