@@ -1,19 +1,28 @@
 package by.bstu.vs.stpms.lablist.ui.subject;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class SubjectViewModel extends ViewModel {
+import java.util.List;
 
-    private MutableLiveData<String> mText;
+import by.bstu.vs.stpms.lablist.model.entity.Subject;
+import by.bstu.vs.stpms.lablist.model.repository.SubjectRepository;
 
-    public SubjectViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+public class SubjectViewModel extends AndroidViewModel {
+
+    private LiveData<List<Subject>> subjects;
+    private SubjectRepository repository;
+
+    public SubjectViewModel(Application application) {
+        super(application);
+        repository = new SubjectRepository(application);
+        subjects = repository.getSubjectsByTermId(0);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Subject>> getSubjectsByTermId(int id) {
+        subjects = repository.getSubjectsByTermId(id);
+        return subjects;
     }
 }

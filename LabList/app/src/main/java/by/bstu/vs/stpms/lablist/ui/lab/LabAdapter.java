@@ -13,12 +13,25 @@ import java.util.List;
 import by.bstu.vs.stpms.lablist.databinding.LabItemLayoutBinding;
 import by.bstu.vs.stpms.lablist.model.entity.Lab;
 import lombok.Getter;
+import lombok.Setter;
 
 public class LabAdapter extends RecyclerView.Adapter<LabAdapter.ViewHolder> {
+    public interface OnClickListener {
+        void onVariantClick(Lab lab);
+    }
+
+    public interface OnLongClickListener {
+        boolean onLongVariantClick(Lab lab, View view);
+    }
+
     @Getter
     List<Lab> labs;
+    @Setter
+    private OnClickListener onClickListener;
+    @Setter
+    private OnLongClickListener onLongClickListener;
 
-    public void setLabs(List<Lab> labs) {
+    public void setSubjects(List<Lab> labs) {
         this.labs = labs;
         notifyDataSetChanged();
     }
@@ -35,6 +48,12 @@ public class LabAdapter extends RecyclerView.Adapter<LabAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Lab lab = labs.get(position);
         holder.binding.setLab(lab);
+        if (onClickListener != null) {
+            holder.itemView.setOnClickListener(view -> onClickListener.onVariantClick(lab));
+        }
+        if (onLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(view -> onLongClickListener.onLongVariantClick(lab, view));
+        }
 
     }
 

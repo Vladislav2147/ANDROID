@@ -20,7 +20,7 @@ public class LabFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         labViewModel =
                 new ViewModelProvider(this).get(LabViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        View root = inflater.inflate(R.layout.fragment_lab, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
         labViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
         return root;

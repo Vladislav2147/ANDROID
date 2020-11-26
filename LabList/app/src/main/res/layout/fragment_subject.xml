@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.term.TermFragment">
+    tools:context=".ui.subject.SubjectFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_term"
+        android:id="@+id/rv_subject"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteException;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablist.model.LabDatabase;
@@ -39,10 +38,10 @@ public class TermRepository {
     }
 
     public void updateTerm(Term term, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(termDao, onError, (BiConsumer<TermDao, Term>) TermDao::update).execute(term);
+        new DBAsyncTask<>(termDao, onError, TermDao::update).execute(term);
     }
 
     public void deleteTerm(Term term, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(termDao, onError, (BiConsumer<TermDao, Term>) TermDao::delete).execute(term);
+        new DBAsyncTask<>(termDao, onError, TermDao::delete).execute(term);
     }
 }

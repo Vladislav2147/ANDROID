@@ -13,10 +13,24 @@ import java.util.List;
 import by.bstu.vs.stpms.lablist.databinding.SubjectItemLayoutBinding;
 import by.bstu.vs.stpms.lablist.model.entity.Subject;
 import lombok.Getter;
+import lombok.Setter;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
+    public interface OnClickListener {
+        void onVariantClick(Subject subject);
+    }
+
+    public interface OnLongClickListener {
+        boolean onLongVariantClick(Subject subject, View view);
+    }
+
     @Getter
     List<Subject> subjects;
+    @Setter
+    private OnClickListener onClickListener;
+    @Setter
+    private OnLongClickListener onLongClickListener;
+
 
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
@@ -35,7 +49,12 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Subject subject = subjects.get(position);
         holder.binding.setSubject(subject);
-
+        if (onClickListener != null) {
+            holder.itemView.setOnClickListener(view -> onClickListener.onVariantClick(subject));
+        }
+        if (onLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(view -> onLongClickListener.onLongVariantClick(subject, view));
+        }
     }
 
     @Override

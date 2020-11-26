@@ -26,7 +26,20 @@ public class TermViewModel extends AndroidViewModel {
     public LiveData<List<Term>> getTerms() {
         return termsLiveData;
     }
+
+    public LiveData<Term> getTermById(int id) {
+        return repository.getTermById(id);
+    }
+
     public void addTerm(Term term, Consumer<SQLiteException> onError) {
         repository.insertTerm(term, onError);
+    }
+
+    public void updateTerm(Term term, Consumer<SQLiteException> onError) {
+        repository.updateTerm(term, onError);
+    }
+
+    public void deleteTerm(Term term, Consumer<SQLiteException> onError) {
+        repository.deleteTerm(term, onError);
     }
 }

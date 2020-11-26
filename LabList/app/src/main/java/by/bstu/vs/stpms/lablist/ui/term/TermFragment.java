@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,20 +37,23 @@ public class TermFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_term, container, false);
 
         termAdapter = new TermAdapter();
-        termViewModel.getTerms().observe(getViewLifecycleOwner(), terms -> {
-            termAdapter.setTerms(terms);
+        termViewModel.getTerms().observe(getViewLifecycleOwner(), terms -> termAdapter.setTerms(terms));
+        termAdapter.setOnClickListener(term -> {
+            TermFragmentDirections.ActionNavTermToNavSubject action = TermFragmentDirections.actionNavTermToNavSubject(term.getId());
+            Navigation.findNavController(root).navigate(action);
         });
 
         recyclerView = root.findViewById(R.id.rv_term);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(termAdapter);
+
         return root;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(this::createAddDialog);
     }
 

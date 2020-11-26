@@ -3,23 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_term">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_term"
         android:name="by.bstu.vs.stpms.lablist.ui.term.TermFragment"
         android:label="@string/menu_term"
-        tools:layout="@layout/fragment_term" />
+        tools:layout="@layout/fragment_term" >
+        <action
+            android:id="@+id/action_nav_term_to_nav_subject"
+            app:destination="@id/nav_subject"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_subject"
         android:name="by.bstu.vs.stpms.lablist.ui.subject.SubjectFragment"
         android:label="@string/menu_subject"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_subject" >
+        <action
+            android:id="@+id/action_nav_subject_to_nav_lab"
+            app:destination="@id/nav_lab"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <argument
+            android:name="termId"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_lab"
         android:name="by.bstu.vs.stpms.lablist.ui.lab.LabFragment"
         android:label="@string/menu_lab"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_lab" >
+        <argument
+            android:name="subjectId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

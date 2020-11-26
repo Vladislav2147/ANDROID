@@ -13,15 +13,30 @@ import java.util.List;
 import by.bstu.vs.stpms.lablist.databinding.TermItemLayoutBinding;
 import by.bstu.vs.stpms.lablist.model.entity.Term;
 import lombok.Getter;
+import lombok.Setter;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
+
+    public interface OnClickListener {
+        void onVariantClick(Term term);
+    }
+
+    public interface OnLongClickListener {
+        boolean onLongVariantClick(Term term, View view);
+    }
+
     @Getter
     List<Term> terms;
+    @Setter
+    private OnClickListener onClickListener;
+    @Setter
+    private OnLongClickListener onLongClickListener;
 
     public void setTerms(List<Term> terms) {
         this.terms = terms;
         notifyDataSetChanged();
     }
+
 
     @NonNull
     @Override
@@ -35,6 +50,12 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Term term = terms.get(position);
         holder.binding.setTerm(term);
+        if (onClickListener != null) {
+            holder.itemView.setOnClickListener(view -> onClickListener.onVariantClick(term));
+        }
+        if (onLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(view -> onLongClickListener.onLongVariantClick(term, view));
+        }
 
     }
 

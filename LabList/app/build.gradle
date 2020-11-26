@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
+    id "androidx.navigation.safeargs"
 }
+
 
 android {
     compileSdkVersion 30
@@ -52,7 +54,6 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-
 
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.basgeekball:awesome-validation:4.2'
