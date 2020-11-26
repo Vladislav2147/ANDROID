@@ -1,10 +1,12 @@
 package by.bstu.vs.stpms.lablist.model.repository;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteException;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablist.model.LabDatabase;
 import by.bstu.vs.stpms.lablist.model.dao.LabDao;
@@ -29,20 +31,20 @@ public class LabRepository {
     }
 
     public LiveData<Lab> getLabById(int id) {
-        LabDatabase.databaseWriteExecutor.execute(() -> lab = labDao.getById(id));
+        lab = labDao.getById(id);
         return lab;
     }
 
-    public void insertLab(Lab lab) {
-        LabDatabase.databaseWriteExecutor.execute(() -> labDao.insert(lab));
+    public void insertLab(Lab lab, Consumer<SQLiteException> onError) {
+        new DBAsyncTask<>(labDao, onError, LabDao::insert).execute(lab);
     }
 
-    public void updateLab(Lab lab) {
-        LabDatabase.databaseWriteExecutor.execute(() -> labDao.update(lab));
+    public void updateLab(Lab lab, Consumer<SQLiteException> onError) {
+        new DBAsyncTask<>(labDao, onError, LabDao::update).execute(lab);
     }
 
-    public void deleteLab(Lab lab) {
-        LabDatabase.databaseWriteExecutor.execute(() -> labDao.delete(lab));
+    public void deleteLab(Lab lab, Consumer<SQLiteException> onError) {
+        new DBAsyncTask<>(labDao, onError, LabDao::delete).execute(lab);
     }
 
 }

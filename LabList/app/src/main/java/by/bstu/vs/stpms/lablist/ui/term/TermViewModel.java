@@ -1,11 +1,13 @@
 package by.bstu.vs.stpms.lablist.ui.term;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteException;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablist.model.entity.Term;
 import by.bstu.vs.stpms.lablist.model.repository.TermRepository;
@@ -24,7 +26,7 @@ public class TermViewModel extends AndroidViewModel {
     public LiveData<List<Term>> getTerms() {
         return termsLiveData;
     }
-    public void addTerm(Term term) {
-        repository.insertTerm(term);
+    public void addTerm(Term term, Consumer<SQLiteException> onError) {
+        repository.insertTerm(term, onError);
     }
 }

@@ -79,7 +79,7 @@ public class TermFragment extends Fragment {
             term.setSemester(Integer.valueOf(et_semester.getText().toString()));
 
             try {
-                termViewModel.addTerm(term);
+                termViewModel.addTerm(term, e -> Toast.makeText(TermFragment.this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                 dialog.dismiss();
             } catch (SQLiteException e) {
                 Toast.makeText(TermFragment.this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

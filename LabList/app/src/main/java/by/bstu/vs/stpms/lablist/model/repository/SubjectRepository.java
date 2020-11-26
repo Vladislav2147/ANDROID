@@ -1,10 +1,12 @@
 package by.bstu.vs.stpms.lablist.model.repository;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteException;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablist.model.LabDatabase;
 import by.bstu.vs.stpms.lablist.model.dao.SubjectDao;
@@ -27,20 +29,15 @@ public class SubjectRepository {
         return subjectsByTermId;
     }
 
-    public LiveData<Subject> getSubjectById(int id) {
-        LabDatabase.databaseWriteExecutor.execute(() -> subject = subjectDao.getById(id));
-        return subject;
+    public void insertSubject(Subject subject, Consumer<SQLiteException> onError) {
+        new DBAsyncTask<>(subjectDao, onError, SubjectDao::insert).execute(subject);
     }
 
-    public void insertSubject(Subject subject) {
-        LabDatabase.databaseWriteExecutor.execute(() -> subjectDao.insert(subject));
+    public void updateSubject(Subject subject, Consumer<SQLiteException> onError) {
+        new DBAsyncTask<>(subjectDao, onError, SubjectDao::update).execute(subject);
     }
 
-    public void updateSubject(Subject subject) {
-        LabDatabase.databaseWriteExecutor.execute(() -> subjectDao.update(subject));
-    }
-
-    public void deleteSubject(Subject subject) {
-        LabDatabase.databaseWriteExecutor.execute(() -> subjectDao.delete(subject));
+    public void deleteSubject(Subject subject, Consumer<SQLiteException> onError) {
+        new DBAsyncTask<>(subjectDao, onError, SubjectDao::delete).execute(subject);
     }
 }
