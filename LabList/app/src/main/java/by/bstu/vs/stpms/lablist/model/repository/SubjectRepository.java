@@ -12,7 +12,7 @@ import by.bstu.vs.stpms.lablist.model.LabDatabase;
 import by.bstu.vs.stpms.lablist.model.dao.SubjectDao;
 import by.bstu.vs.stpms.lablist.model.entity.Subject;
 
-public class SubjectRepository {
+public class SubjectRepository implements Repository<Subject> {
 
     private SubjectDao subjectDao;
 
@@ -29,15 +29,21 @@ public class SubjectRepository {
         return subjectsByTermId;
     }
 
-    public void insertSubject(Subject subject, Consumer<SQLiteException> onError) {
+    @Override
+    public LiveData<Subject> getById(int id) {
+        subject = subjectDao.getById(id);
+        return subject;
+    }
+
+    public void insert(Subject subject, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(subjectDao, onError, SubjectDao::insert).execute(subject);
     }
 
-    public void updateSubject(Subject subject, Consumer<SQLiteException> onError) {
+    public void update(Subject subject, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(subjectDao, onError, SubjectDao::update).execute(subject);
     }
 
-    public void deleteSubject(Subject subject, Consumer<SQLiteException> onError) {
+    public void delete(Subject subject, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(subjectDao, onError, SubjectDao::delete).execute(subject);
     }
 }

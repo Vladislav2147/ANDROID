@@ -47,8 +47,6 @@ public class TermFragment extends Fragment {
         return root;
     }
 
-
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -95,9 +93,9 @@ public class TermFragment extends Fragment {
             term.setSemester(Integer.valueOf(et_semester.getText().toString()));
 
             if (termToEdit == null) {
-                termViewModel.addTerm(term, showError);
+                termViewModel.add(term, showError);
             } else {
-                termViewModel.updateTerm(term, showError);
+                termViewModel.update(term, showError);
             }
             dialog.dismiss();
         });
@@ -109,7 +107,7 @@ public class TermFragment extends Fragment {
                 .setTitle("Delete")
                 .setMessage("Delete item?")
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
-                    termViewModel.deleteTerm(term, showError);
+                    termViewModel.delete(term, showError);
                 })
                 .setNegativeButton("Cancel", null)
                 .create()

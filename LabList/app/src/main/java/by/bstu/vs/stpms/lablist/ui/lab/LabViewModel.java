@@ -1,19 +1,27 @@
 package by.bstu.vs.stpms.lablist.ui.lab;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class LabViewModel extends ViewModel {
+import java.util.List;
 
-    private MutableLiveData<String> mText;
+import by.bstu.vs.stpms.lablist.model.entity.Lab;
+import by.bstu.vs.stpms.lablist.model.repository.LabRepository;
+import by.bstu.vs.stpms.lablist.ui.AbstractCrudViewModel;
 
-    public LabViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
+
+    public LabViewModel(@NonNull Application application) {
+        super(application);
+        repository = new LabRepository(application);
+        listLiveData = repository.getLabsBySubjectId(0);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Lab>> getLabsBySubjectId(int id) {
+        listLiveData = repository.getLabsBySubjectId(id);
+        return listLiveData;
     }
+
 }

@@ -13,7 +13,7 @@ import by.bstu.vs.stpms.lablist.model.dao.TermDao;
 import by.bstu.vs.stpms.lablist.model.entity.Term;
 import lombok.Getter;
 
-public class TermRepository {
+public class TermRepository implements Repository<Term> {
 
     private TermDao termDao;
 
@@ -28,20 +28,20 @@ public class TermRepository {
         terms = termDao.getAll();
     }
 
-    public LiveData<Term> getTermById(int id) {
+    public LiveData<Term> getById(int id) {
         term = termDao.getById(id);
         return term;
     }
 
-    public void insertTerm(Term term, Consumer<SQLiteException> onError) {
+    public void insert(Term term, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(termDao, onError, TermDao::insert).execute(term);
     }
 
-    public void updateTerm(Term term, Consumer<SQLiteException> onError) {
+    public void update(Term term, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(termDao, onError, TermDao::update).execute(term);
     }
 
-    public void deleteTerm(Term term, Consumer<SQLiteException> onError) {
+    public void delete(Term term, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(termDao, onError, TermDao::delete).execute(term);
     }
 }

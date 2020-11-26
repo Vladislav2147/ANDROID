@@ -12,7 +12,7 @@ import by.bstu.vs.stpms.lablist.model.LabDatabase;
 import by.bstu.vs.stpms.lablist.model.dao.LabDao;
 import by.bstu.vs.stpms.lablist.model.entity.Lab;
 
-public class LabRepository {
+public class LabRepository implements Repository<Lab> {
 
     private LabDao labDao;
 
@@ -30,20 +30,20 @@ public class LabRepository {
         return labsBySubjectId;
     }
 
-    public LiveData<Lab> getLabById(int id) {
+    public LiveData<Lab> getById(int id) {
         lab = labDao.getById(id);
         return lab;
     }
 
-    public void insertLab(Lab lab, Consumer<SQLiteException> onError) {
+    public void insert(Lab lab, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(labDao, onError, LabDao::insert).execute(lab);
     }
 
-    public void updateLab(Lab lab, Consumer<SQLiteException> onError) {
+    public void update(Lab lab, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(labDao, onError, LabDao::update).execute(lab);
     }
 
-    public void deleteLab(Lab lab, Consumer<SQLiteException> onError) {
+    public void delete(Lab lab, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(labDao, onError, LabDao::delete).execute(lab);
     }
 
