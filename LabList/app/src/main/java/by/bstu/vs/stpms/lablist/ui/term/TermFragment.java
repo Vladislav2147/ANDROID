@@ -38,7 +38,7 @@ public class TermFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        showError = e -> Toast.makeText(TermFragment.this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        showError = e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
         View root = inflater.inflate(R.layout.fragment_term, container, false);
 
