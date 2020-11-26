@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/item_padding">
+            android:padding="@dimen/item_indent">
 
             <TextView
                 android:id="@+id/subject_name"

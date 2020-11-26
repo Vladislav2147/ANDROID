@@ -37,6 +37,10 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public Term getItemAt(int position) {
+        return terms.get(position);
+    }
+
 
     @NonNull
     @Override

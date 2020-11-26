@@ -17,4 +17,6 @@
     <string name="course">Course</string>
     <string name="semester">Semester</string>
     <string name="invalid">Invalid</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
