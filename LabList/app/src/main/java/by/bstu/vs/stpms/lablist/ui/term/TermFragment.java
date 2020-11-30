@@ -116,7 +116,7 @@ public class TermFragment extends Fragment {
 
     private void initRecyclerView(View root) {
         termAdapter = new TermAdapter();
-        termViewModel.getTerms().observe(getViewLifecycleOwner(), terms -> termAdapter.setTerms(terms));
+        termViewModel.getItems().observe(getViewLifecycleOwner(), terms -> termAdapter.setTerms(terms));
         termAdapter.setOnClickListener(term -> {
             TermFragmentDirections.ActionNavTermToNavSubject action = TermFragmentDirections.actionNavTermToNavSubject(term.getId());
             Navigation.findNavController(root).navigate(action);

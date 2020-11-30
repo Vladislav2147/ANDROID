@@ -37,7 +37,7 @@ public class Lab extends BaseObservable implements Serializable {
     )
     @NonNull
     @ColumnInfo(name = "subject_id")
-    private String subjectId;
+    private int subjectId;
     @ColumnInfo(name = "task_file_path")
     private String taskFilePath;
     @ColumnInfo(name = "code_reference")

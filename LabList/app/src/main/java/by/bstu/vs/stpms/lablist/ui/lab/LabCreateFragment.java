@@ -1,5 +1,6 @@
 package by.bstu.vs.stpms.lablist.ui.lab;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import by.bstu.vs.stpms.lablist.model.entity.Lab;
 
 public class LabCreateFragment extends Fragment {
 
+
     private LabViewModel mViewModel;
 
     @Override
@@ -25,13 +27,16 @@ public class LabCreateFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         Lab lab = LabCreateFragmentArgs.fromBundle(getArguments()).getLab();
+        int subjectId = LabCreateFragmentArgs.fromBundle(getArguments()).getSubjectId();
 
         mViewModel = new ViewModelProvider(this).get(LabViewModel.class);
         mViewModel.setLabLiveData(lab);
+        mViewModel.setSubjectId(subjectId);
         mViewModel.setOnError(e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
 
         FragmentLabCreateBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lab_create, container, false);
         binding.setVm(mViewModel);
+        binding.setFragment(this);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         return binding.getRoot();
     }
@@ -41,5 +46,8 @@ public class LabCreateFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-
+    public void save() {
+        mViewModel.save();
+        getActivity().onBackPressed();
+    }
 }

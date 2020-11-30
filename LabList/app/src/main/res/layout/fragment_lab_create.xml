@@ -4,6 +4,9 @@
         <variable
             name="vm"
             type="by.bstu.vs.stpms.lablist.ui.lab.LabViewModel" />
+        <variable
+            name="fragment"
+            type="by.bstu.vs.stpms.lablist.ui.lab.LabCreateFragment" />
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -67,14 +70,26 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/choose_file"/>
+                android:hint="@string/task_reference">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={vm.labLiveData.taskFilePath}"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <Button
                 android:layout_margin="8dp"
-                android:onClick="@{(view) -> vm.save()}"
+                android:onClick="@{(view) -> fragment.save()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/save"/>

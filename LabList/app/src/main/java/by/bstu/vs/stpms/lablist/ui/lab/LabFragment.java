@@ -53,7 +53,7 @@ public class LabFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         FloatingActionButton fab = getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            LabFragmentDirections.ActionNavLabToLabCreateFragment action = LabFragmentDirections.actionNavLabToLabCreateFragment();
+            LabFragmentDirections.ActionNavLabToLabCreateFragment action = LabFragmentDirections.actionNavLabToLabCreateFragment(subjectId);
             navController.navigate(action);
         });
     }
@@ -85,7 +85,7 @@ public class LabFragment extends Fragment {
             popupMenu.setOnMenuItemClickListener(menuItem -> {
                 switch (menuItem.getItemId()) {
                     case R.id.edit_item:
-                        LabFragmentDirections.ActionNavLabToLabCreateFragment action = LabFragmentDirections.actionNavLabToLabCreateFragment();
+                        LabFragmentDirections.ActionNavLabToLabCreateFragment action = LabFragmentDirections.actionNavLabToLabCreateFragment(subjectId);
                         action.setLab(lab);
                         navController.navigate(action);
                         break;

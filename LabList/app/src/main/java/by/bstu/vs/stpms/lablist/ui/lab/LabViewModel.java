@@ -17,6 +17,7 @@ import lombok.Getter;
 
 public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
 
+    private int subjectId;
     private boolean createMode = true;
     private Consumer<SQLiteException> onError;
 
@@ -52,8 +53,14 @@ public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
         this.onError = onError;
     }
 
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
+    }
+
     public void save() {
+        labLiveData.getValue().setSubjectId(subjectId);
         if (createMode) add(labLiveData.getValue(), onError);
         else update(labLiveData.getValue(), onError);
     }
+
 }

@@ -21,7 +21,7 @@ public abstract class AbstractCrudViewModel<E, R extends Repository<E>> extends 
         super(application);
     }
 
-    public LiveData<List<E>> getTerms() {
+    public LiveData<List<E>> getItems() {
         return listLiveData;
     }
 

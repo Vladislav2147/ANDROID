@@ -77,5 +77,8 @@
             app:argType="by.bstu.vs.stpms.lablist.model.entity.Lab"
             android:defaultValue="@null"
             app:nullable="true" />
+        <argument
+            android:name="subjectId"
+            app:argType="integer" />
     </fragment>
 </navigation>
