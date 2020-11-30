@@ -11,10 +11,69 @@
         android:layout_height="match_parent"
         tools:context=".ui.lab.LabDetailsFragment">
 
-        <TextView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{`` + vm.labLiveData.name}" />
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/MarginStyle"
+                    android:textAlignment="center"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.labLiveData.name}"
+                    android:ems="10" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TextView
+                    style="@style/MarginStyle"
+                    android:drawableLeft="@drawable/ic_sharp_description_24"
+                    android:drawablePadding="8dp"
+                    android:textSize="24sp"
+                    android:maxLines="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.labLiveData.notes}"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TextView
+                    style="@style/MarginStyle"
+                    android:drawableLeft="@drawable/ic_sharp_insert_link_24"
+                    android:drawablePadding="8dp"
+                    android:textSize="24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.labLiveData.codeReference}"
+                    android:autoLink="web"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TextView
+                    android:id="@+id/ingredients"
+                    style="@style/MarginStyle"
+                    android:drawableStart="@drawable/ic_sharp_attach_file_24"
+                    android:drawablePadding="8dp"
+                    android:textSize="24sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.labLiveData.taskFilePath}"
+                    android:autoLink="web"
+                    android:ems="10" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+            </LinearLayout>
+        </ScrollView>
 
     </FrameLayout>
 </layout>
