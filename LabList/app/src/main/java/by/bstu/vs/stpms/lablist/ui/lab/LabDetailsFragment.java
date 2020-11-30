@@ -40,7 +40,12 @@ public class LabDetailsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel.getLabById(labId);
-
+        getActivity().findViewById(R.id.fab).setVisibility(View.GONE);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().findViewById(R.id.fab).setVisibility(View.VISIBLE);
+    }
 }
