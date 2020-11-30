@@ -11,10 +11,75 @@
         android:layout_height="match_parent"
         tools:context=".ui.lab.LabDetailsFragment">
 
-        <TextView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{`` + vm.labLiveData.name}" />
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={vm.labLiveData.name}"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:text="@={vm.labLiveData.notes}"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/code_reference">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={vm.labLiveData.codeReference}"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_file"/>
+            <Button
+                android:layout_margin="8dp"
+                android:onClick="@{(view) -> vm.save()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save"/>
+        </LinearLayout>
+        </ScrollView>
 
     </FrameLayout>
 </layout>

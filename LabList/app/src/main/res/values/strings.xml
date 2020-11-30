@@ -20,4 +20,9 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="name">Name</string>
+    <string name="mark">Mark</string>
+    <string name="description">Description</string>
+    <string name="code_reference">Code Reference</string>
+    <string name="choose_file">Choose File</string>
+    <string name="save">Save</string>
 </resources>

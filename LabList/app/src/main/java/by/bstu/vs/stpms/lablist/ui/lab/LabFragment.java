@@ -14,7 +14,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ public class LabFragment extends Fragment {
     private LabAdapter labAdapter;
     private Consumer<SQLiteException> showError;
     private int subjectId;
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -39,7 +41,8 @@ public class LabFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_lab, container, false);
         showError = e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         subjectId = LabFragmentArgs.fromBundle(getArguments()).getSubjectId();
-
+        NavHostFragment navHostFragment = (NavHostFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
         initRecyclerView(root);
 
         return root;
@@ -50,12 +53,9 @@ public class LabFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         FloatingActionButton fab = getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            createAddDialog(null);
+            LabFragmentDirections.ActionNavLabToLabCreateFragment action = LabFragmentDirections.actionNavLabToLabCreateFragment();
+            navController.navigate(action);
         });
-    }
-
-    public void createAddDialog(Lab labToEdit) {
-
     }
 
     public void deleteLab(Lab lab) {
@@ -72,12 +72,11 @@ public class LabFragment extends Fragment {
     }
 
     private void initRecyclerView(View root) {
-
         labAdapter = new LabAdapter();
         labViewModel.getLabsBySubjectId(subjectId).observe(getViewLifecycleOwner(), labs -> labAdapter.setLabs(labs));
         labAdapter.setOnClickListener(lab -> {
             LabFragmentDirections.ActionNavLabToLabDetailsFragment action = LabFragmentDirections.actionNavLabToLabDetailsFragment(lab.getId());
-            Navigation.findNavController(root).navigate(action);
+            navController.navigate(action);
         });
         labAdapter.setOnIsPassedPropertyChanged(lab -> labViewModel.update(lab, showError));
         labAdapter.setOnLongClickListener((lab, view) -> {
@@ -86,7 +85,9 @@ public class LabFragment extends Fragment {
             popupMenu.setOnMenuItemClickListener(menuItem -> {
                 switch (menuItem.getItemId()) {
                     case R.id.edit_item:
-                        createAddDialog(lab);
+                        LabFragmentDirections.ActionNavLabToLabCreateFragment action = LabFragmentDirections.actionNavLabToLabCreateFragment();
+                        action.setLab(lab);
+                        navController.navigate(action);
                         break;
                     case R.id.delete_item:
                         deleteLab(lab);

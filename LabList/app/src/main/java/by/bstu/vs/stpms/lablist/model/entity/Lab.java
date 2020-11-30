@@ -8,6 +8,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 import by.bstu.vs.stpms.lablist.BR;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +23,7 @@ import static androidx.room.ForeignKey.CASCADE;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(tableName = "lab")
-public class Lab extends BaseObservable {
+public class Lab extends BaseObservable implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Integer id;
@@ -41,7 +43,6 @@ public class Lab extends BaseObservable {
     @ColumnInfo(name = "code_reference")
     private String codeReference;
     private String notes;
-    private Integer mark;
     @ColumnInfo(name = "is_passed")
     private boolean isPassed;
 

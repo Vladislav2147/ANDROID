@@ -51,6 +51,13 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_nav_lab_to_labCreateFragment"
+            app:destination="@id/labCreateFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/labDetailsFragment"
@@ -60,5 +67,15 @@
         <argument
             android:name="labId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/labCreateFragment"
+        android:name="by.bstu.vs.stpms.lablist.ui.lab.LabCreateFragment"
+        android:label="LabCreateFragment" >
+        <argument
+            android:name="lab"
+            app:argType="by.bstu.vs.stpms.lablist.model.entity.Lab"
+            android:defaultValue="@null"
+            app:nullable="true" />
     </fragment>
 </navigation>

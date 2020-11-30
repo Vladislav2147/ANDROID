@@ -1,6 +1,5 @@
 package by.bstu.vs.stpms.lablist.ui.lab;
 
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,24 +12,25 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.util.function.Consumer;
-
 import by.bstu.vs.stpms.lablist.R;
-import by.bstu.vs.stpms.lablist.databinding.FragmentLabDetailsBinding;
+import by.bstu.vs.stpms.lablist.databinding.FragmentLabCreateBinding;
+import by.bstu.vs.stpms.lablist.model.entity.Lab;
 
 public class LabCreateFragment extends Fragment {
 
     private LabViewModel mViewModel;
-    private Consumer<SQLiteException> showError;
-    private int labId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        showError = e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        labId = LabDetailsFragmentArgs.fromBundle(getArguments()).getLabId();
+
+        Lab lab = LabCreateFragmentArgs.fromBundle(getArguments()).getLab();
+
         mViewModel = new ViewModelProvider(this).get(LabViewModel.class);
-        FragmentLabDetailsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lab_details, container, false);
+        mViewModel.setLabLiveData(lab);
+        mViewModel.setOnError(e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+
+        FragmentLabCreateBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lab_create, container, false);
         binding.setVm(mViewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         return binding.getRoot();
@@ -39,8 +39,7 @@ public class LabCreateFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel.getLabById(labId);
-
     }
+
 
 }
