@@ -6,9 +6,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablist.databinding.LabItemLayoutBinding;
 import by.bstu.vs.stpms.lablist.model.entity.Lab;
@@ -27,11 +30,13 @@ public class LabAdapter extends RecyclerView.Adapter<LabAdapter.ViewHolder> {
     @Getter
     List<Lab> labs;
     @Setter
+    private Consumer<Lab> onIsPassedPropertyChanged;
+    @Setter
     private OnClickListener onClickListener;
     @Setter
     private OnLongClickListener onLongClickListener;
 
-    public void setSubjects(List<Lab> labs) {
+    public void setLabs(List<Lab> labs) {
         this.labs = labs;
         notifyDataSetChanged();
     }
@@ -47,6 +52,14 @@ public class LabAdapter extends RecyclerView.Adapter<LabAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Lab lab = labs.get(position);
+        lab.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (propertyId == BR.passed) {
+                    onIsPassedPropertyChanged.accept(lab);
+                }
+            }
+        });
         holder.binding.setLab(lab);
         if (onClickListener != null) {
             holder.itemView.setOnClickListener(view -> onClickListener.onVariantClick(lab));

@@ -124,8 +124,6 @@ public class SubjectFragment extends Fragment {
             Navigation.findNavController(root).navigate(action);
         });
 
-
-
         subjectAdapter.setOnLongClickListener((subject, view) -> {
             PopupMenu popupMenu = new PopupMenu(getContext(), view, Gravity.END);
             popupMenu.inflate(R.menu.popup_menu);
