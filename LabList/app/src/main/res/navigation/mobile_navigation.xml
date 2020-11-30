@@ -44,5 +44,21 @@
         <argument
             android:name="subjectId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_nav_lab_to_labDetailsFragment"
+            app:destination="@id/labDetailsFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/labDetailsFragment"
+        android:name="by.bstu.vs.stpms.lablist.ui.lab.LabDetailsFragment"
+        android:label="lab_details_fragment"
+        tools:layout="@layout/fragment_lab_details" >
+        <argument
+            android:name="labId"
+            app:argType="integer" />
     </fragment>
 </navigation>

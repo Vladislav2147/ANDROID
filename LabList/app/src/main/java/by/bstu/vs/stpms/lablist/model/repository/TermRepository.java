@@ -28,19 +28,17 @@ public class TermRepository implements Repository<Term> {
         terms = termDao.getAll();
     }
 
-    public LiveData<Term> getById(int id) {
-        term = termDao.getById(id);
-        return term;
-    }
-
+    @Override
     public void insert(Term term, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(termDao, onError, TermDao::insert).execute(term);
     }
 
+    @Override
     public void update(Term term, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(termDao, onError, TermDao::update).execute(term);
     }
 
+    @Override
     public void delete(Term term, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(termDao, onError, TermDao::delete).execute(term);
     }

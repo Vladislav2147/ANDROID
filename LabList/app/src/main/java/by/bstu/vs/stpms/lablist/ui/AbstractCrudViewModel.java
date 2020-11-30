@@ -25,10 +25,6 @@ public abstract class AbstractCrudViewModel<E, R extends Repository<E>> extends 
         return listLiveData;
     }
 
-    public LiveData<E> getById(int id) {
-        return repository.getById(id);
-    }
-
     public void add(E item, Consumer<SQLiteException> onError) {
         repository.insert(item, onError);
     }

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,8 +76,8 @@ public class LabFragment extends Fragment {
         labAdapter = new LabAdapter();
         labViewModel.getLabsBySubjectId(subjectId).observe(getViewLifecycleOwner(), labs -> labAdapter.setLabs(labs));
         labAdapter.setOnClickListener(lab -> {
-//            LabFragmentDirections.ActionNavLabToNavLab action = LabFragmentDirections.actionNavLabToNavLab(lab.getId());
-//            Navigation.findNavController(root).navigate(action);
+            LabFragmentDirections.ActionNavLabToLabDetailsFragment action = LabFragmentDirections.actionNavLabToLabDetailsFragment(lab.getId());
+            Navigation.findNavController(root).navigate(action);
         });
         labAdapter.setOnIsPassedPropertyChanged(lab -> labViewModel.update(lab, showError));
         labAdapter.setOnLongClickListener((lab, view) -> {

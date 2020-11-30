@@ -30,19 +30,16 @@ public class SubjectRepository implements Repository<Subject> {
     }
 
     @Override
-    public LiveData<Subject> getById(int id) {
-        subject = subjectDao.getById(id);
-        return subject;
-    }
-
     public void insert(Subject subject, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(subjectDao, onError, SubjectDao::insert).execute(subject);
     }
 
+    @Override
     public void update(Subject subject, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(subjectDao, onError, SubjectDao::update).execute(subject);
     }
 
+    @Override
     public void delete(Subject subject, Consumer<SQLiteException> onError) {
         new DBAsyncTask<>(subjectDao, onError, SubjectDao::delete).execute(subject);
     }

@@ -10,10 +10,14 @@ import androidx.room.PrimaryKey;
 
 import by.bstu.vs.stpms.lablist.BR;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(tableName = "lab")
@@ -36,68 +40,10 @@ public class Lab extends BaseObservable {
     private String taskFilePath;
     @ColumnInfo(name = "code_reference")
     private String codeReference;
-    private String screenshot;
+    private String notes;
     private Integer mark;
     @ColumnInfo(name = "is_passed")
     private boolean isPassed;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    public void setName(@NonNull String name) {
-        this.name = name;
-    }
-
-    @NonNull
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(@NonNull String subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public String getTaskFilePath() {
-        return taskFilePath;
-    }
-
-    public void setTaskFilePath(String taskFilePath) {
-        this.taskFilePath = taskFilePath;
-    }
-
-    public String getCodeReference() {
-        return codeReference;
-    }
-
-    public void setCodeReference(String codeReference) {
-        this.codeReference = codeReference;
-    }
-
-    public String getScreenshot() {
-        return screenshot;
-    }
-
-    public void setScreenshot(String screenshot) {
-        this.screenshot = screenshot;
-    }
-
-    public Integer getMark() {
-        return mark;
-    }
-
-    public void setMark(Integer mark) {
-        this.mark = mark;
-    }
 
     @Bindable
     public boolean isPassed() {

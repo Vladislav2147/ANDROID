@@ -13,7 +13,7 @@ import by.bstu.vs.stpms.lablist.model.entity.Lab;
 import by.bstu.vs.stpms.lablist.model.entity.Subject;
 import by.bstu.vs.stpms.lablist.model.entity.Term;
 
-@Database(entities = {Lab.class, Subject.class, Term.class}, version = 9)
+@Database(entities = {Lab.class, Subject.class, Term.class}, version = 10)
 public abstract class LabDatabase extends RoomDatabase {
 
     public abstract LabDao getLabDao();

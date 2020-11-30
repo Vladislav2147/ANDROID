@@ -10,9 +10,11 @@ import java.util.List;
 import by.bstu.vs.stpms.lablist.model.entity.Lab;
 import by.bstu.vs.stpms.lablist.model.repository.LabRepository;
 import by.bstu.vs.stpms.lablist.ui.AbstractCrudViewModel;
+import lombok.Getter;
 
 public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
-
+    @Getter
+    private LiveData<Lab> labLiveData;
     public LabViewModel(@NonNull Application application) {
         super(application);
         repository = new LabRepository(application);
@@ -24,4 +26,8 @@ public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
         return listLiveData;
     }
 
+    public LiveData<Lab> getLabById(int id) {
+        labLiveData = repository.getById(id);
+        return labLiveData;
+    }
 }
