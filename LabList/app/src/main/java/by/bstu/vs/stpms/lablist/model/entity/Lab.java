@@ -22,19 +22,18 @@ import static androidx.room.ForeignKey.CASCADE;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(tableName = "lab")
+@Entity(tableName = "lab", foreignKeys = @ForeignKey(
+        entity = Subject.class,
+        parentColumns = "id",
+        childColumns = "subject_id",
+        onUpdate = CASCADE, onDelete = CASCADE
+))
 public class Lab extends BaseObservable implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Integer id;
     @NonNull
     private String name;
-    @ForeignKey(
-            entity = Subject.class,
-            parentColumns = "id",
-            childColumns = "subject_id",
-            onUpdate = CASCADE, onDelete = CASCADE
-    )
     @NonNull
     @ColumnInfo(name = "subject_id")
     private int subjectId;
