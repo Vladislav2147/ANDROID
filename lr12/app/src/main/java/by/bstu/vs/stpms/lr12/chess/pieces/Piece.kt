@@ -18,6 +18,10 @@ interface Piece {
     class State(canMove: Boolean, isOnField: Boolean) {
         var canMove = false
         var isOnField = false
+        override fun toString(): String {
+            return "State(canMove=$canMove, isOnField=$isOnField)"
+        }
+
     }
 
 }

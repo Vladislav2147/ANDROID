@@ -4,7 +4,6 @@ import by.bstu.vs.stpms.lr12.chess.Board
 import by.bstu.vs.stpms.lr12.chess.Color
 import by.bstu.vs.stpms.lr12.chess.Space
 import by.bstu.vs.stpms.lr12.exceptions.UnableToMoveToSpaceException
-import kotlin.math.abs
 
 class Castle (
         override val color: Color,
@@ -26,6 +25,8 @@ class Castle (
     init {
         this.space = space
     }
+
+    constructor(color: Color): this(color, null)
 
     override fun moveTo(newSpace: Space) {
         try {
@@ -83,5 +84,9 @@ class Castle (
         } catch (e: UnableToMoveToSpaceException) {
             println(e.message)
         }
+    }
+
+    override fun toString(): String {
+        return "\nCastle(color=$color, state=$state, space=$space, name='$name', history=$history)"
     }
 }

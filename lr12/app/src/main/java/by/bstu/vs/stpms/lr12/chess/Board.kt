@@ -17,8 +17,11 @@ object Board {
     }
     fun dropPiece(space: Space) {
         val piece = getPieceBySpace(space)
-        piece?.space = null
-        piece?.let { println("piece ${piece.name} was dropped from ${piece.space}") }
+        piece?.remove()
+        piece?.let { println("piece ${piece.name} was dropped from $space") }
     }
 
+    private fun Piece.remove() {
+        this.space = null
+    }
 }

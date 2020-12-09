@@ -27,6 +27,8 @@ class Pawn(
         this.space = space
     }
 
+    constructor(color: Color): this(color, null)
+
     override fun moveTo(newSpace: Space) {
         try {
             if (space != null) {
@@ -63,4 +65,10 @@ class Pawn(
             println(e.message)
         }
     }
+
+    override fun toString(): String {
+        return "\nPawn(color=$color, state=$state, space=$space, name='$name', history=$history)"
+    }
+
+
 }
