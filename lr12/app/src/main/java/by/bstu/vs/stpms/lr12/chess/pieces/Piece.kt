@@ -10,9 +10,14 @@ interface Piece {
     val name: String
     var space: Space?
     var history: ArrayList<Space?>
+    val state: State
 
     fun moveTo(newSpace: Space)
-    fun spaceIsEmpty(space: Space): Boolean = Board.getInstance().getPieceBySpace(space) == null
+    fun spaceIsEmpty(space: Space): Boolean = Board.getPieceBySpace(space) == null
 
+    class State(canMove: Boolean, isOnField: Boolean) {
+        var canMove = false
+        var isOnField = false
+    }
 
 }
