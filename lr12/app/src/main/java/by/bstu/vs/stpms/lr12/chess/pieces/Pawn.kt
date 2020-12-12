@@ -11,7 +11,7 @@ class Pawn(
     space: Space?,
 ) : Piece {
 
-    override val state: Piece.State = Piece.State(false, false)
+    override val state: Piece.State = Piece.State()
     override var space: Space? = null
     set(value) {
         field = value

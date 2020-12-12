@@ -15,7 +15,7 @@ interface Piece {
     fun moveTo(newSpace: Space)
     fun spaceIsEmpty(space: Space): Boolean = Board.getPieceBySpace(space) == null
 
-    class State(canMove: Boolean, isOnField: Boolean) {
+    class State {
         var canMove = false
         var isOnField = false
         override fun toString(): String {

@@ -10,7 +10,7 @@ class Castle (
         space: Space?,
 ) : Piece {
 
-    override val state: Piece.State = Piece.State(canMove = false, isOnField = false)
+    override val state: Piece.State = Piece.State()
     override var space: Space? = null
         set(value) {
             field = value
