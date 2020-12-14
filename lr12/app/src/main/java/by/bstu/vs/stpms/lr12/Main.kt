@@ -72,9 +72,9 @@ fun main() {
 
     //c
     println("a + b ${converter("+")?.invoke(2.0, 3.0)}")
-    println("a - b ${converter("+")?.invoke(2.0, 3.0)}")
-    println("a * b ${converter("+")?.invoke(2.0, 3.0)}")
-    println("a / b ${converter("+")?.invoke(2.0, 3.0)}")
+    println("a - b ${converter("-")?.invoke(2.0, 3.0)}")
+    println("a * b ${converter("*")?.invoke(2.0, 3.0)}")
+    println("a / b ${converter("/")?.invoke(2.0, 3.0)}")
     println("default ${converter("invalid op")?.invoke(2.0, 3.0)}")
 
 }

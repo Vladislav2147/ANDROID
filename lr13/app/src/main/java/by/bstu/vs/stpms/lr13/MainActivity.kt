@@ -1,71 +1,90 @@
 package by.bstu.vs.stpms.lr13
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import by.bstu.vs.stpms.lr13.model.Weather
-import by.bstu.vs.stpms.lr13.retrofit.RetrofitWeather
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import by.bstu.vs.stpms.lr13.databinding.ActivityMainBinding
+import by.bstu.vs.stpms.lr13.model.Article
+import by.bstu.vs.stpms.lr13.recyclerview.ArticleAdapter
+import by.bstu.vs.stpms.lr13.retrofit.event.Status
+import by.bstu.vs.stpms.lr13.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
-    var BaseNewsUrl = "http://newsapi.org/"
-    var NewsAppId = "7e0b4244a83b4402906eb588bc9932c7"
-    var BaseWeatherUrl = "http://api.openweathermap.org/"
-    var WeatherAppId = "94176bf6d13e644d4c512383369a13d3"
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var articleAdapter: ArticleAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val newsRetrofit = Retrofit
-//            .Builder()
-//            .baseUrl(BaseNewsUrl)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//        val news = newsRetrofit.create(RetrofitNews::class.java)
-//        news.getNews(NewsAppId).enqueue(object : Callback<News> {
-//            override fun onResponse(call: Call<News>, response: Response<News>) {
-//                if (response.code() == 200) {
-//                    val news = response.body()
-//                    news?.articles
-//
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<News>, t: Throwable) {
-//
-//            }
-//        })
-        val logging = HttpLoggingInterceptor()
-        logging.level = (HttpLoggingInterceptor.Level.BASIC)
-        val client = OkHttpClient.Builder().addInterceptor(logging).build()
 
-        val weatherRetrofit = Retrofit
-            .Builder()
-            .baseUrl(BaseWeatherUrl)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val weather = weatherRetrofit.create(RetrofitWeather::class.java)
-        weather.getWeatherByCityName("moscow", WeatherAppId).enqueue(object : Callback<Weather> {
-            override fun onResponse(call: Call<Weather>, response: Response<Weather>) {
-                if (response.code() == 200) {
-                    val weather = response.body()
-                    weather?.description
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        var binding: ActivityMainBinding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_main
+        )
+        binding.vm = mainViewModel
+        binding.lifecycleOwner = this
 
+
+        articleAdapter = ArticleAdapter()
+        mainViewModel.newsLiveData.observe(this) { news -> articleAdapter.setArticles(news.data?.articles) }
+        articleAdapter.onClickListener = object : ArticleAdapter.OnClickListener {
+            override fun onVariantClick(article: Article?) {
+                article?.let {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(it.link)
+                    startActivity(intent)
                 }
             }
+        }
+        recyclerView = findViewById<RecyclerView>(R.id.rv_news).apply {
+            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = articleAdapter
+        }
+        val newsProgressBar: ProgressBar = findViewById(R.id.news_progress)
+        val weatherProgressBar: ProgressBar = findViewById(R.id.weather_progress)
 
-            override fun onFailure(call: Call<Weather>, t: Throwable) {
-                val a = 6
+        mainViewModel.newsLiveData.observe(this, {
+            when (it.status) {
+                Status.ERROR -> {
+                    Toast.makeText(this, "error " + it.t?.message, Toast.LENGTH_SHORT).show()
+                    newsProgressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+                Status.SUCCESS -> {
+                    newsProgressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+                Status.LOADING -> {
+                    newsProgressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                }
+            }
+        })
+        mainViewModel.getNews()
+
+        mainViewModel.weatherLiveData.observe(this, {
+            when (it.status) {
+                Status.ERROR -> Toast.makeText(this, "error " + it.t?.message, Toast.LENGTH_SHORT)
+                        .show()
+                Status.SUCCESS -> Log.d("TAG", "weather: success")
+                Status.LOADING -> Log.d("TAG", "weather: loading")
             }
         })
     }
+
 }

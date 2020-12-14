@@ -1,18 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <data>
+        <variable
+            name="vm"
+            type="by.bstu.vs.stpms.lr13.viewmodel.MainViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.core.widget.NestedScrollView
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/item_indent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/item_indent"
+                                android:hint="@string/city"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/button"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text="@={vm.city}"/>
+
+                            <Button
+                                android:id="@+id/button"
+                                android:layout_margin="@dimen/item_indent"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/submit"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:onClick="@{() -> vm.getWeather()}"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ProgressBar
+                            android:id="@+id/weather_progress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/default_text"
+                            android:layout_margin="@dimen/item_indent"
+                            android:layout_marginTop="0dp"
+                            android:text="@{`Weather: ` + vm.weatherLiveData.data.description[0].description, default=``}"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/default_text"
+                            android:layout_margin="@dimen/item_indent"
+                            android:layout_marginTop="0dp"
+                            android:text="@{`Temperature: ` + vm.weatherLiveData.data.main.temperature + ` C`, default=``}"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/default_text"
+                            android:layout_margin="@dimen/item_indent"
+                            android:layout_marginTop="0dp"
+                            android:text="@{`Humidity: ` + vm.weatherLiveData.data.main.humidity + `%`, default=``}"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/default_text"
+                            android:layout_margin="@dimen/item_indent"
+                            android:layout_marginTop="0dp"
+                            android:text="@{`Pressure: ` + vm.weatherLiveData.data.main.pressure + ` hPa`, default=``}"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/default_text"
+                            android:layout_margin="@dimen/item_indent"
+                            android:layout_marginTop="0dp"
+                            android:text="@{`Wind speed: ` + vm.weatherLiveData.data.wind.speed + ` m/s`, default=``}"/>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <ProgressBar
+                    android:id="@+id/news_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView >
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

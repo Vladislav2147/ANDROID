@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface RetrofitNews {
+interface ApiNews {
     @GET("/v2/top-headlines?sources=google-news-ru")
     fun getNews(@Query("apiKey") apiKey: String): Call<News>
 }
