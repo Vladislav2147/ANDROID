@@ -29,18 +29,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        var binding: ActivityMainBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_main
+
+        initBinding()
+        initRecyclerView()
+        initViewModel()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.getNews()
+    }
+
+    private fun initBinding() {
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
+                this,
+                R.layout.activity_main
         )
-        binding.vm = mainViewModel
-        binding.lifecycleOwner = this
+        binding.apply {
+            vm = mainViewModel
+            lifecycleOwner = this@MainActivity
+        }
+    }
 
-
+    private fun initRecyclerView() {
         articleAdapter = ArticleAdapter()
-        mainViewModel.newsLiveData.observe(this) { news -> articleAdapter.setArticles(news.data?.articles) }
         articleAdapter.onClickListener = object : ArticleAdapter.OnClickListener {
             override fun onVariantClick(article: Article?) {
                 article?.let {
@@ -50,14 +63,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
         recyclerView = findViewById<RecyclerView>(R.id.rv_news).apply {
             isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = articleAdapter
         }
-        val newsProgressBar: ProgressBar = findViewById(R.id.news_progress)
-        val weatherProgressBar: ProgressBar = findViewById(R.id.weather_progress)
+    }
 
+    private fun initViewModel() {
+        val newsProgressBar: ProgressBar = findViewById(R.id.news_progress)
+
+        mainViewModel.newsLiveData.observe(this) { news -> articleAdapter.setArticles(news.data?.articles) }
         mainViewModel.newsLiveData.observe(this, {
             when (it.status) {
                 Status.ERROR -> {
@@ -68,23 +85,24 @@ class MainActivity : AppCompatActivity() {
                 Status.SUCCESS -> {
                     newsProgressBar.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
+                    Log.d("HTTP", "news: success")
                 }
                 Status.LOADING -> {
                     newsProgressBar.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
+                    Log.d("HTTP", "news: loading")
                 }
             }
         })
-        mainViewModel.getNews()
 
         mainViewModel.weatherLiveData.observe(this, {
             when (it.status) {
                 Status.ERROR -> Toast.makeText(this, "error " + it.t?.message, Toast.LENGTH_SHORT)
                         .show()
-                Status.SUCCESS -> Log.d("TAG", "weather: success")
-                Status.LOADING -> Log.d("TAG", "weather: loading")
+                Status.SUCCESS -> Log.d("HTTP", "weather: success")
+                Status.LOADING -> Log.d("HTTP", "weather: loading")
             }
         })
     }
-
 }
+
