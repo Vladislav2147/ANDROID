@@ -116,7 +116,7 @@ class MyLocationService: Service() {
 
     }
 
-    fun getNotification(text: String): Notification {
+    private fun getNotification(text: String): Notification {
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent, 0

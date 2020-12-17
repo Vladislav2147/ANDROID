@@ -2,4 +2,5 @@
     <string name="app_name">Services</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="download">Download</string>
 </resources>
