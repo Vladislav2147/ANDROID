@@ -17,6 +17,7 @@ import android.util.Log
 import by.bstu.vs.stpms.services.App.Companion.CHANNEL_ID
 import by.bstu.vs.stpms.services.MainActivity
 import by.bstu.vs.stpms.services.R
+import java.util.*
 
 
 class MyLocationService: Service() {
@@ -27,14 +28,16 @@ class MyLocationService: Service() {
     private lateinit var mLocationManager: LocationManager
     private lateinit var previousLocation: Location
     private lateinit var notificationIntent: Intent
+    private var firstStart = false
     private var count = 0
     private var averageSpeed = 0.0
 
 
     private var mLocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-            val speed = if (location.hasSpeed()) {
-                location.speed
+            val speed = if (firstStart) {
+                firstStart = false
+                0f
             } else {
                 previousLocation.let { lastLocation ->
                     val elapsedTimeInSeconds = (location.time - lastLocation.time) / 1_000
@@ -44,8 +47,10 @@ class MyLocationService: Service() {
             }
             previousLocation = location
             averageSpeed = (averageSpeed * count + speed) / ++count
+
             fun Double.format(digits: Int) = "%.${digits}f".format(this)
             updateNotification("Average speed: ${averageSpeed.format(2)} km/h")
+
             Log.d(TAG, "avg speed: $averageSpeed")
         }
 
@@ -68,6 +73,15 @@ class MyLocationService: Service() {
         Log.d(TAG, "onStartCommand")
         notificationIntent = Intent(this, MainActivity::class.java)
         startForeground(1, getNotification("text"))
+
+        Timer().apply {
+            schedule(object : TimerTask() {
+                override fun run() {
+                    stopSelf()
+                }
+            }, 5000)
+        }
+        
         return START_STICKY
     }
 
@@ -80,6 +94,7 @@ class MyLocationService: Service() {
     @SuppressLint("MissingPermission")
     private fun initializeLocationManager() {
         Log.d(TAG, "initializeLocationManager")
+        firstStart = true
         mLocationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val criteria = Criteria()
         criteria.accuracy = Criteria.ACCURACY_COARSE
@@ -119,4 +134,5 @@ class MyLocationService: Service() {
         val mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         mNotificationManager.notify(1, notification)
     }
+
 }

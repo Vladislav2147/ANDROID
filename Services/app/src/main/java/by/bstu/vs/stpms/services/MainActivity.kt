@@ -39,9 +39,13 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun requestLocation() {
-        button_location.setOnClickListener {
+        button_start.setOnClickListener {
             val service = Intent(this, MyLocationService::class.java)
             ContextCompat.startForegroundService(this, service)
+        }
+        button_stop.setOnClickListener {
+            val service = Intent(this, MyLocationService::class.java)
+            stopService(service)
         }
     }
 
