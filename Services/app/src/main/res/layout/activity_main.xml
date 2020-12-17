@@ -36,6 +36,7 @@
 
         <EditText
             android:id="@+id/download_edit_text"
+            android:layout_margin="@dimen/margin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,6 +47,7 @@
 
         <Button
             android:id="@+id/download_button"
+            android:layout_margin="@dimen/margin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/download"

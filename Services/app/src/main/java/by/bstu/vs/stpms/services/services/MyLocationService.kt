@@ -21,10 +21,7 @@ import java.util.*
 
 
 class MyLocationService: Service() {
-    private val TAG = "TEST_LOCATION"
-    private val LOCATION_INTERVAL = 1000
-    private val LOCATION_DISTANCE = 10f
-
+    private val TAG = "MY_LOCATION_SERVICE"
     private lateinit var mLocationManager: LocationManager
     private lateinit var previousLocation: Location
     private lateinit var notificationIntent: Intent
@@ -79,7 +76,7 @@ class MyLocationService: Service() {
                 override fun run() {
                     stopSelf()
                 }
-            }, 5000)
+            }, 10000)
         }
         
         return START_STICKY

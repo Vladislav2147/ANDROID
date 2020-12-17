@@ -19,22 +19,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        requestLocationWithPermissionCheck()
-        download_button.setOnClickListener {
-            val downloadIntent = Intent(this, MyDownloadService::class.java)
-            downloadIntent.putExtra("image_uri", download_edit_text.text.toString())
-            startService(downloadIntent)
-        }
-
-
+        requestServicesWithPermissionCheck()
     }
 
-    private fun requestLocationWithPermissionCheck() {
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                        ContextCompat.checkSelfPermission(
-                                this,
-                                Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED)) {
+    private fun requestServicesWithPermissionCheck() {
+
+        val permissions = arrayListOf(
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION),
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION),
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        )
+
+        if (permissions.any { it != PackageManager.PERMISSION_GRANTED }) {
 
             requestPermissions(
                     arrayOf(
@@ -45,12 +41,13 @@ class MainActivity : AppCompatActivity() {
                     ),
                     REQUEST_CODE
             )
+
         } else {
             requestLocation()
+            requestDownload()
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun requestLocation() {
         button_start.setOnClickListener {
             val service = Intent(this, MyLocationService::class.java)
@@ -62,6 +59,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun requestDownload() {
+        download_button.setOnClickListener {
+            val downloadIntent = Intent(this, MyDownloadService::class.java)
+            downloadIntent.putExtra("image_uri", download_edit_text.text.toString())
+            startService(downloadIntent)
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -69,10 +74,15 @@ class MainActivity : AppCompatActivity() {
     ) {
 
         when (requestCode) {
-            REQUEST_CODE ->
+            REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     requestLocation()
                 }
+                if (grantResults.isNotEmpty() && grantResults[3] == PackageManager.PERMISSION_GRANTED) {
+                    requestDownload()
+                }
+            }
+
         }
     }
 }
