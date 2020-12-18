@@ -33,7 +33,7 @@ object NetworkService {
             .addInterceptor(loggingInterceptor)
             .build()
 
-    private val gson: Gson? = GsonBuilder()
+    private val gson: Gson = GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             .create()
 

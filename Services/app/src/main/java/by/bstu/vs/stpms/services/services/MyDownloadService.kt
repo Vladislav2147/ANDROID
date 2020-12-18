@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.Environment
 import android.os.Environment.DIRECTORY_PICTURES
 import android.util.Log
-import android.widget.Toast
+import by.bstu.vs.stpms.services.ACTION
 import by.bstu.vs.stpms.services.R
 import java.io.File
 import java.text.DateFormat
@@ -41,6 +41,11 @@ class MyDownloadService : IntentService("MyDownloadService") {
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
             dm.enqueue(request)
+
+            val intent = Intent()
+            intent.action = ACTION
+            intent.putExtra("success", "success")
+            sendBroadcast(intent)
             Log.d(TAG, "onHandleIntent: Successful download")
         } catch (e: Exception) {
             Log.e(TAG, "onHandleIntent: ", e)

@@ -17,7 +17,6 @@ import android.util.Log
 import by.bstu.vs.stpms.services.App.Companion.CHANNEL_ID
 import by.bstu.vs.stpms.services.MainActivity
 import by.bstu.vs.stpms.services.R
-import java.util.*
 
 
 class MyLocationService: Service() {
@@ -70,14 +69,14 @@ class MyLocationService: Service() {
         Log.d(TAG, "onStartCommand")
         notificationIntent = Intent(this, MainActivity::class.java)
         startForeground(1, getNotification("text"))
-
-        Timer().apply {
-            schedule(object : TimerTask() {
-                override fun run() {
-                    stopSelf()
-                }
-            }, 10000)
-        }
+//
+//        Timer().apply {
+//            schedule(object : TimerTask() {
+//                override fun run() {
+//                    stopSelf()
+//                }
+//            }, 10000)
+//        }
         
         return START_STICKY
     }

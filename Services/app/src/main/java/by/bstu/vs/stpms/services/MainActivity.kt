@@ -1,10 +1,13 @@
 package by.bstu.vs.stpms.services
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import by.bstu.vs.stpms.services.services.MyDownloadService
@@ -12,6 +15,7 @@ import by.bstu.vs.stpms.services.services.MyLocationService
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val REQUEST_CODE: Int = 101
+const val ACTION = "by.bstu.vs.stpms.services"
 
 class MainActivity : AppCompatActivity() {
 
@@ -84,5 +88,28 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+
+
+    private val receiver = object: BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            Toast
+                    .makeText(this@MainActivity, p1?.getStringExtra("success"), Toast.LENGTH_SHORT)
+                    .show()
+        }
+
+    }
+
+    private val filter = IntentFilter(ACTION)
+
+    override fun onResume() {
+        registerReceiver(receiver, filter)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        unregisterReceiver(receiver)
+        super.onPause()
     }
 }
