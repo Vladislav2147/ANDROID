@@ -31,16 +31,16 @@ public class SubjectRepository implements Repository<Subject> {
 
     @Override
     public void insert(Subject subject, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(subjectDao, onError, SubjectDao::insert).execute(subject);
+        new OperationAsyncTask<>(subjectDao, onError, SubjectDao::insert).execute(subject);
     }
 
     @Override
     public void update(Subject subject, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(subjectDao, onError, SubjectDao::update).execute(subject);
+        new OperationAsyncTask<>(subjectDao, onError, SubjectDao::update).execute(subject);
     }
 
     @Override
     public void delete(Subject subject, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(subjectDao, onError, SubjectDao::delete).execute(subject);
+        new OperationAsyncTask<>(subjectDao, onError, SubjectDao::delete).execute(subject);
     }
 }

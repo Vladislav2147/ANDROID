@@ -6,13 +6,13 @@ import android.os.AsyncTask;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class DBAsyncTask<D, E> extends AsyncTask<E, Void, SQLiteException> {
+public class OperationAsyncTask<D, E> extends AsyncTask<E, Void, SQLiteException> {
 
     private D dao;
     private Consumer<SQLiteException> onError;
     private BiConsumer<D, E> doInBackground;
 
-    public DBAsyncTask(D dao, Consumer<SQLiteException> onError, BiConsumer<D, E> doInBackground) {
+    public OperationAsyncTask(D dao, Consumer<SQLiteException> onError, BiConsumer<D, E> doInBackground) {
         this.dao = dao;
         this.onError = onError;
         this.doInBackground = doInBackground;

@@ -37,17 +37,17 @@ public class LabRepository implements Repository<Lab> {
 
     @Override
     public void insert(Lab lab, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(labDao, onError, LabDao::insert).execute(lab);
+        new OperationAsyncTask<>(labDao, onError, LabDao::insert).execute(lab);
     }
 
     @Override
     public void update(Lab lab, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(labDao, onError, LabDao::update).execute(lab);
+        new OperationAsyncTask<>(labDao, onError, LabDao::update).execute(lab);
     }
 
     @Override
     public void delete(Lab lab, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(labDao, onError, LabDao::delete).execute(lab);
+        new OperationAsyncTask<>(labDao, onError, LabDao::delete).execute(lab);
     }
 
 }

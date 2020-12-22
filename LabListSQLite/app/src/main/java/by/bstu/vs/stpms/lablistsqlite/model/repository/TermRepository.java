@@ -30,16 +30,16 @@ public class TermRepository implements Repository<Term> {
 
     @Override
     public void insert(Term term, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(termDao, onError, TermDao::insert).execute(term);
+        new OperationAsyncTask<>(termDao, onError, TermDao::insert).execute(term);
     }
 
     @Override
     public void update(Term term, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(termDao, onError, TermDao::update).execute(term);
+        new OperationAsyncTask<>(termDao, onError, TermDao::update).execute(term);
     }
 
     @Override
     public void delete(Term term, Consumer<SQLiteException> onError) {
-        new DBAsyncTask<>(termDao, onError, TermDao::delete).execute(term);
+        new OperationAsyncTask<>(termDao, onError, TermDao::delete).execute(term);
     }
 }
