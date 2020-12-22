@@ -18,12 +18,16 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(DatabaseContract.TermTable.CREATE_TABLE);
+        sqLiteDatabase.execSQL(DatabaseContract.SubjectTable.CREATE_TABLE);
         sqLiteDatabase.execSQL(DatabaseContract.LabTable.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(DatabaseContract.LabTable.DELETE_TABLE);
+        sqLiteDatabase.execSQL(DatabaseContract.SubjectTable.DELETE_TABLE);
+        sqLiteDatabase.execSQL(DatabaseContract.TermTable.DELETE_TABLE);
         this.onCreate(sqLiteDatabase);
     }
 }

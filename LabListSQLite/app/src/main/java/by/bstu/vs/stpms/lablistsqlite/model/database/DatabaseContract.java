@@ -25,6 +25,8 @@ public final class DatabaseContract {
                 COLUMN_SEMESTER + INT_TYPE + "NOT NULL, " +
                 " UNIQUE(" + COLUMN_COURSE + ", " + COLUMN_SEMESTER + "))";
 
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+
     }
 
     public static abstract class SubjectTable {
@@ -42,6 +44,8 @@ public final class DatabaseContract {
                 " FOREIGN KEY ("    + COLUMN_TERM_ID + ")" +
                 " REFERENCES "      + TermTable.TABLE_NAME + "(" + TermTable.COLUMN_ID +") " +
                 "ON UPDATE CASCADE ON DELETE CASCADE)";
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
 
@@ -68,6 +72,8 @@ public final class DatabaseContract {
                 " FOREIGN KEY ("        + COLUMN_SUBJECT_ID + ")" +
                 " REFERENCES "          + SubjectTable.TABLE_NAME + "(" + SubjectTable.COLUMN_ID +") " +
                 "ON UPDATE CASCADE ON DELETE CASCADE)";
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
 }
