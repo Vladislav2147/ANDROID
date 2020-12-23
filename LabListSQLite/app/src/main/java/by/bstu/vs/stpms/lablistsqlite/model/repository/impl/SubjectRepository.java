@@ -22,6 +22,7 @@ public class SubjectRepository extends Repository<Subject> {
 
     private MutableLiveData<List<Subject>> subjectsByTermId;
     private LiveData<Subject> subject;
+    private int currentId = 0;
 
     public SubjectRepository(Context context) {
         super(context);
@@ -30,22 +31,31 @@ public class SubjectRepository extends Repository<Subject> {
     }
 
     public LiveData<List<Subject>> getSubjectsByTermId(int termId) {
-        new QueryAsyncTask<>(subjectsByTermId, () -> subjectDao.getAllByTermId(termId)).execute();
+        currentId = termId;
+        new QueryAsyncTask<>(subjectsByTermId, () -> subjectDao.getAllByTermId(currentId)).execute();
         return subjectsByTermId;
     }
 
     @Override
     public void insert(Subject subject, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(subjectDao, onError, SubjectDao::insert).execute(subject);
+        refresh();
     }
 
     @Override
     public void update(Subject subject, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(subjectDao, onError, SubjectDao::update).execute(subject);
+        refresh();
     }
 
     @Override
     public void delete(Subject subject, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(subjectDao, onError, SubjectDao::delete).execute(subject);
+        refresh();
+    }
+
+    @Override
+    protected void refresh() {
+        new QueryAsyncTask<>(subjectsByTermId, () -> subjectDao.getAllByTermId(currentId)).execute();
     }
 }

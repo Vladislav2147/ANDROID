@@ -18,8 +18,7 @@ public abstract class Repository<E> {
     }
 
     public abstract void insert(E item, Consumer<SQLiteException> onError);
-
     public abstract void update(E item, Consumer<SQLiteException> onError);
-
     public abstract void delete(E item, Consumer<SQLiteException> onError);
+    protected abstract void refresh();
 }

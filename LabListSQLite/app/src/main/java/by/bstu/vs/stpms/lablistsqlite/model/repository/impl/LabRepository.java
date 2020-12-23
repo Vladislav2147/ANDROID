@@ -22,6 +22,7 @@ public class LabRepository extends Repository<Lab> {
 
     private MutableLiveData<List<Lab>> labsBySubjectId;
     private MutableLiveData<Lab> lab;
+    private int currentId = 0;
 
 
     public LabRepository(Context context) {
@@ -32,7 +33,8 @@ public class LabRepository extends Repository<Lab> {
     }
 
     public LiveData<List<Lab>> getLabsBySubjectId(int subjectId) {
-        new QueryAsyncTask<>(labsBySubjectId, () -> labDao.getLabsBySubjectId(subjectId)).execute();
+        currentId = subjectId;
+        new QueryAsyncTask<>(labsBySubjectId, () -> labDao.getLabsBySubjectId(currentId)).execute();
         return labsBySubjectId;
     }
 
@@ -44,16 +46,24 @@ public class LabRepository extends Repository<Lab> {
     @Override
     public void insert(Lab lab, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(labDao, onError, LabDao::insert).execute(lab);
+        refresh();
     }
 
     @Override
     public void update(Lab lab, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(labDao, onError, LabDao::update).execute(lab);
+        refresh();
     }
 
     @Override
     public void delete(Lab lab, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(labDao, onError, LabDao::delete).execute(lab);
+        refresh();
+    }
+
+    @Override
+    protected void refresh() {
+        new QueryAsyncTask<>(labsBySubjectId, () -> labDao.getLabsBySubjectId(currentId)).execute();
     }
 
 }

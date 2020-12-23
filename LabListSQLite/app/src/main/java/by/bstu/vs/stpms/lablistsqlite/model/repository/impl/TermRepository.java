@@ -30,21 +30,29 @@ public class TermRepository extends Repository<Term> {
         super(context);
         termDao = new TermDaoImpl(database);
         terms = new MutableLiveData<>();
-        new QueryAsyncTask<>(terms, () -> termDao.getAll()).execute();
+        refresh();
     }
 
     @Override
     public void insert(Term term, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(termDao, onError, TermDao::insert).execute(term);
+        refresh();
     }
 
     @Override
     public void update(Term term, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(termDao, onError, TermDao::update).execute(term);
+        refresh();
     }
 
     @Override
     public void delete(Term term, Consumer<SQLiteException> onError) {
         new OperationAsyncTask<>(termDao, onError, TermDao::delete).execute(term);
+        refresh();
+    }
+
+    @Override
+    protected void refresh() {
+        new QueryAsyncTask<>(terms, () -> termDao.getAll()).execute();
     }
 }
