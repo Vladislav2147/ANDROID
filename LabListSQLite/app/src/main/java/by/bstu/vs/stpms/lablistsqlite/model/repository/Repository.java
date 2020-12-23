@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablistsqlite.model.database.DatabaseOpenHelper;
 
-public abstract class Repository<T> {
+public abstract class Repository<E> {
 
     protected SQLiteDatabase database;
 
@@ -17,9 +17,9 @@ public abstract class Repository<T> {
         database = openHelper.getReadableDatabase();
     }
 
-    public abstract void insert(T item, Consumer<SQLiteException> onError);
+    public abstract void insert(E item, Consumer<SQLiteException> onError);
 
-    public abstract void update(T item, Consumer<SQLiteException> onError);
+    public abstract void update(E item, Consumer<SQLiteException> onError);
 
-    public abstract void delete(T item, Consumer<SQLiteException> onError);
+    public abstract void delete(E item, Consumer<SQLiteException> onError);
 }

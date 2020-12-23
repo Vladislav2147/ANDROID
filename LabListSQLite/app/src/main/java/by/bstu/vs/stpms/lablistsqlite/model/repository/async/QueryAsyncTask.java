@@ -1,7 +1,9 @@
 package by.bstu.vs.stpms.lablistsqlite.model.repository.async;
 
 import android.os.AsyncTask;
+
 import androidx.lifecycle.MutableLiveData;
+
 import java.util.function.Supplier;
 
 public class QueryAsyncTask<E> extends AsyncTask<Void, Void, E> {
@@ -23,6 +25,6 @@ public class QueryAsyncTask<E> extends AsyncTask<Void, Void, E> {
     @Override
     protected void onPostExecute(E e) {
         super.onPostExecute(e);
-        liveData.setValue(e);
+        liveData.postValue(e);
     }
 }

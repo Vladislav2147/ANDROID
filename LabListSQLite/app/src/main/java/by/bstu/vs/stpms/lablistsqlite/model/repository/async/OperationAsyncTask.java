@@ -6,7 +6,10 @@ import android.os.AsyncTask;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class OperationAsyncTask<D, E> extends AsyncTask<E, Void, SQLiteException> {
+import by.bstu.vs.stpms.lablistsqlite.model.dao.Dao;
+import by.bstu.vs.stpms.lablistsqlite.model.entity.Entity;
+
+public class OperationAsyncTask<D extends Dao<E>, E extends Entity> extends AsyncTask<E, Void, SQLiteException> {
 
     private D dao;
     private Consumer<SQLiteException> onError;
