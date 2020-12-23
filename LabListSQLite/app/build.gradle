@@ -49,11 +49,6 @@ dependencies {
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     compileOnly "org.projectlombok:lombok:1.18.12"
 
-    def room_version = "2.2.5"
-
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.basgeekball:awesome-validation:4.2'
 }
