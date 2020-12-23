@@ -5,5 +5,4 @@ import by.bstu.vs.stpms.lablistsqlite.model.entity.Term;
 
 public interface TermDao extends Dao<Term> {
     List<Term> getAll();
-    Term getById(int id);
 }

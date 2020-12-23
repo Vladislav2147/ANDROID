@@ -28,7 +28,7 @@ public class SubjectDaoImpl implements SubjectDao {
         cv.put(DatabaseContract.SubjectTable.COLUMN_TERM_ID, subject.getTermId());
 
         if (database.insertOrThrow(DatabaseContract.SubjectTable.TABLE_NAME, null, cv) == -1) {
-            throw new SQLiteException("Lab insert failed");
+            throw new SQLiteException("Subject insert failed");
         }
     }
 
@@ -41,7 +41,7 @@ public class SubjectDaoImpl implements SubjectDao {
         );
 
         if (deleted == 0) {
-            throw new SQLiteException("Lab wasn't deleted");
+            throw new SQLiteException("Subject wasn't deleted");
         }
     }
 
@@ -61,7 +61,7 @@ public class SubjectDaoImpl implements SubjectDao {
         );
 
         if (updated == 0) {
-            throw new SQLiteException("Lab wasn't updated");
+            throw new SQLiteException("Subject wasn't updated");
         }
     }
 
