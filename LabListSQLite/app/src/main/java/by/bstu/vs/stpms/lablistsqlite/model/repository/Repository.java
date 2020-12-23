@@ -1,14 +1,25 @@
 package by.bstu.vs.stpms.lablistsqlite.model.repository;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import java.util.function.Consumer;
 
-public interface Repository<T> {
+import by.bstu.vs.stpms.lablistsqlite.model.database.DatabaseOpenHelper;
 
-    void insert(T item, Consumer<SQLiteException> onError);
+public abstract class Repository<T> {
 
-    void update(T item, Consumer<SQLiteException> onError);
+    protected SQLiteDatabase database;
 
-    void delete(T item, Consumer<SQLiteException> onError);
+    public Repository(Context context) {
+        DatabaseOpenHelper openHelper = new DatabaseOpenHelper(context);
+        database = openHelper.getReadableDatabase();
+    }
+
+    public abstract void insert(T item, Consumer<SQLiteException> onError);
+
+    public abstract void update(T item, Consumer<SQLiteException> onError);
+
+    public abstract void delete(T item, Consumer<SQLiteException> onError);
 }

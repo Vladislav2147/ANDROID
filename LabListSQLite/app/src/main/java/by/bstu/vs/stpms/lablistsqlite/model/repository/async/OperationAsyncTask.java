@@ -1,4 +1,4 @@
-package by.bstu.vs.stpms.lablistsqlite.model.repository;
+package by.bstu.vs.stpms.lablistsqlite.model.repository.async;
 
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;

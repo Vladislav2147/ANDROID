@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
-import by.bstu.vs.stpms.lablistsqlite.model.repository.LabRepository;
+import by.bstu.vs.stpms.lablistsqlite.model.repository.impl.LabRepository;
 import by.bstu.vs.stpms.lablistsqlite.ui.AbstractCrudViewModel;
 import lombok.Getter;
 

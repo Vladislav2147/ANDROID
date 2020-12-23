@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Subject;
-import by.bstu.vs.stpms.lablistsqlite.model.repository.SubjectRepository;
+import by.bstu.vs.stpms.lablistsqlite.model.repository.impl.SubjectRepository;
 import by.bstu.vs.stpms.lablistsqlite.ui.AbstractCrudViewModel;
 
 public class SubjectViewModel extends AbstractCrudViewModel<Subject, SubjectRepository> {

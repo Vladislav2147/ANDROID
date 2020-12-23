@@ -2,7 +2,6 @@ package by.bstu.vs.stpms.lablistsqlite.model.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
@@ -17,19 +16,11 @@ import static androidx.room.ForeignKey.CASCADE;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(tableName = "subject", foreignKeys = @ForeignKey(
-        entity = Term.class,
-        parentColumns = "id",
-        childColumns = "term_id",
-        onUpdate = CASCADE, onDelete = CASCADE
-))
-public class Subject {
+public class Subject implements Entity {
 
-    @PrimaryKey(autoGenerate = true)
     private Integer id;
     @NonNull
     private String name;
-    @ColumnInfo(name = "term_id")
     private int termId;
 
 }

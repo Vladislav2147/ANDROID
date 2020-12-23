@@ -1,6 +1,7 @@
-package by.bstu.vs.stpms.lablistsqlite.model.repository;
+package by.bstu.vs.stpms.lablistsqlite.model.repository.impl;
 
 import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteException;
 
 import androidx.lifecycle.LiveData;
@@ -11,17 +12,18 @@ import java.util.function.Consumer;
 import by.bstu.vs.stpms.lablistsqlite.model.LabDatabase;
 import by.bstu.vs.stpms.lablistsqlite.model.dao.SubjectDao;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Subject;
+import by.bstu.vs.stpms.lablistsqlite.model.repository.async.OperationAsyncTask;
+import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
 
-public class SubjectRepository implements Repository<Subject> {
+public class SubjectRepository extends Repository<Subject> {
 
     private SubjectDao subjectDao;
 
     private LiveData<List<Subject>> subjectsByTermId;
     private LiveData<Subject> subject;
 
-    public SubjectRepository(Application application) {
-        LabDatabase db = LabDatabase.getDatabase(application);
-        subjectDao = db.getSubjectDao();
+    public SubjectRepository(Context context) {
+        super(context);
     }
 
     public LiveData<List<Subject>> getSubjectsByTermId(int termId) {

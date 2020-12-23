@@ -9,8 +9,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.function.Consumer;
-
 import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
+
 
 public abstract class AbstractCrudViewModel<E, R extends Repository<E>> extends AndroidViewModel {
 
