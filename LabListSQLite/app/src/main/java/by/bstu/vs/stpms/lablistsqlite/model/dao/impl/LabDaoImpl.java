@@ -8,12 +8,14 @@ import android.database.sqlite.SQLiteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.dao.LabDao;
 import by.bstu.vs.stpms.lablistsqlite.model.database.DatabaseContract;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
 
 public class LabDaoImpl implements LabDao {
 
+    private final static String TAG = "LabDaoImpl";
     private SQLiteDatabase database;
 
     public LabDaoImpl(SQLiteDatabase database) {
@@ -32,8 +34,11 @@ public class LabDaoImpl implements LabDao {
         cv.put(DatabaseContract.LabTable.COLUMN_IS_PASSED, lab.isPassed());
 
         if (database.insertOrThrow(DatabaseContract.LabTable.TABLE_NAME, null, cv) == -1) {
-            throw new SQLiteException("Lab insert failed");
+            SQLiteException exception = new SQLiteException("Lab insert failed");
+            FileLog.getInstance().error(TAG, "insert: Lab " + lab + " insert failed", exception);
+            throw exception;
         }
+        FileLog.getInstance().info(TAG, "insert: success " + lab);
     }
 
     @Override
@@ -49,9 +54,12 @@ public class LabDaoImpl implements LabDao {
         );
 
         if (cursor.moveToFirst()) {
+            FileLog.getInstance().info(TAG, "getById: success id = " + id);
             return getByCursor(cursor);
         } else {
-            throw new SQLiteException("Lab with id = " + id + " not found");
+            SQLiteException exception = new SQLiteException("Lab with id = " + id + " not found");
+            FileLog.getInstance().error(TAG, "getById: Lab with id = " + id + " not found", exception);
+            throw exception;
         }
     }
 
@@ -64,8 +72,11 @@ public class LabDaoImpl implements LabDao {
         );
 
         if (deleted == 0) {
-            throw new SQLiteException("Lab wasn't deleted");
+            SQLiteException exception = new SQLiteException("Lab wasn't deleted");
+            FileLog.getInstance().error(TAG, "delete: Lab " + lab + " wasn't deleted", exception);
+            throw exception;
         }
+        FileLog.getInstance().info(TAG, "delete: success " + lab);
     }
 
     @Override
@@ -87,8 +98,11 @@ public class LabDaoImpl implements LabDao {
         );
 
         if (updated == 0) {
-            throw new SQLiteException("Lab wasn't updated");
+            SQLiteException exception = new SQLiteException("Lab wasn't updated");
+            FileLog.getInstance().error(TAG, "update: Lab " + lab + " wasn't updated", exception);
+            throw exception;
         }
+        FileLog.getInstance().info(TAG, "update: success " + lab);
     }
 
     @Override
@@ -112,6 +126,7 @@ public class LabDaoImpl implements LabDao {
                 labs.add(getByCursor(cursor));
             } while (cursor.moveToNext());
         }
+        FileLog.getInstance().info(TAG, "getLabsBySubjectId: id = " + subjectId + "; rows = " + labs.size());
         return labs;
     }
 
@@ -135,6 +150,7 @@ public class LabDaoImpl implements LabDao {
                 labs.add(getByCursor(cursor));
             } while (cursor.moveToNext());
         }
+        FileLog.getInstance().info(TAG, "getLabsByStateAndSubjectId: id = " + subjectId + "; rows = " + labs.size());
         return labs;
     }
 
