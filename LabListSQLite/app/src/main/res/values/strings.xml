@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Lab List</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_term">Term</string>
+    <string name="menu_subject">Subject</string>
+    <string name="menu_lab">Lab</string>
+    <string name="default_term">X course X semester</string>
+    <string name="default_subject">Subject name</string>
+    <string name="default_lab">Lab name</string>
+    <string name="submit">Submit</string>
+    <string name="course">Course</string>
+    <string name="semester">Semester</string>
+    <string name="invalid">Invalid</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="mark">Mark</string>
+    <string name="description">Description</string>
+    <string name="code_reference">Code Reference</string>
+    <string name="choose_file">Choose File</string>
+    <string name="save">Save</string>
+    <string name="task_reference">Task reference</string>
+</resources>

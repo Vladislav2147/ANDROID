@@ -3,7 +3,6 @@ package by.bstu.vs.stpms.lablistsqlite.model.repository.impl;
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
@@ -23,8 +22,6 @@ public class TermRepository extends Repository<Term> {
 
     @Getter
     private MutableLiveData<List<Term>> terms;
-    private LiveData<Term> term;
-
 
     public TermRepository(Context context) {
         super(context);

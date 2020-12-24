@@ -21,7 +21,6 @@ public class SubjectRepository extends Repository<Subject> {
     private SubjectDao subjectDao;
 
     private MutableLiveData<List<Subject>> subjectsByTermId;
-    private LiveData<Subject> subject;
     private int currentId = 0;
 
     public SubjectRepository(Context context) {
