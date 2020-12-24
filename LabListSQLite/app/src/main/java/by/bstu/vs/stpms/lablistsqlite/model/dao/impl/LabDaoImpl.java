@@ -23,22 +23,27 @@ public class LabDaoImpl implements LabDao {
     }
 
     @Override
-    public void insert(Lab lab) {
+    public void insert(Lab item) {
         ContentValues cv = new ContentValues();
-        cv.put(DatabaseContract.LabTable.COLUMN_ID, lab.getId());
-        cv.put(DatabaseContract.LabTable.COLUMN_NAME, lab.getName());
-        cv.put(DatabaseContract.LabTable.COLUMN_SUBJECT_ID, lab.getSubjectId());
-        cv.put(DatabaseContract.LabTable.COLUMN_TASK_PATH, lab.getTaskFilePath());
-        cv.put(DatabaseContract.LabTable.COLUMN_CODE_REFERENCE, lab.getCodeReference());
-        cv.put(DatabaseContract.LabTable.COLUMN_NOTES, lab.getNotes());
-        cv.put(DatabaseContract.LabTable.COLUMN_IS_PASSED, lab.isPassed());
+        cv.put(DatabaseContract.LabTable.COLUMN_ID, item.getId());
+        cv.put(DatabaseContract.LabTable.COLUMN_NAME, item.getName());
+        cv.put(DatabaseContract.LabTable.COLUMN_SUBJECT_ID, item.getSubjectId());
+        cv.put(DatabaseContract.LabTable.COLUMN_TASK_PATH, item.getTaskFilePath());
+        cv.put(DatabaseContract.LabTable.COLUMN_CODE_REFERENCE, item.getCodeReference());
+        cv.put(DatabaseContract.LabTable.COLUMN_NOTES, item.getNotes());
+        cv.put(DatabaseContract.LabTable.COLUMN_IS_PASSED, item.isPassed());
 
-        if (database.insertOrThrow(DatabaseContract.LabTable.TABLE_NAME, null, cv) == -1) {
-            SQLiteException exception = new SQLiteException("Lab insert failed");
-            FileLog.getInstance().error(TAG, "insert: Lab " + lab + " insert failed", exception);
-            throw exception;
+        try {
+            if (database.insertOrThrow(DatabaseContract.LabTable.TABLE_NAME, null, cv) == -1) {
+                SQLiteException exception = new SQLiteException("Lab insert failed");
+                FileLog.getInstance().error(TAG, "insert: Lab " + item + " insert failed", exception);
+                throw exception;
+            }
+            FileLog.getInstance().info(TAG, "insert: success " + item);
+        } catch (Exception e) {
+            FileLog.getInstance().error(TAG, "insert: Lab " + item + " insert failed", e);
+            throw new SQLiteException("Lab insert failed");
         }
-        FileLog.getInstance().info(TAG, "insert: success " + lab);
     }
 
     @Override
@@ -64,45 +69,45 @@ public class LabDaoImpl implements LabDao {
     }
 
     @Override
-    public void delete(Lab lab) {
+    public void delete(Lab item) {
         int deleted = database.delete(
                 DatabaseContract.LabTable.TABLE_NAME,
                 "id == ?",
-                new String[]{lab.getId().toString()}
+                new String[]{item.getId().toString()}
         );
 
         if (deleted == 0) {
             SQLiteException exception = new SQLiteException("Lab wasn't deleted");
-            FileLog.getInstance().error(TAG, "delete: Lab " + lab + " wasn't deleted", exception);
+            FileLog.getInstance().error(TAG, "delete: Lab " + item + " wasn't deleted", exception);
             throw exception;
         }
-        FileLog.getInstance().info(TAG, "delete: success " + lab);
+        FileLog.getInstance().info(TAG, "delete: success " + item);
     }
 
     @Override
-    public void update(Lab lab) {
+    public void update(Lab item) {
         ContentValues cv = new ContentValues();
-        cv.put(DatabaseContract.LabTable.COLUMN_ID, lab.getId());
-        cv.put(DatabaseContract.LabTable.COLUMN_NAME, lab.getName());
-        cv.put(DatabaseContract.LabTable.COLUMN_SUBJECT_ID, lab.getSubjectId());
-        cv.put(DatabaseContract.LabTable.COLUMN_TASK_PATH, lab.getTaskFilePath());
-        cv.put(DatabaseContract.LabTable.COLUMN_CODE_REFERENCE, lab.getCodeReference());
-        cv.put(DatabaseContract.LabTable.COLUMN_NOTES, lab.getNotes());
-        cv.put(DatabaseContract.LabTable.COLUMN_IS_PASSED, lab.isPassed());
+        cv.put(DatabaseContract.LabTable.COLUMN_ID, item.getId());
+        cv.put(DatabaseContract.LabTable.COLUMN_NAME, item.getName());
+        cv.put(DatabaseContract.LabTable.COLUMN_SUBJECT_ID, item.getSubjectId());
+        cv.put(DatabaseContract.LabTable.COLUMN_TASK_PATH, item.getTaskFilePath());
+        cv.put(DatabaseContract.LabTable.COLUMN_CODE_REFERENCE, item.getCodeReference());
+        cv.put(DatabaseContract.LabTable.COLUMN_NOTES, item.getNotes());
+        cv.put(DatabaseContract.LabTable.COLUMN_IS_PASSED, item.isPassed());
 
         int updated = database.update(
                 DatabaseContract.LabTable.TABLE_NAME,
                 cv,
                 "id == ?",
-                new String[]{lab.getId().toString()}
+                new String[]{item.getId().toString()}
         );
 
         if (updated == 0) {
             SQLiteException exception = new SQLiteException("Lab wasn't updated");
-            FileLog.getInstance().error(TAG, "update: Lab " + lab + " wasn't updated", exception);
+            FileLog.getInstance().error(TAG, "update: Lab " + item + " wasn't updated", exception);
             throw exception;
         }
-        FileLog.getInstance().info(TAG, "update: success " + lab);
+        FileLog.getInstance().info(TAG, "update: success " + item);
     }
 
     @Override

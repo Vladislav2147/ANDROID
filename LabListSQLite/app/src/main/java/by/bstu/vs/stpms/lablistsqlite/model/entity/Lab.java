@@ -2,6 +2,7 @@ package by.bstu.vs.stpms.lablistsqlite.model.entity;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
 import java.io.Serializable;
 
 import by.bstu.vs.stpms.lablistsqlite.BR;
@@ -32,5 +33,18 @@ public class Lab extends BaseObservable implements Serializable, Entity {
     public void setPassed(boolean passed) {
         isPassed = passed;
         notifyPropertyChanged(BR.passed);
+    }
+
+    @Override
+    public String toString() {
+        return "Lab{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subjectId=" + subjectId +
+                ", taskFilePath='" + taskFilePath + '\'' +
+                ", codeReference='" + codeReference + '\'' +
+                ", notes='" + notes + '\'' +
+                ", isPassed=" + isPassed +
+                "} " + super.toString();
     }
 }

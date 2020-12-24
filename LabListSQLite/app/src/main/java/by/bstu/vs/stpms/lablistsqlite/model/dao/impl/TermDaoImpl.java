@@ -8,12 +8,14 @@ import android.database.sqlite.SQLiteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.dao.TermDao;
 import by.bstu.vs.stpms.lablistsqlite.model.database.DatabaseContract;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Term;
 
 public class TermDaoImpl implements TermDao {
 
+    private final static String TAG = "TermDaoImpl";
     private SQLiteDatabase database;
 
     public TermDaoImpl(SQLiteDatabase database) {
@@ -27,7 +29,15 @@ public class TermDaoImpl implements TermDao {
         cv.put(DatabaseContract.TermTable.COLUMN_COURSE, item.getCourse());
         cv.put(DatabaseContract.TermTable.COLUMN_SEMESTER, item.getSemester());
 
-        if (database.insertOrThrow(DatabaseContract.TermTable.TABLE_NAME, null, cv) == -1) {
+        try {
+            if (database.insertOrThrow(DatabaseContract.TermTable.TABLE_NAME, null, cv) == -1) {
+                SQLiteException exception = new SQLiteException("Term insert failed");
+                FileLog.getInstance().error(TAG, "insert: Term " + item + " insert failed", exception);
+                throw exception;
+            }
+            FileLog.getInstance().info(TAG, "insert: success " + item);
+        } catch (Exception e) {
+            FileLog.getInstance().error(TAG, "insert: Term " + item + " insert failed", e);
             throw new SQLiteException("Term insert failed");
         }
     }
@@ -41,8 +51,11 @@ public class TermDaoImpl implements TermDao {
         );
 
         if (deleted == 0) {
-            throw new SQLiteException("Term wasn't deleted");
+            SQLiteException exception = new SQLiteException("Term wasn't deleted");
+            FileLog.getInstance().error(TAG, "delete: Term " + item + " wasn't deleted", exception);
+            throw exception;
         }
+        FileLog.getInstance().info(TAG, "delete: success " + item);
     }
 
     @Override
@@ -60,8 +73,11 @@ public class TermDaoImpl implements TermDao {
         );
 
         if (updated == 0) {
-            throw new SQLiteException("Term wasn't updated");
+            SQLiteException exception = new SQLiteException("Term wasn't updated");
+            FileLog.getInstance().error(TAG, "update: Term " + item + " wasn't updated", exception);
+            throw exception;
         }
+        FileLog.getInstance().info(TAG, "update: success " + item);
     }
 
     @Override
@@ -84,7 +100,7 @@ public class TermDaoImpl implements TermDao {
                 terms.add(getByCursor(cursor));
             } while (cursor.moveToNext());
         }
-
+        FileLog.getInstance().info(TAG, "getAll: rows = " + terms.size());
         return terms;
     }
 

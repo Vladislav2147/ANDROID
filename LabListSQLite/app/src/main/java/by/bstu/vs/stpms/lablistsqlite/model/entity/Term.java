@@ -1,7 +1,5 @@
 package by.bstu.vs.stpms.lablistsqlite.model.entity;
 
-import org.jetbrains.annotations.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +15,16 @@ public class Term implements Entity {
     private int course;
     private int semester;
 
-    @NotNull
-    @Override
-    public String toString() {
+    public String format() {
         return course + " Course " + semester + " Semester";
     }
 
+    @Override
+    public String toString() {
+        return "Term{" +
+                "id=" + id +
+                ", course=" + course +
+                ", semester=" + semester +
+                '}';
+    }
 }

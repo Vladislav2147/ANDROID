@@ -18,4 +18,12 @@ public class Subject implements Entity {
     private String name;
     private int termId;
 
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", termId=" + termId +
+                '}';
+    }
 }

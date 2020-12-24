@@ -11,11 +11,12 @@ import java.time.format.DateTimeFormatter;
 
 public class FileLog {
 
-    private final static String TAG = "MyLog";
-    private final static long MAX_BYTE_SIZE = 4 * 1024 * 1024;
-    private File logFile;
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss:SSS");
     private static FileLog instance;
+
+    private final static String TAG = "MyLog";
+    private final static long MAX_BYTE_SIZE = 4 * 1024 * 1024; // 4 Mb
+    private final File logFile;
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss:SSS");
 
     public FileLog(Context context) {
         logFile = new File(context.getFilesDir(), "log.txt");
@@ -44,7 +45,7 @@ public class FileLog {
 
         Log.i(tag, message);
         String currentTime = dtf.format(LocalDateTime.now());
-        String toLog = "INFO " + currentTime + " " + tag + ": " + message;
+        String toLog = "INFO\t" + currentTime + " " + tag + ": " + message;
         append(toLog);
 
     }
@@ -53,7 +54,7 @@ public class FileLog {
 
         Log.e(tag, "Error: " + message, e);
         String currentTime = dtf.format(LocalDateTime.now());
-        String toLog = "ERROR " + currentTime + " " + tag + " " + message + "; " + e;
+        String toLog = "ERROR\t" + currentTime + " " + tag + " " + message + "; " + e;
         append(toLog);
 
     }

@@ -2,7 +2,7 @@ package by.bstu.vs.stpms.lablistsqlite.model.database;
 
 public final class DatabaseContract {
 
-    public static final int     DATABASE_VERSION    = 7;
+    public static final int     DATABASE_VERSION    = 8;
     public static final String  DATABASE_NAME       = "LabListDB";
     private static final String INT_TYPE            = " INTEGER";
     private static final String TEXT_TYPE           = " TEXT";
@@ -43,7 +43,8 @@ public final class DatabaseContract {
                 COLUMN_TERM_ID      + INT_TYPE  + "NOT NULL, " +
                 " FOREIGN KEY ("    + COLUMN_TERM_ID + ")" +
                 " REFERENCES "      + TermTable.TABLE_NAME + "(" + TermTable.COLUMN_ID +") " +
-                "ON UPDATE CASCADE ON DELETE CASCADE)";
+                " ON UPDATE CASCADE ON DELETE CASCADE, " +
+                " UNIQUE(" + COLUMN_NAME + ", " + COLUMN_TERM_ID + "))";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
@@ -71,7 +72,8 @@ public final class DatabaseContract {
                 COLUMN_IS_PASSED        + INT_TYPE   + "NOT NULL CHECK(" + COLUMN_IS_PASSED + " in (0,1)), " +
                 " FOREIGN KEY ("        + COLUMN_SUBJECT_ID + ")" +
                 " REFERENCES "          + SubjectTable.TABLE_NAME + "(" + SubjectTable.COLUMN_ID +") " +
-                "ON UPDATE CASCADE ON DELETE CASCADE)";
+                " ON UPDATE CASCADE ON DELETE CASCADE," +
+                " UNIQUE(" + COLUMN_NAME + ", " + COLUMN_SUBJECT_ID + "))";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
