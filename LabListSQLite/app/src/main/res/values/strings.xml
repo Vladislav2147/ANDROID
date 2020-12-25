@@ -39,4 +39,8 @@
     <string name="log_title">Open Log file</string>
     <string name="all_labs">All Labs</string>
     <string name="log_summary">Opens log file from internal app storage to view reports of operations execution</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="details">Details</string>
+    <string name="create_lab">Create lab</string>
 </resources>

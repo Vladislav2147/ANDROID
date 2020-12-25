@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/labDetailsFragment"
         android:name="by.bstu.vs.stpms.lablistsqlite.ui.lab.LabDetailsFragment"
-        android:label="lab_details_fragment"
+        android:label="@string/details"
         tools:layout="@layout/fragment_lab_details" >
         <argument
             android:name="labId"
@@ -71,7 +71,7 @@
     <fragment
         android:id="@+id/labCreateFragment"
         android:name="by.bstu.vs.stpms.lablistsqlite.ui.lab.LabCreateFragment"
-        android:label="LabCreateFragment" >
+        android:label="@string/create_lab" >
         <argument
             android:name="lab"
             app:argType="by.bstu.vs.stpms.lablistsqlite.model.entity.Lab"
@@ -84,5 +84,18 @@
     <fragment
         android:id="@+id/nav_settings"
         android:name="by.bstu.vs.stpms.lablistsqlite.ui.settings.SettingsFragment"
-        android:label="Settings" />
+        android:label="Settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_nav_log"
+            app:destination="@id/nav_log"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_log"
+        android:name="by.bstu.vs.stpms.lablistsqlite.ui.settings.LogFragment"
+        android:label="Log"
+        tools:layout="@layout/fragment_log" />
 </navigation>

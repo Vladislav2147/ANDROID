@@ -6,8 +6,11 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class FileLog {
 
@@ -68,5 +71,19 @@ public class FileLog {
         } catch (IOException e) {
             Log.e(TAG, "appendToFile ", e);
         }
+    }
+
+    public String readLog() {
+        StringBuilder stringBuilder = new StringBuilder("");
+        try {
+            List<String> lines = Files.readAllLines(logFile.toPath(), StandardCharsets.UTF_8);
+            for(String line: lines) {
+                stringBuilder.append(line).append("\n");
+            }
+            Log.i(TAG, "readLog success");
+        } catch (IOException e) {
+            Log.e(TAG, "readLog ", e);
+        }
+        return stringBuilder.toString();
     }
 }

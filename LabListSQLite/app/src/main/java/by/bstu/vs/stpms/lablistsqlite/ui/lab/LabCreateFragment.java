@@ -41,20 +41,9 @@ public class LabCreateFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getActivity().findViewById(R.id.fab).setVisibility(View.GONE);
-    }
-
     public void save() {
         mViewModel.save();
         getActivity().onBackPressed();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        getActivity().findViewById(R.id.fab).setVisibility(View.VISIBLE);
-    }
 }

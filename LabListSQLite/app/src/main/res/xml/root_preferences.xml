@@ -22,6 +22,7 @@
             app:key="dev_mode"
             app:title="@string/dev_title" />
         <Preference
+            app:key="open_log"
             app:dependency="dev_mode"
             app:title="@string/log_title"
             app:summary="@string/log_summary"/>

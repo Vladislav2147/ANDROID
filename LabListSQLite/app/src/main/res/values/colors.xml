@@ -5,6 +5,9 @@
     <color name="material_400">#9CCC65</color>
     <color name="red_600">#E53935</color>
     <color name="red_400">#EF5350</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="itemBackground">#353535</color>
+    <color name="activityBackground">#535353</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="button">#B71C1C</color>
 </resources>
