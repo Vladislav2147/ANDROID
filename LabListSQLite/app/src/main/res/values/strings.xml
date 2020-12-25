@@ -27,18 +27,16 @@
     <string name="save">Save</string>
     <string name="task_reference">Task reference</string>
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="appearance_header">Appearance</string>
+    <string name="advanced_header">Avanced</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <!-- Appearance Preferences -->
+    <string name="theme_title">Night mode</string>
+    <string name="font_title">Font size</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- Advanced Preferences -->
+    <string name="dev_title">Developer settings</string>
+    <string name="log_title">Open Log file</string>
     <string name="all_labs">All Labs</string>
+    <string name="log_summary">Opens log file from internal app storage to view reports of operations execution</string>
 </resources>
