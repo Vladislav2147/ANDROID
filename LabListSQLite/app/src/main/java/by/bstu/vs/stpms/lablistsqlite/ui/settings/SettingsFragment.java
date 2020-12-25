@@ -33,4 +33,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
         super.onViewCreated(view, savedInstanceState);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

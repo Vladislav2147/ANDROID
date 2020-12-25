@@ -28,11 +28,11 @@
     <string name="task_reference">Task reference</string>
     <!-- Preference Titles -->
     <string name="appearance_header">Appearance</string>
-    <string name="advanced_header">Avanced</string>
+    <string name="advanced_header">Advanced</string>
 
     <!-- Appearance Preferences -->
     <string name="theme_title">Night mode</string>
-    <string name="font_title">Font size</string>
+    <string name="header_image">Header image</string>
 
     <!-- Advanced Preferences -->
     <string name="dev_title">Developer settings</string>

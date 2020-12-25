@@ -13,11 +13,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="textInputStyle">@style/InputStyle</item>
         <item name="itemBackgroundColor">@color/white</item>
+        <item name="navigationViewBackground">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Theme.DarkTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:windowBackground">@color/activityBackground</item>
+        <item name="navigationViewBackground">@color/activityBackground</item>
         <item name="itemBackgroundColor">@color/itemBackground</item>
         <item name="android:itemBackground">@color/itemBackground</item>
         <item name="actionBarColor">@color/itemBackground</item>
@@ -26,6 +28,7 @@
         <item name="android:editTextColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
         <item name="colorAccent">@color/button</item>
+        <item name="colorSecondary">@color/button</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="actionBarStyle">@style/TitleTextStyle</item>
@@ -37,6 +40,7 @@
 
     <declare-styleable name="bg">
         <attr name="itemBackgroundColor" format="color"/>
+        <attr name="navigationViewBackground" format="color"/>
         <attr name="actionBarColor" format="color"/>
     </declare-styleable>
 
