@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowBackground">@color/activityBackground</item>
-        <item name="itemBackgroundColor">@color/itemBackground</item>
-        <item name="android:itemBackground">@color/itemBackground</item>
-        <item name="actionBarColor">@color/itemBackground</item>
-        <item name="colorPrimaryDark">#202020</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:editTextColor">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
-        <item name="colorAccent">@color/button</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="actionBarStyle">@style/TitleTextStyle</item>
+
+    <style name="CustomEditStyle" parent="Widget.AppCompat.EditText">
+
+    </style>
+    <style name="CustomInputStyle" parent="Widget.Design.TextInputLayout">
+
     </style>
 
-    <declare-styleable name="bg">
-        <attr name="itemBackgroundColor" format="color"/>
-        <attr name="actionBarColor" format="color"/>
-    </declare-styleable>
-
-    <style name="TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/white</item>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/itemBackground</item>
     </style>
 
+    <style name="CustomPopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/itemBackground</item>
+    </style>
     <style name="MarginStyle">
         <item name="android:layout_margin">@dimen/item_indent</item>
     </style>

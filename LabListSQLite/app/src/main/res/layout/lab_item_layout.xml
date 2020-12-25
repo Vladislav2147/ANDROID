@@ -14,7 +14,8 @@
         android:layout_marginTop="1dp"
         android:focusable="true"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="?attr/itemBackgroundColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
