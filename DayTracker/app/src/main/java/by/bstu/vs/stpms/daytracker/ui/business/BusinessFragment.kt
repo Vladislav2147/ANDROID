@@ -1,4 +1,4 @@
-package by.bstu.vs.stpms.daytracker.ui.home
+package by.bstu.vs.stpms.daytracker.ui.business
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,22 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import by.bstu.vs.stpms.daytracker.R
 
-class HomeFragment : Fragment() {
+class BusinessFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var businessViewModel: BusinessViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        businessViewModel =
+                ViewModelProvider(this).get(BusinessViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_business, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
         return root
     }
 }
