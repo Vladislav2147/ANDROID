@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +21,7 @@ public class FileLog {
     private final static long MAX_BYTE_SIZE = 4 * 1024 * 1024; // 4 Mb
     private final static int MAX_READ_LINES = 999;
     private final File logFile;
-    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss:SSS");
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss:SSSxxx");
 
     public FileLog(Context context) {
         logFile = new File(context.getFilesDir(), "log.txt");
@@ -49,7 +49,7 @@ public class FileLog {
     public void info(String tag, String message) {
 
         Log.i(tag, message);
-        String currentTime = dtf.format(LocalDateTime.now());
+        String currentTime = ZonedDateTime.now().format(dtf);
         String toLog = "INFO\t" + currentTime + " " + tag + ": " + message;
         append(toLog);
 
@@ -58,7 +58,7 @@ public class FileLog {
     public void error(String tag, String message, Throwable e) {
 
         Log.e(tag, "Error: " + message, e);
-        String currentTime = dtf.format(LocalDateTime.now());
+        String currentTime = ZonedDateTime.now().format(dtf);
         String toLog = "ERROR\t" + currentTime + " " + tag + " " + message + "; " + e;
         append(toLog);
 

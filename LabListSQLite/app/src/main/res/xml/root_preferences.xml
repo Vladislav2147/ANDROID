@@ -9,7 +9,6 @@
 
         <ListPreference
             app:key="header_image"
-            app:defaultValue="normal"
             app:entries="@array/image_entries"
             app:entryValues="@array/image_values"
             android:defaultValue="1"

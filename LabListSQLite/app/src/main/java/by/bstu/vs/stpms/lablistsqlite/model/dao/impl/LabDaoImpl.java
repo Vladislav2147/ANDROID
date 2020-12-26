@@ -131,7 +131,7 @@ public class LabDaoImpl implements LabDao {
                 labs.add(getByCursor(cursor));
             } while (cursor.moveToNext());
         }
-        FileLog.getInstance().info(TAG, "getLabsBySubjectId: id = " + subjectId + "; rows = " + labs.size());
+        FileLog.getInstance().info(TAG, "getLabsBySubjectIdSortedByState: id = " + subjectId + "; rows = " + labs.size());
         return labs;
     }
 

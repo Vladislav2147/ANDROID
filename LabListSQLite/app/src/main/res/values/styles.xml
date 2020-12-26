@@ -16,6 +16,14 @@
     <style name="CustomPopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/itemBackground</item>
     </style>
+
+    <style name="PopupMenuStyle" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/itemBackground</item>
+    </style>
+    <style name="WhitePopupMenu" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/white</item>
+    </style>
+
     <style name="MarginStyle">
         <item name="android:layout_margin">@dimen/item_indent</item>
     </style>
