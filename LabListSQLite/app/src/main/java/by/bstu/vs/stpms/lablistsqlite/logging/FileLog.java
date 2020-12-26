@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 
 public class FileLog {
@@ -18,6 +19,7 @@ public class FileLog {
 
     private final static String TAG = "MyLog";
     private final static long MAX_BYTE_SIZE = 4 * 1024 * 1024; // 4 Mb
+    private final static int MAX_READ_LINES = 999;
     private final File logFile;
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss:SSS");
 
@@ -74,9 +76,11 @@ public class FileLog {
     }
 
     public String readLog() {
-        StringBuilder stringBuilder = new StringBuilder("");
+        StringBuilder stringBuilder = new StringBuilder();
         try {
             List<String> lines = Files.readAllLines(logFile.toPath(), StandardCharsets.UTF_8);
+            Collections.reverse(lines);
+            lines = lines.subList(0, MAX_READ_LINES < lines.size() ? (int) MAX_BYTE_SIZE : lines.size());
             for(String line: lines) {
                 stringBuilder.append(line).append("\n");
             }
