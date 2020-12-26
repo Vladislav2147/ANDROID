@@ -13,7 +13,7 @@ import java.util.*
 @TypeConverters(BusinessTypeConverter::class, CalendarConverter::class)
 class Business(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int? = null,
     @ColumnInfo(name = "start_time")
     var startTime: Calendar,
     @ColumnInfo(name = "end_time")
