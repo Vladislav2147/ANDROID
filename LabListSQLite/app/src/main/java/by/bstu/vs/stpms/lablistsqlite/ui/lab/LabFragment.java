@@ -4,6 +4,9 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -34,6 +37,13 @@ public class LabFragment extends Fragment {
     private Consumer<SQLiteException> showError;
     private int subjectId;
     private NavController navController;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -102,5 +112,28 @@ public class LabFragment extends Fragment {
         recyclerView = root.findViewById(R.id.rv_lab);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(labAdapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Do something that differs the Activity's menu here
+        inflater.inflate(R.menu.lab_sorting_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_default:
+                labViewModel.getLabsBySubjectId(subjectId);
+                return true;
+            case R.id.sort_not_done_first:
+                labViewModel.getLabsBySubjectIdSortedByState(subjectId);
+                return true;
+            default:
+                break;
+        }
+
+        return false;
     }
 }

@@ -111,6 +111,31 @@ public class LabDaoImpl implements LabDao {
     }
 
     @Override
+    public List<Lab> getLabsBySubjectIdSortedByState(int subjectId) {
+
+        List<Lab> labs = new ArrayList<>();
+
+        Cursor cursor = database.query(
+                DatabaseContract.LabTable.TABLE_NAME,
+                null,
+                DatabaseContract.LabTable.COLUMN_SUBJECT_ID + " == ?",
+                new String[]{String.valueOf(subjectId)},
+                null,
+                null,
+                DatabaseContract.LabTable.COLUMN_IS_PASSED
+        );
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                labs.add(getByCursor(cursor));
+            } while (cursor.moveToNext());
+        }
+        FileLog.getInstance().info(TAG, "getLabsBySubjectId: id = " + subjectId + "; rows = " + labs.size());
+        return labs;
+    }
+
+    @Override
     public List<Lab> getLabsBySubjectId(int subjectId) {
 
         List<Lab> labs = new ArrayList<>();
@@ -132,30 +157,6 @@ public class LabDaoImpl implements LabDao {
             } while (cursor.moveToNext());
         }
         FileLog.getInstance().info(TAG, "getLabsBySubjectId: id = " + subjectId + "; rows = " + labs.size());
-        return labs;
-    }
-
-    @Override
-    public List<Lab> getLabsByStateAndSubjectId(boolean isPassed, int subjectId) {
-        List<Lab> labs = new ArrayList<>();
-
-        Cursor cursor = database.query(
-                DatabaseContract.LabTable.TABLE_NAME,
-                null,
-                DatabaseContract.LabTable.COLUMN_SUBJECT_ID + " == ? and " +
-                        DatabaseContract.LabTable.COLUMN_IS_PASSED + " == ?",
-                new String[]{String.valueOf(subjectId), String.valueOf(isPassed)},
-                null,
-                null,
-                null
-        );
-
-        if (cursor.moveToFirst()) {
-            do {
-                labs.add(getByCursor(cursor));
-            } while (cursor.moveToNext());
-        }
-        FileLog.getInstance().info(TAG, "getLabsByStateAndSubjectId: id = " + subjectId + "; rows = " + labs.size());
         return labs;
     }
 

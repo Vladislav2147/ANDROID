@@ -34,6 +34,11 @@ public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
         return listLiveData;
     }
 
+    public LiveData<List<Lab>> getLabsBySubjectIdSortedByState(int id) {
+        listLiveData = repository.getLabsBySubjectIdSortedByState(id);
+        return listLiveData;
+    }
+
     public LiveData<Lab> getLabById(int id) {
         labLiveData = repository.getById(id);
         return labLiveData;

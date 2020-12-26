@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import by.bstu.vs.stpms.lablistsqlite.model.dao.LabDao;
 import by.bstu.vs.stpms.lablistsqlite.model.dao.impl.LabDaoImpl;
@@ -23,6 +24,7 @@ public class LabRepository extends Repository<Lab> {
     private MutableLiveData<List<Lab>> labsBySubjectId;
     private MutableLiveData<Lab> lab;
     private int currentId = 0;
+    private boolean isLastDefault = true;
 
 
     public LabRepository(Context context) {
@@ -35,6 +37,14 @@ public class LabRepository extends Repository<Lab> {
     public LiveData<List<Lab>> getLabsBySubjectId(int subjectId) {
         currentId = subjectId;
         new QueryAsyncTask<>(labsBySubjectId, () -> labDao.getLabsBySubjectId(currentId)).execute();
+        isLastDefault = true;
+        return labsBySubjectId;
+    }
+
+    public LiveData<List<Lab>> getLabsBySubjectIdSortedByState(int subjectId) {
+        currentId = subjectId;
+        new QueryAsyncTask<>(labsBySubjectId, () -> labDao.getLabsBySubjectIdSortedByState(currentId)).execute();
+        isLastDefault = false;
         return labsBySubjectId;
     }
 
@@ -63,7 +73,10 @@ public class LabRepository extends Repository<Lab> {
 
     @Override
     protected void refresh() {
-        new QueryAsyncTask<>(labsBySubjectId, () -> labDao.getLabsBySubjectId(currentId)).execute();
+        Supplier<List<Lab>> supplier;
+        if(isLastDefault) supplier = () -> labDao.getLabsBySubjectId(currentId);
+        else supplier = () -> labDao.getLabsBySubjectIdSortedByState(currentId);
+        new QueryAsyncTask<>(labsBySubjectId, supplier).execute();
     }
 
 }

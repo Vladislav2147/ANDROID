@@ -42,4 +42,7 @@
 
     <string name="details">Details</string>
     <string name="create_lab">Create lab</string>
+    <string name="sort">Sort</string>
+    <string name="default1">Default</string>
+    <string name="not_done_first">Not done first</string>
 </resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/hide_group" >
+        <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="100"
+            android:icon="@drawable/ic_baseline_sort_24"
+            android:title="@string/sort"
+            app:showAsAction="ifRoom">
+            <menu>
+                <item
+                    android:id="@+id/sort_default"
+                    android:title="@string/default1"
+                    app:showAsAction="never"/>
+                <item
+                    android:id="@+id/sort_not_done_first"
+                    android:title="@string/not_done_first"
+                    app:showAsAction="never"/>
+            </menu>
+        </item>
+    </group>
+</menu>

@@ -2,7 +2,6 @@ package by.bstu.vs.stpms.lablistsqlite;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,16 +66,10 @@ public class MainActivity extends AppCompatActivity {
             String currentFragment = navController.getCurrentDestination().getLabel().toString();
             if (addableFragments.stream().noneMatch(currentFragment::equals)) fab.setVisibility(View.GONE);
             else fab.setVisibility(View.VISIBLE);
+
         });
 
         customizeHeader(sharedPreferences);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
