@@ -19,7 +19,7 @@ class Business(
     var startTime: Calendar,
     @ColumnInfo(name = "end_time")
     var endTime: Calendar,
-    var type: BusinessType?
+    var type: BusinessType
 ): Serializable {
     constructor() : this(
             null,
@@ -31,6 +31,6 @@ class Business(
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             },
-            null
+            BusinessType.CHILL
     )
 }

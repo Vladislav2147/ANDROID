@@ -8,20 +8,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import by.bstu.vs.stpms.daytracker.MainActivity
 import by.bstu.vs.stpms.daytracker.R
 import by.bstu.vs.stpms.daytracker.databinding.FragmentBusinessSaveBinding
 import by.bstu.vs.stpms.daytracker.model.entity.Business
 import by.bstu.vs.stpms.daytracker.model.entity.BusinessType
 import by.bstu.vs.stpms.daytracker.view.CustomRadioButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,8 +27,8 @@ class BusinessSaveFragment : Fragment() {
     lateinit var business: Business
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         val businessArg = BusinessSaveFragmentArgs.fromBundle(requireArguments()).Business
@@ -62,8 +57,11 @@ class BusinessSaveFragment : Fragment() {
             radioButtons.add(lunch)
             radioButtons.add(sleep)
 
+            radioButtons.first { business.type.id == it.id }.isChecked = true
+
             radioButtons.forEach { it.setOnCheckedChangeListener { button, isChecked ->
                 if (isChecked) {
+                    radioButtons.filter { customRadioButton -> customRadioButton.id != button.id }.forEach { customRadioButton -> customRadioButton.isChecked = false }
                     business.type = BusinessType.findById(button.id)
                     businessViewModel.setCurrent(business)
                 }
@@ -82,10 +80,12 @@ class BusinessSaveFragment : Fragment() {
             businessViewModel.setCurrent(business)
         }
 
-        DatePickerDialog(requireContext(), d,
-                business.startTime.get(Calendar.YEAR),
-                business.startTime.get(Calendar.MONTH),
-                business.startTime.get(Calendar.DAY_OF_MONTH))
+        DatePickerDialog(
+            requireContext(), d,
+            business.startTime.get(Calendar.YEAR),
+            business.startTime.get(Calendar.MONTH),
+            business.startTime.get(Calendar.DAY_OF_MONTH)
+        )
                 .show()
     }
 
@@ -97,10 +97,12 @@ class BusinessSaveFragment : Fragment() {
             businessViewModel.setCurrent(business)
         }
 
-        DatePickerDialog(requireContext(), d,
-                business.endTime.get(Calendar.YEAR),
-                business.endTime.get(Calendar.MONTH),
-                business.endTime.get(Calendar.DAY_OF_MONTH))
+        DatePickerDialog(
+            requireContext(), d,
+            business.endTime.get(Calendar.YEAR),
+            business.endTime.get(Calendar.MONTH),
+            business.endTime.get(Calendar.DAY_OF_MONTH)
+        )
                 .show()
     }
 
@@ -111,9 +113,11 @@ class BusinessSaveFragment : Fragment() {
             businessViewModel.setCurrent(business)
         }
 
-        TimePickerDialog(requireContext(), t,
-                business.startTime.get(Calendar.HOUR_OF_DAY),
-                business.startTime.get(Calendar.MINUTE), true)
+        TimePickerDialog(
+            requireContext(), t,
+            business.startTime.get(Calendar.HOUR_OF_DAY),
+            business.startTime.get(Calendar.MINUTE), true
+        )
                 .show()
     }
 
@@ -124,9 +128,18 @@ class BusinessSaveFragment : Fragment() {
             businessViewModel.setCurrent(business)
         }
 
-        TimePickerDialog(requireContext(), t,
-                business.endTime.get(Calendar.HOUR_OF_DAY),
-                business.endTime.get(Calendar.MINUTE), true)
+        TimePickerDialog(
+            requireContext(), t,
+            business.endTime.get(Calendar.HOUR_OF_DAY),
+            business.endTime.get(Calendar.MINUTE), true
+        )
                 .show()
+    }
+
+    fun save() {
+        businessViewModel.save(
+            { e -> Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show() },
+            { requireActivity().onBackPressed() }
+        )
     }
 }

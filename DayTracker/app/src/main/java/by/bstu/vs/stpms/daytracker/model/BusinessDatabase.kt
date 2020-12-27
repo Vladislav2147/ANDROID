@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import by.bstu.vs.stpms.daytracker.model.dao.BusinessDao
 import by.bstu.vs.stpms.daytracker.model.entity.Business
 
-@Database(entities = [Business::class], version = 4, exportSchema = false)
+@Database(entities = [Business::class], version = 5, exportSchema = false)
 abstract class BusinessDatabase : RoomDatabase() {
 
     abstract fun businessDao(): BusinessDao
@@ -32,14 +32,18 @@ abstract class BusinessDatabase : RoomDatabase() {
 
         val insertTrigger = "create trigger if not exists check_time_ranges_insert before insert on business\n" +
                 "begin\n" +
-                "    select case WHEN (select count(*) from business\n" +
+                "    select case " +
+                "    WHEN new.start_time > new.end_time THEN raise(fail, \"Begin can't be after end\")" +
+                "    WHEN (select count(*) from business\n" +
                 "    where (new.start_time > start_time and new.start_time < end_time) or (new.end_time > start_time and new.end_time < end_time) or (start_time > new.start_time and start_time < new.end_time)) > 0 THEN\n" +
                 "    raise (fail, 'Time interval intersection')\n" +
                 "    end;\n" +
                 "end;\n"
         val updateTrigger = "create trigger if not exists check_time_ranges_update before update on business\n" +
                 "begin\n" +
-                "    select case WHEN (select count(*) from business\n" +
+                "    select case " +
+                "    WHEN new.start_time > new.end_time THEN raise(fail, \"Begin can't be after end\")" +
+                "    WHEN (select count(*) from business\n" +
                 "    where (new.start_time > start_time and new.start_time < end_time) or (new.end_time > start_time and new.end_time < end_time) or (start_time > new.start_time and start_time < new.end_time)) > 0 THEN\n" +
                 "    raise (fail, 'Time interval intersection')\n" +
                 "    end;\n" +

@@ -100,7 +100,7 @@
                             android:background="@drawable/radio_background"
                             android:foreground="@drawable/ic_menu_camera"
                             android:button="@null"
-                            android:checked="true" />
+                            android:checked="false" />
                         <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
                             android:id="@+id/work"
                             android:layout_margin="@dimen/half_indent"
@@ -160,15 +160,11 @@
                             android:checked="false" />
                     </TableRow>
                 </by.bstu.vs.stpms.daytracker.view.ToggleButtonGroupTableLayout>
-
-
-
-                <!--                <Button-->
-<!--                    android:layout_margin="8dp"-->
-<!--                    android:onClick="@{(view) -> fragment.save()}"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/save"/>-->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> fragment.save()}"
+                    android:text="@string/save"/>
             </LinearLayout>
             
         </ScrollView>

@@ -2,7 +2,10 @@ package by.bstu.vs.stpms.daytracker.ui.business
 
 import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import by.bstu.vs.stpms.daytracker.model.entity.Business
 import by.bstu.vs.stpms.daytracker.model.repository.BusinessRepository
 import kotlinx.coroutines.launch
@@ -24,13 +27,13 @@ class BusinessViewModel(application: Application) : AndroidViewModel(application
         currentBusiness.setValue(business)
     }
 
-    fun insert(
-        business: Business,
+    fun save(
         onError: (e: SQLiteConstraintException) -> Unit,
         onSuccess: () -> Unit
     ) = viewModelScope.launch() {
         try {
-            businessRepository.insert(business)
+            if(createMode) businessRepository.insert(currentBusiness.value!!)
+            else businessRepository.update(currentBusiness.value!!)
             onSuccess.invoke()
         } catch (e: SQLiteConstraintException) {
             onError.invoke(e)
@@ -41,7 +44,4 @@ class BusinessViewModel(application: Application) : AndroidViewModel(application
         businessRepository.delete(business)
     }
 
-    fun update(business: Business) = viewModelScope.launch {
-        businessRepository.update(business)
-    }
 }

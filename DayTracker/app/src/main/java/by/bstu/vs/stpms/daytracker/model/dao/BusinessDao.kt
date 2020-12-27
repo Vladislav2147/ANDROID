@@ -18,6 +18,7 @@ interface BusinessDao {
     fun getAll(): Flow<List<Business>>
 
     @Update
+    @Throws(SQLiteConstraintException::class)
     suspend fun update(business: Business)
 
     @Delete

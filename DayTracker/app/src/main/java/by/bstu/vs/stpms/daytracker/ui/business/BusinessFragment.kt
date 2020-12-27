@@ -69,41 +69,6 @@ class BusinessFragment : Fragment() {
             }
         }
 
-        val start = Calendar.getInstance()
-        val end = Calendar.getInstance()
-
-        start.time = Date()
-        start.add(Calendar.DAY_OF_MONTH, -1)
-        end.time = Date()
-//        end.add(Calendar.DAY_OF_MONTH)
-
-        val start1 = Calendar.getInstance()
-        val end1 = Calendar.getInstance()
-
-        start1.time = Date()
-        start1.add(Calendar.HOUR_OF_DAY, -3)
-        end1.time = Date()
-        end1.add(Calendar.HOUR_OF_DAY, -1)
-
-        val business1 = Business(
-            startTime = start,
-            endTime = end,
-            type = BusinessType.CHILL
-        )
-
-//        val business2 = Business(
-//            startTime = start1,
-//            endTime = end1,
-//            type = BusinessType.SLEEP
-//        )
-
-        businessViewModel.insert(
-            business1,
-            { e -> Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show() },
-            { Toast.makeText(context, "success", Toast.LENGTH_SHORT).show() }
-        )
-//        businessViewModel.insert(business2)
-
         return view
     }
 
