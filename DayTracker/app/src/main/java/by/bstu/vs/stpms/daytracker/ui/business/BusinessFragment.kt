@@ -46,18 +46,12 @@ class BusinessFragment : Fragment() {
 
         adapter.onLongClickListener = object: BusinessAdapter.OnLongClickListener {
             override fun onLongVariantClick(business: Business, view: View): Boolean {
-                val popupMenu =
-                    PopupMenu(
-                        context!!, view, Gravity.END
-                    )
+                val popupMenu = PopupMenu(context!!, view, Gravity.END)
                 popupMenu.inflate(R.menu.popup_menu)
                 popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
                     when (menuItem.itemId) {
                         R.id.edit_item -> {
-                            val action =
-                                BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(
-                                    business
-                                )
+                            val action = BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(business)
                             navController.navigate(action)
                         }
                         R.id.delete_item -> businessViewModel.delete(business)
@@ -106,6 +100,7 @@ class BusinessFragment : Fragment() {
 
         return view
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

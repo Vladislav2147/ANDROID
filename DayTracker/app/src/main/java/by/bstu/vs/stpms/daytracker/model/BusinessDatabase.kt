@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import by.bstu.vs.stpms.daytracker.model.dao.BusinessDao
 import by.bstu.vs.stpms.daytracker.model.entity.Business
 
-@Database(entities = [Business::class], version = 1, exportSchema = false)
+@Database(entities = [Business::class], version = 4, exportSchema = false)
 abstract class BusinessDatabase : RoomDatabase() {
 
     abstract fun businessDao(): BusinessDao
@@ -22,18 +22,26 @@ abstract class BusinessDatabase : RoomDatabase() {
                     context.applicationContext,
                     BusinessDatabase::class.java,
                     "business_database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
-                instance.openHelper.writableDatabase.execSQL(trigger)
+                instance.openHelper.writableDatabase.execSQL(insertTrigger)
+                instance.openHelper.writableDatabase.execSQL(updateTrigger)
                 instance
             }
         }
 
-        val trigger = "create trigger if not exists check_time_ranges before insert on business\n" +
+        val insertTrigger = "create trigger if not exists check_time_ranges_insert before insert on business\n" +
                 "begin\n" +
                 "    select case WHEN (select count(*) from business\n" +
                 "    where (new.start_time > start_time and new.start_time < end_time) or (new.end_time > start_time and new.end_time < end_time) or (start_time > new.start_time and start_time < new.end_time)) > 0 THEN\n" +
-                "    raise (fail, 'interval intersection')\n" +
+                "    raise (fail, 'Time interval intersection')\n" +
+                "    end;\n" +
+                "end;\n"
+        val updateTrigger = "create trigger if not exists check_time_ranges_update before update on business\n" +
+                "begin\n" +
+                "    select case WHEN (select count(*) from business\n" +
+                "    where (new.start_time > start_time and new.start_time < end_time) or (new.end_time > start_time and new.end_time < end_time) or (start_time > new.start_time and start_time < new.end_time)) > 0 THEN\n" +
+                "    raise (fail, 'Time interval intersection')\n" +
                 "    end;\n" +
                 "end;\n"
     }
