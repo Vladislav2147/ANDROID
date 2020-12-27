@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import by.bstu.vs.stpms.daytracker.model.entity.converters.BusinessTypeConverter
 import by.bstu.vs.stpms.daytracker.model.entity.converters.CalendarConverter
+import java.io.Serializable
 
 import java.util.*
 
@@ -19,4 +20,4 @@ class Business(
     @ColumnInfo(name = "end_time")
     var endTime: Calendar,
     var type: BusinessType
-)
+): Serializable

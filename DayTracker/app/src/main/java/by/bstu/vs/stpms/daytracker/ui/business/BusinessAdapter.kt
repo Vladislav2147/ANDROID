@@ -22,7 +22,7 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.ViewHolder>() {
     private var businesses: List<Business>? = null
 
     val onClickListener: OnClickListener? = null
-    val onLongClickListener: OnLongClickListener? = null
+    var onLongClickListener: OnLongClickListener? = null
 
     fun setBusinesses(businesses: List<Business>?) {
         this.businesses = businesses

@@ -1,6 +1,7 @@
-package by.bstu.vs.stpms.daytracker.model
+package by.bstu.vs.stpms.daytracker.model.repository
 
 import android.app.Application
+import by.bstu.vs.stpms.daytracker.model.BusinessDatabase
 import by.bstu.vs.stpms.daytracker.model.dao.BusinessDao
 import by.bstu.vs.stpms.daytracker.model.entity.Business
 
