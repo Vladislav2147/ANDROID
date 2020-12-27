@@ -15,15 +15,9 @@ class BusinessViewModel(application: Application) : AndroidViewModel(application
     private var createMode = true
     lateinit var currentBusiness: MutableLiveData<Business>
 
-    fun setLiveData(business: Business?) {
-        var busi = business
-        if (busi == null) {
-            createMode = true
-            busi = Business()
-        } else {
-            createMode = false
-        }
-        this.currentBusiness = MutableLiveData(busi)
+    fun setLiveData(business: Business) {
+        createMode = business.id == null
+        this.currentBusiness = MutableLiveData(business)
     }
 
     fun setCurrent(business: Business) {
