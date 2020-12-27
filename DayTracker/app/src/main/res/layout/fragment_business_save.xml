@@ -83,44 +83,94 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_margin="8dp"
+
+                <by.bstu.vs.stpms.daytracker.view.ToggleButtonGroupTableLayout
+                    android:id="@+id/radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/type">
+                    android:layout_margin="@dimen/half_indent">
+                    <TableRow>
+                        <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
+                            android:id="@+id/chill"
+                            android:layout_margin="@dimen/half_indent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:layout_height="0dp"
+                            android:background="@drawable/radio_background"
+                            android:foreground="@drawable/ic_menu_camera"
+                            android:button="@null"
+                            android:checked="true" />
+                        <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
+                            android:id="@+id/work"
+                            android:layout_margin="@dimen/half_indent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:layout_height="0dp"
+                            android:background="@drawable/radio_background"
+                            android:foreground="@drawable/ic_menu_camera"
+                            android:button="@null"
+                            android:checked="false" />
+                        <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
+                            android:id="@+id/studying"
+                            android:layout_margin="@dimen/half_indent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:layout_height="0dp"
+                            android:background="@drawable/radio_background"
+                            android:foreground="@drawable/ic_menu_camera"
+                            android:button="@null"
+                            android:checked="false" />
+                    </TableRow>
+                    <TableRow>
+                        <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
+                            android:id="@+id/road"
+                            android:layout_margin="@dimen/half_indent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:layout_height="0dp"
+                            android:background="@drawable/radio_background"
+                            android:foreground="@drawable/ic_menu_camera"
+                            android:button="@null"
+                            android:checked="false" />
+                        <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
+                            android:id="@+id/lunch"
+                            android:layout_margin="@dimen/half_indent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:layout_height="0dp"
+                            android:background="@drawable/radio_background"
+                            android:foreground="@drawable/ic_menu_camera"
+                            android:button="@null"
+                            android:checked="false" />
+                        <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
+                            android:id="@+id/sleep"
+                            android:layout_margin="@dimen/half_indent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:layout_height="0dp"
+                            android:background="@drawable/radio_background"
+                            android:foreground="@drawable/ic_menu_camera"
+                            android:button="@null"
+                            android:checked="false" />
+                    </TableRow>
+                </by.bstu.vs.stpms.daytracker.view.ToggleButtonGroupTableLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:text="@{vm.currentBusiness.type.name}"
-                        />
 
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_margin="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/id">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:text="@{vm.currentBusiness.id.toString()}"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-<!--                <Button-->
+                <!--                <Button-->
 <!--                    android:layout_margin="8dp"-->
 <!--                    android:onClick="@{(view) -> fragment.save()}"-->
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
 <!--                    android:text="@string/save"/>-->
             </LinearLayout>
+            
         </ScrollView>
 
     </FrameLayout>

@@ -8,16 +8,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import by.bstu.vs.stpms.daytracker.MainActivity
 import by.bstu.vs.stpms.daytracker.R
 import by.bstu.vs.stpms.daytracker.databinding.FragmentBusinessSaveBinding
 import by.bstu.vs.stpms.daytracker.model.entity.Business
+import by.bstu.vs.stpms.daytracker.model.entity.BusinessType
+import by.bstu.vs.stpms.daytracker.view.CustomRadioButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class BusinessSaveFragment : Fragment() {
@@ -30,10 +36,11 @@ class BusinessSaveFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        business = BusinessSaveFragmentArgs.fromBundle(requireArguments()).Business
+        val businessArg = BusinessSaveFragmentArgs.fromBundle(requireArguments()).Business
         businessViewModel = ViewModelProvider(this).get(BusinessViewModel::class.java)
 
-        businessViewModel.setLiveData(business)
+        businessViewModel.setLiveData(businessArg)
+        business = businessViewModel.currentBusiness.value!!
 
         val binding: FragmentBusinessSaveBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_business_save, container, false)
@@ -46,7 +53,23 @@ class BusinessSaveFragment : Fragment() {
             startButtonTime.setOnClickListener { setStartTime() }
             endButtonDate.setOnClickListener { setEndDate() }
             endButtonTime.setOnClickListener { setEndTime() }
+
+            val radioButtons: ArrayList<CustomRadioButton> = ArrayList()
+            radioButtons.add(chill)
+            radioButtons.add(work)
+            radioButtons.add(studying)
+            radioButtons.add(road)
+            radioButtons.add(lunch)
+            radioButtons.add(sleep)
+
+            radioButtons.forEach { it.setOnCheckedChangeListener { button, isChecked ->
+                if (isChecked) {
+                    business.type = BusinessType.findById(button.id)
+                    businessViewModel.setCurrent(business)
+                }
+            } }
         }
+
         return binding.root
 
     }

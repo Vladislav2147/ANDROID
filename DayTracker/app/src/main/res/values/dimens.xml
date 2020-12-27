@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="large_text">24sp</dimen>
     <dimen name="item_indent">16dp</dimen>
+    <dimen name="half_indent">8dp</dimen>
 </resources>
