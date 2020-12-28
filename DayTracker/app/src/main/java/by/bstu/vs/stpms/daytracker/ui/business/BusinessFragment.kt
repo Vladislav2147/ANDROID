@@ -35,6 +35,31 @@ class BusinessFragment : Fragment() {
                 ViewModelProvider(this).get(BusinessViewModel::class.java)
         _binding = FragmentBusinessBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
+        navController = navHostFragment!!.navController
+
+        initRecyclerView()
+
+        return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val fab = (activity as MainActivity).findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener {
+            val action = BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(Business())
+            navController.navigate(action)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initRecyclerView() {
         val adapter = BusinessAdapter()
 
         businessViewModel.businessesLiveData.observe(viewLifecycleOwner, { businesses ->
@@ -45,11 +70,7 @@ class BusinessFragment : Fragment() {
         binding.rvBusiness.adapter = adapter
         binding.rvBusiness.layoutManager = LinearLayoutManager(context)
 
-        val navHostFragment =
-            requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
-        navController = navHostFragment!!.navController
-
-        adapter.onLongClickListener = object: BusinessAdapter.OnLongClickListener {
+        adapter.onLongClickListener = object : BusinessAdapter.OnLongClickListener {
             override fun onLongVariantClick(business: Business, view: View): Boolean {
                 val popupMenu = PopupMenu(context!!, view, Gravity.END)
                 popupMenu.inflate(R.menu.popup_menu)
@@ -67,17 +88,6 @@ class BusinessFragment : Fragment() {
                 return true
             }
         }
-
-        return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val fab = (activity as MainActivity).findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener {
-            val action = BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(Business())
-            navController.navigate(action)
-        }
     }
 
     fun deleteBusiness(business: Business) {
@@ -91,8 +101,5 @@ class BusinessFragment : Fragment() {
                 .show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 }

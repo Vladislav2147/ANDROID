@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/nav_stats"
-        android:name="by.bstu.vs.stpms.daytracker.ui.gallery.StatisticsFragment"
+        android:name="by.bstu.vs.stpms.daytracker.ui.business.StatisticsFragment"
         android:label="@string/menu_stats"
         tools:layout="@layout/fragment_stats" />
 

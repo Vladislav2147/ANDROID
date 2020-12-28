@@ -19,4 +19,10 @@
     <string name="time">Time</string>
     <string name="save">Save</string>
     <string name="business">Business</string>
+    
+    <string name="too_few_sleep">-You sleeping less than 8 hours a day. It can influence your health.\n\n</string>
+    <string name="too_much_work">-You working more than 40 hours a week. Rest sometimes :)\n\n</string>
+    <string name="too_few_studying">-You studying less than 2 hours a day. You should working harder!\n\n</string>
+    <string name="too_much_road">-You spend for a road more than 4 hours a day. You should find job closer to your house!\n\n</string>
+    <string name="too_few_chill">-You chilling less than 2 hours a day. Rest sometimes :)\n\n</string>
 </resources>
