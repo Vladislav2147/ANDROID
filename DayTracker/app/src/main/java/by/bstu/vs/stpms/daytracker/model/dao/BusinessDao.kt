@@ -14,7 +14,7 @@ interface BusinessDao {
     @Throws(SQLiteConstraintException::class)
     suspend fun insert(business: Business)
 
-    @Query("SELECT * FROM business")
+    @Query("SELECT * FROM business ORDER BY start_time DESC")
     fun getAll(): Flow<List<Business>>
 
     @Update

@@ -1,8 +1,9 @@
 package by.bstu.vs.stpms.daytracker.ui.business
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,9 +14,7 @@ import by.bstu.vs.stpms.daytracker.MainActivity
 import by.bstu.vs.stpms.daytracker.R
 import by.bstu.vs.stpms.daytracker.databinding.FragmentBusinessBinding
 import by.bstu.vs.stpms.daytracker.model.entity.Business
-import by.bstu.vs.stpms.daytracker.model.entity.BusinessType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
 
 class BusinessFragment : Fragment() {
 
@@ -27,9 +26,9 @@ class BusinessFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
         businessViewModel =
@@ -40,7 +39,7 @@ class BusinessFragment : Fragment() {
 
         businessViewModel.businessesLiveData.observe(viewLifecycleOwner, { businesses ->
             adapter.setBusinesses(
-                businesses
+                    businesses
             )
         })
         binding.rvBusiness.adapter = adapter
@@ -60,7 +59,7 @@ class BusinessFragment : Fragment() {
                             val action = BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(business)
                             navController.navigate(action)
                         }
-                        R.id.delete_item -> businessViewModel.delete(business)
+                        R.id.delete_item -> deleteBusiness(business)
                     }
                     true
                 }
@@ -81,6 +80,16 @@ class BusinessFragment : Fragment() {
         }
     }
 
+    fun deleteBusiness(business: Business) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder
+                .setTitle("Delete")
+                .setMessage("Delete item?")
+                .setPositiveButton("Ok") { dialogInterface: DialogInterface?, i: Int -> businessViewModel.delete(business) }
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
