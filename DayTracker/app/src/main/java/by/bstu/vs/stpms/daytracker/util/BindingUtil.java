@@ -14,10 +14,31 @@ import by.bstu.vs.stpms.daytracker.model.entity.BusinessType;
 public class BindingUtil {
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd.MM.yyyy");
+    private static final SimpleDateFormat timeOnlyFormatter = new SimpleDateFormat("HH:mm ");
 
     @BindingAdapter("android:text")
     public static void setCalendar(TextView textView, Calendar calendar) {
-        textView.setText(formatter.format(calendar.getTime()));
+        Calendar now = Calendar.getInstance();
+        int delta = now.get(Calendar.DAY_OF_YEAR) - calendar.get(Calendar.DAY_OF_YEAR);
+        StringBuilder dateTimeString = new StringBuilder();
+        if (delta > 7) {
+            dateTimeString.append(formatter.format(calendar.getTime()));
+        } else {
+            dateTimeString.append(timeOnlyFormatter.format(calendar.getTime()));
+            switch (delta) {
+                case 0:
+                    dateTimeString.append("today");
+                    break;
+                case 1:
+                    dateTimeString.append("yesterday");
+                    break;
+                default:
+                    dateTimeString.append(delta).append(" days ago");
+                    break;
+            }
+        }
+
+        textView.setText(dateTimeString.toString());
     }
 
     @BindingAdapter("android:src")
