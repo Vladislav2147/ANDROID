@@ -33,7 +33,7 @@
     <fragment
         android:id="@+id/nav_business_save"
         android:name="by.bstu.vs.stpms.daytracker.ui.business.BusinessSaveFragment"
-        android:label="fragment_business_save"
+        android:label="@string/business"
         tools:layout="@layout/fragment_business_save" >
         <argument
             android:name="Business"

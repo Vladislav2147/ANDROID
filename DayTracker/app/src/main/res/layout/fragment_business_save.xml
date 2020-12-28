@@ -22,63 +22,86 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_indent"
+                    android:layout_marginTop="@dimen/item_indent"
+                    android:text="@string/start"
+                    android:textColor="@color/red_600"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:layout_marginHorizontal="@dimen/item_indent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/large_text"
-                        android:text="@{vm.currentBusiness.startTime.time.toString()}"
+                        android:text="@{vm.currentBusiness.startTime}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/start_button_date"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
+                    <ImageButton
                         android:id="@+id/start_button_date"
+                        android:layout_marginHorizontal="@dimen/item_indent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/date"
+                        android:src="@drawable/ic_baseline_calendar_today_24"
+                        android:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/start_button_time"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <Button
+                    <ImageButton
                         android:id="@+id/start_button_time"
+                        android:layout_marginHorizontal="@dimen/item_indent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/time"
+                        android:src="@drawable/ic_baseline_access_time_24"
+                        android:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_indent"
+                    android:layout_marginTop="@dimen/item_indent"
+                    android:text="@string/end"
+                    android:textColor="?attr/colorSecondary"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:layout_marginHorizontal="@dimen/item_indent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/large_text"
-                        android:text="@{vm.currentBusiness.endTime.time.toString()}"
+                        android:text="@{vm.currentBusiness.endTime}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/end_button_date"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <Button
+                    <ImageButton
                         android:id="@+id/end_button_date"
+                        android:layout_marginHorizontal="@dimen/item_indent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/date"
+                        android:src="@drawable/ic_baseline_calendar_today_24"
+                        android:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/end_button_time"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <Button
+                    <ImageButton
                         android:id="@+id/end_button_time"
+                        android:layout_marginHorizontal="@dimen/item_indent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/time"
+                        android:src="@drawable/ic_baseline_access_time_24"
+                        android:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -98,7 +121,7 @@
                             app:layout_constraintDimensionRatio="1:1"
                             android:layout_height="0dp"
                             android:background="@drawable/radio_background"
-                            android:foreground="@drawable/ic_menu_camera"
+                            android:foreground="@drawable/business_chill"
                             android:button="@null"
                             android:checked="false" />
                         <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
@@ -109,7 +132,7 @@
                             app:layout_constraintDimensionRatio="1:1"
                             android:layout_height="0dp"
                             android:background="@drawable/radio_background"
-                            android:foreground="@drawable/ic_menu_camera"
+                            android:foreground="@drawable/business_work"
                             android:button="@null"
                             android:checked="false" />
                         <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
@@ -120,7 +143,7 @@
                             app:layout_constraintDimensionRatio="1:1"
                             android:layout_height="0dp"
                             android:background="@drawable/radio_background"
-                            android:foreground="@drawable/ic_menu_camera"
+                            android:foreground="@drawable/business_studying"
                             android:button="@null"
                             android:checked="false" />
                     </TableRow>
@@ -133,7 +156,7 @@
                             app:layout_constraintDimensionRatio="1:1"
                             android:layout_height="0dp"
                             android:background="@drawable/radio_background"
-                            android:foreground="@drawable/ic_menu_camera"
+                            android:foreground="@drawable/business_road"
                             android:button="@null"
                             android:checked="false" />
                         <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
@@ -144,7 +167,7 @@
                             app:layout_constraintDimensionRatio="1:1"
                             android:layout_height="0dp"
                             android:background="@drawable/radio_background"
-                            android:foreground="@drawable/ic_menu_camera"
+                            android:foreground="@drawable/business_lunch"
                             android:button="@null"
                             android:checked="false" />
                         <by.bstu.vs.stpms.daytracker.view.CustomRadioButton
@@ -155,7 +178,7 @@
                             app:layout_constraintDimensionRatio="1:1"
                             android:layout_height="0dp"
                             android:background="@drawable/radio_background"
-                            android:foreground="@drawable/ic_menu_camera"
+                            android:foreground="@drawable/business_sleep"
                             android:button="@null"
                             android:checked="false" />
                     </TableRow>
@@ -163,6 +186,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/item_indent"
                     android:onClick="@{() -> fragment.save()}"
                     android:text="@string/save"/>
             </LinearLayout>

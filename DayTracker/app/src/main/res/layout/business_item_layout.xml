@@ -27,11 +27,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{business.startTime.time.toString()}"/>
+                android:text="@{business.startTime}"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{business.endTime.time.toString()}"/>
+                android:text="@{business.endTime}"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
