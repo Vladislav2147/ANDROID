@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.bstu.vs.stpms.daytracker.MainActivity
 import by.bstu.vs.stpms.daytracker.R
 import by.bstu.vs.stpms.daytracker.databinding.FragmentBusinessBinding
 import by.bstu.vs.stpms.daytracker.model.entity.Business
+import by.bstu.vs.stpms.daytracker.ui.business.recylerview.BusinessAdapter
+import by.bstu.vs.stpms.daytracker.ui.business.recylerview.RecyclerItemTouchHelper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BusinessFragment : Fragment() {
@@ -69,7 +72,16 @@ class BusinessFragment : Fragment() {
         })
         binding.rvBusiness.adapter = adapter
         binding.rvBusiness.layoutManager = LinearLayoutManager(context)
+        val itemTouchHelper = ItemTouchHelper(RecyclerItemTouchHelper(adapter) { businessViewModel.delete(it) })
+        itemTouchHelper.attachToRecyclerView(binding.rvBusiness)
 
+        adapter.onClickListener = object: BusinessAdapter.OnClickListener {
+            override fun onVariantClick(business: Business) {
+                val action = BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(business)
+                navController.navigate(action)
+            }
+
+        }
         adapter.onLongClickListener = object : BusinessAdapter.OnLongClickListener {
             override fun onLongVariantClick(business: Business, view: View): Boolean {
                 val popupMenu = PopupMenu(context!!, view, Gravity.END)

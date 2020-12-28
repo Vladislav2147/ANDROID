@@ -1,4 +1,4 @@
-package by.bstu.vs.stpms.daytracker.ui.business
+package by.bstu.vs.stpms.daytracker.ui.business.recylerview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import by.bstu.vs.stpms.daytracker.databinding.BusinessItemLayoutBinding
 import by.bstu.vs.stpms.daytracker.model.entity.Business
-import java.util.function.Consumer
 
 
 class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.ViewHolder>() {
@@ -21,13 +20,14 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.ViewHolder>() {
 
     private var businesses: List<Business>? = null
 
-    val onClickListener: OnClickListener? = null
+    var onClickListener: OnClickListener? = null
     var onLongClickListener: OnLongClickListener? = null
 
     fun setBusinesses(businesses: List<Business>?) {
         this.businesses = businesses
         notifyDataSetChanged()
     }
+    fun getBusinesses() = businesses;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
