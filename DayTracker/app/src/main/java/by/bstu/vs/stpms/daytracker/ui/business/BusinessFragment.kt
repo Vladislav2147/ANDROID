@@ -75,16 +75,12 @@ class BusinessFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(RecyclerItemTouchHelper(adapter) { businessViewModel.delete(it) })
         itemTouchHelper.attachToRecyclerView(binding.rvBusiness)
 
-        adapter.onClickListener = object: BusinessAdapter.OnClickListener {
-            override fun onVariantClick(business: Business) {
-                val action = BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(business)
-                navController.navigate(action)
-            }
-
+        adapter.onClickListener = {
+            val action = BusinessFragmentDirections.actionNavBusinessToBusinessSaveFragment(it)
+            navController.navigate(action)
         }
-        adapter.onLongClickListener = object : BusinessAdapter.OnLongClickListener {
-            override fun onLongVariantClick(business: Business, view: View): Boolean {
-                val popupMenu = PopupMenu(context!!, view, Gravity.END)
+        adapter.onLongClickListener = { business, view ->
+                val popupMenu = PopupMenu(requireContext(), view, Gravity.END)
                 popupMenu.inflate(R.menu.popup_menu)
                 popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
                     when (menuItem.itemId) {
@@ -97,17 +93,17 @@ class BusinessFragment : Fragment() {
                     true
                 }
                 popupMenu.show()
-                return true
-            }
+                true
         }
+
     }
 
-    fun deleteBusiness(business: Business) {
+    private fun deleteBusiness(business: Business) {
         val builder = AlertDialog.Builder(requireContext())
         builder
                 .setTitle("Delete")
                 .setMessage("Delete item?")
-                .setPositiveButton("Ok") { dialogInterface: DialogInterface?, i: Int -> businessViewModel.delete(business) }
+                .setPositiveButton("Ok") { _: DialogInterface?, i: Int -> businessViewModel.delete(business) }
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show()

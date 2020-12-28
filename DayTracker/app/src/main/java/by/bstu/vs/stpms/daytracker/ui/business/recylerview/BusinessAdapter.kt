@@ -10,18 +10,11 @@ import by.bstu.vs.stpms.daytracker.model.entity.Business
 
 
 class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.ViewHolder>() {
-    interface OnClickListener {
-        fun onVariantClick(business: Business)
-    }
-
-    interface OnLongClickListener {
-        fun onLongVariantClick(business: Business, view: View): Boolean
-    }
 
     private var businesses: List<Business>? = null
 
-    var onClickListener: OnClickListener? = null
-    var onLongClickListener: OnLongClickListener? = null
+    var onClickListener: ((Business) -> Unit)? = null
+    var onLongClickListener:((Business, View) -> Boolean)? = null
 
     fun setBusinesses(businesses: List<Business>?) {
         this.businesses = businesses
@@ -38,8 +31,8 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val business = businesses!![position]
         holder.binding?.business = business
-        holder.itemView.setOnClickListener { onClickListener?.onVariantClick(business) }
-        holder.itemView.setOnLongClickListener { view: View -> onLongClickListener?.onLongVariantClick(business, view) ?: false }
+        holder.itemView.setOnClickListener { onClickListener?.invoke(business) }
+        holder.itemView.setOnLongClickListener { view: View -> onLongClickListener?.invoke(business, view) ?: false }
     }
 
     override fun getItemCount(): Int {
