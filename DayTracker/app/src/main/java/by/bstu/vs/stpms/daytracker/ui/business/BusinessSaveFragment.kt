@@ -23,7 +23,7 @@ import kotlin.collections.ArrayList
 
 class BusinessSaveFragment : Fragment() {
 
-    lateinit var businessViewModel: BusinessViewModel
+    private lateinit var businessViewModel: BusinessViewModel
     lateinit var business: Business
 
     override fun onCreateView(
@@ -61,7 +61,9 @@ class BusinessSaveFragment : Fragment() {
 
             radioButtons.forEach { it.setOnCheckedChangeListener { button, isChecked ->
                 if (isChecked) {
-                    radioButtons.filter { customRadioButton -> customRadioButton.id != button.id }.forEach { customRadioButton -> customRadioButton.isChecked = false }
+                    radioButtons
+                            .filter { customRadioButton -> customRadioButton.id != button.id }
+                            .forEach { customRadioButton -> customRadioButton.isChecked = false }
                     business.type = BusinessType.findById(button.id)
                     businessViewModel.setCurrent(business)
                 }

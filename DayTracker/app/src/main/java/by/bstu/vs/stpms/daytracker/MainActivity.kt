@@ -36,8 +36,7 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_business, R.id.nav_stats
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { controller: NavController?, destination: NavDestination?, arguments: Bundle? ->
+        navController.addOnDestinationChangedListener { _: NavController?, _: NavDestination?, _: Bundle? ->
             val addableFragments: MutableList<String> =
                 ArrayList()
             addableFragments.add(getString(R.string.menu_home))
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 navController.currentDestination!!.label.toString()
             if (addableFragments.stream()
                     .noneMatch { o: String? ->
-                        currentFragment.equals(o)
+                        currentFragment == o
                     }
             ) fab.visibility = View.GONE
             else fab.visibility = View.VISIBLE
@@ -62,7 +61,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }

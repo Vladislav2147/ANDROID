@@ -10,8 +10,8 @@ import by.bstu.vs.stpms.daytracker.model.entity.Business;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
-    private BusinessAdapter adapter;
-    private Consumer<Business> onSwipe;
+    private final BusinessAdapter adapter;
+    private final Consumer<Business> onSwipe;
 
     public RecyclerItemTouchHelper(BusinessAdapter adapter, Consumer<Business> onSwipe) {
         super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT);

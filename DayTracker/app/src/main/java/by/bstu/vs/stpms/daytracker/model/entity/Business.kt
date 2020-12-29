@@ -21,6 +21,7 @@ class Business(
     var endTime: Calendar,
     var type: BusinessType
 ): Serializable {
+
     constructor() : this(
             null,
             Calendar.getInstance().apply {
@@ -33,4 +34,5 @@ class Business(
             },
             BusinessType.CHILL
     )
+
 }

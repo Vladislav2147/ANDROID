@@ -49,7 +49,7 @@ class StatisticsFragment : Fragment() {
         val pieChart = requireView().findViewById<PieChart>(R.id.chart)
         val recommendationsTextView = requireView().findViewById<TextView>(R.id.recommendations)
 
-        businessViewModel.businessesLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        businessViewModel.businessesLiveData.observe(viewLifecycleOwner, {
             val map = formatList(it)
             val pieEntries: ArrayList<PieEntry> = ArrayList()
             for (key: String in map.keys) {

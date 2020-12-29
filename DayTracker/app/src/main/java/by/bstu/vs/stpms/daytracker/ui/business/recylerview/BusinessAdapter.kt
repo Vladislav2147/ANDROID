@@ -20,12 +20,12 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.ViewHolder>() {
         this.businesses = businesses
         notifyDataSetChanged()
     }
-    fun getBusinesses() = businesses;
+    fun getBusinesses() = businesses
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: BusinessItemLayoutBinding = BusinessItemLayoutBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding.getRoot())
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -35,9 +35,7 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.ViewHolder>() {
         holder.itemView.setOnLongClickListener { view: View -> onLongClickListener?.invoke(business, view) ?: false }
     }
 
-    override fun getItemCount(): Int {
-        return if (businesses == null) 0 else businesses!!.size
-    }
+    override fun getItemCount(): Int = businesses?.size ?: 0
 
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         var binding: BusinessItemLayoutBinding? = DataBindingUtil.bind(v)

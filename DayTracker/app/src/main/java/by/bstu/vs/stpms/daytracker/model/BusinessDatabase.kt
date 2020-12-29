@@ -30,7 +30,7 @@ abstract class BusinessDatabase : RoomDatabase() {
             }
         }
 
-        val insertTrigger = "create trigger if not exists check_time_ranges_insert before insert on business\n" +
+        private const val insertTrigger = "create trigger if not exists check_time_ranges_insert before insert on business\n" +
                 "begin\n" +
                 "    select case " +
                 "    WHEN strftime('%s', 'now') < cast(new.end_time as text) THEN raise(fail, \"End can't be more than now\")\n" +
@@ -40,7 +40,7 @@ abstract class BusinessDatabase : RoomDatabase() {
                 "    raise (fail, 'Time interval intersection')\n" +
                 "    end;\n" +
                 "end;\n"
-        val updateTrigger = "create trigger if not exists check_time_ranges_update before update on business\n" +
+        private const val updateTrigger = "create trigger if not exists check_time_ranges_update before update on business\n" +
                 "begin\n" +
                 "    select case " +
                 "    WHEN strftime('%s', 'now') < cast(new.end_time as text) THEN raise(fail, \"End can't be more than now\")\n" +

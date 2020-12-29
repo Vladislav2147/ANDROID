@@ -24,13 +24,13 @@ class BusinessViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun setCurrent(business: Business) {
-        currentBusiness.setValue(business)
+        currentBusiness.value = business
     }
 
     fun save(
         onError: (e: SQLiteConstraintException) -> Unit,
         onSuccess: () -> Unit
-    ) = viewModelScope.launch() {
+    ) = viewModelScope.launch {
         try {
             if(createMode) businessRepository.insert(currentBusiness.value!!)
             else businessRepository.update(currentBusiness.value!!)
