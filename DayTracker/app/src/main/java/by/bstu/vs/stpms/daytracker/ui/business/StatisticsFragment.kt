@@ -90,10 +90,10 @@ class StatisticsFragment : Fragment() {
 
 fun formatList(busies: List<Business>): Map<String, Double> {
     val weekAgo = Calendar.getInstance().apply {
-        set(Calendar.DAY_OF_YEAR, -7)
+        add(Calendar.DAY_OF_YEAR, -7)
     }
     return busies
-        .filter { it.startTime > weekAgo }
+        .filter { it.startTime.compareTo(weekAgo) == 1 }
         .groupBy { capitalize(it.type.name) }
         .mapValues { busiesGroupByType ->
             busiesGroupByType

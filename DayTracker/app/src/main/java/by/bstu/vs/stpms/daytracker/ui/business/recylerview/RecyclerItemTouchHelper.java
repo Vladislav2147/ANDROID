@@ -14,7 +14,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private final Consumer<Business> onSwipe;
 
     public RecyclerItemTouchHelper(BusinessAdapter adapter, Consumer<Business> onSwipe) {
-        super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT);
+        super(0, ItemTouchHelper.LEFT);
         this.adapter = adapter;
         this.onSwipe = onSwipe;
     }
