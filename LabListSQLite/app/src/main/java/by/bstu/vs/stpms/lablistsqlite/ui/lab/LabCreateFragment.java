@@ -42,6 +42,11 @@ public class LabCreateFragment extends Fragment {
     }
 
     public void save() {
+        String name = mViewModel.getLabLiveData().getValue().getName();
+        if (name == null || name.isEmpty()) {
+            Toast.makeText(getContext(), "Name required", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mViewModel.save();
         getActivity().onBackPressed();
     }
