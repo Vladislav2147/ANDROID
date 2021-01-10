@@ -47,6 +47,7 @@ class MyDownloadService : IntentService("MyDownloadService") {
             intent.putExtra("success", "success")
             sendBroadcast(intent)
             Log.d(TAG, "onHandleIntent: Successful download")
+
         } catch (e: Exception) {
             Log.e(TAG, "onHandleIntent: ", e)
         }
