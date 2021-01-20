@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        articleAdapter = ArticleAdapter()
+        articleAdapter = ArticleAdapter(this)
         articleAdapter.onClickListener = object : ArticleAdapter.OnClickListener {
             override fun onVariantClick(article: Article?) {
                 article?.let {

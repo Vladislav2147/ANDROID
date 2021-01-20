@@ -1,7 +1,10 @@
 package by.bstu.vs.stpms.lr13.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import by.bstu.vs.stpms.lr13.R
 import by.bstu.vs.stpms.lr13.model.News
 import by.bstu.vs.stpms.lr13.model.Weather
 import by.bstu.vs.stpms.lr13.retrofit.NetworkService
@@ -10,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel: ViewModel() {
+class MainViewModel(application: Application): AndroidViewModel(application) {
     var apiNews = NetworkService.newsService()
     var apiWeather = NetworkService.weatherService()
 
@@ -18,9 +21,13 @@ class MainViewModel: ViewModel() {
     val weatherLiveData = MutableLiveData<Event<Weather>>()
     var city = MutableLiveData("")
 
+    val weatherKey: String = application.getString(R.string.weather_key)
+    val newsKey: String = application.getString(R.string.news_key)
+
+
     fun getNews() {
         newsLiveData.postValue(Event.loading())
-        apiNews.getNews(NetworkService.NEWS_KEY).enqueue(object: Callback<News>{
+        apiNews.getNews(newsKey).enqueue(object: Callback<News>{
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 newsLiveData.postValue(Event.success(response.body()))
             }
@@ -34,7 +41,7 @@ class MainViewModel: ViewModel() {
 
     fun getWeather() {
         weatherLiveData.postValue(Event.loading())
-        apiWeather.getWeatherByCityName(city.value!!, NetworkService.WEATHER_KEY).enqueue(object: Callback<Weather>{
+        apiWeather.getWeatherByCityName(city.value!!, weatherKey).enqueue(object: Callback<Weather>{
             override fun onResponse(call: Call<Weather>, response: Response<Weather>) {
                 weatherLiveData.postValue(Event.success(response.body()))
             }

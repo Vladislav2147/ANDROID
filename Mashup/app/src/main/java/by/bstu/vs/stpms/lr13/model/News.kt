@@ -20,6 +20,8 @@ class Article {
     var link: String? = null
     @SerializedName("publishedAt")
     var publishedAt: Date? = null
+    @SerializedName("urlToImage")
+    var imageUrl: String? = null
 
     companion object {
         @JvmStatic

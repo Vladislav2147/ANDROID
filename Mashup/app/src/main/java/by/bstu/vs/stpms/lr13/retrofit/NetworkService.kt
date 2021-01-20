@@ -16,9 +16,7 @@ import com.google.gson.Gson
 object NetworkService {
 
     private const val BASE_NEWS_URL = "http://newsapi.org/"
-    const val NEWS_KEY = "7e0b4244a83b4402906eb588bc9932c7"
     private const val BASE_WEATHER_URL = "http://api.openweathermap.org/"
-    const val WEATHER_KEY = "94176bf6d13e644d4c512383369a13d3"
 
 
     private val loggingInterceptor = run {

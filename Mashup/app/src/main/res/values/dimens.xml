@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="large_text">20sp</dimen>
+    <dimen name="small_text">12sp</dimen>
     <dimen name="default_text">16sp</dimen>
     <dimen name="item_indent">8dp</dimen>
     <dimen name="large_item_indent">16dp</dimen>
