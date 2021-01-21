@@ -4,21 +4,65 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
-import java.util.function.Consumer;
-
+import by.bstu.vs.stpms.lablistsqlite.model.dao.Dao;
 import by.bstu.vs.stpms.lablistsqlite.model.database.DatabaseOpenHelper;
+import by.bstu.vs.stpms.lablistsqlite.model.entity.Entity;
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
 
-public abstract class Repository<E> {
+public abstract class Repository<E extends Entity> {
 
     protected SQLiteDatabase database;
+    protected Dao<E> dao;
 
     public Repository(Context context) {
         DatabaseOpenHelper openHelper = new DatabaseOpenHelper(context);
         database = openHelper.getReadableDatabase();
     }
 
-    public abstract void insert(E item, Consumer<SQLiteException> onError);
-    public abstract void update(E item, Consumer<SQLiteException> onError);
-    public abstract void delete(E item, Consumer<SQLiteException> onError);
+    public final Completable insert(E item) {
+        return new Completable() {
+            @Override
+            protected void subscribeActual(CompletableObserver observer) {
+                try {
+                    dao.insert(item);
+                    refresh();
+                    observer.onComplete();
+                } catch (SQLiteException e) {
+                    observer.onError(e);
+                }
+            }
+        };
+    }
+
+    public final Completable update(E item) {
+        return new Completable() {
+            @Override
+            protected void subscribeActual(CompletableObserver observer) {
+                try {
+                    dao.update(item);
+                    refresh();
+                    observer.onComplete();
+                } catch (SQLiteException e) {
+                    observer.onError(e);
+                }
+            }
+        };
+    }
+    public final Completable delete(E item) {
+        return new Completable() {
+            @Override
+            protected void subscribeActual(CompletableObserver observer) {
+                try {
+                    dao.delete(item);
+                    refresh();
+                    observer.onComplete();
+                } catch (SQLiteException e) {
+                    observer.onError(e);
+                }
+            }
+        };
+    }
+
     protected abstract void refresh();
 }
