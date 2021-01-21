@@ -15,11 +15,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import by.bstu.vs.stpms.lablistsqlite.R;
 import by.bstu.vs.stpms.lablistsqlite.databinding.FragmentLabCreateBinding;
+import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
+import io.reactivex.CompletableObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class LabCreateFragment extends Fragment {
 
-
+    private final static String TAG = "LabCreateFragment";
     private LabViewModel mViewModel;
 
     @Override
@@ -32,7 +37,6 @@ public class LabCreateFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(LabViewModel.class);
         mViewModel.setLabLiveData(lab);
         mViewModel.setSubjectId(subjectId);
-        mViewModel.setOnError(e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
 
         FragmentLabCreateBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lab_create, container, false);
         binding.setVm(mViewModel);
@@ -47,8 +51,29 @@ public class LabCreateFragment extends Fragment {
             Toast.makeText(getContext(), "Name required", Toast.LENGTH_SHORT).show();
             return;
         }
-        mViewModel.save();
-        getActivity().onBackPressed();
+        Lab lab = mViewModel.getLabLiveData().getValue();
+        mViewModel.save()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        FileLog.getInstance().info(TAG, "save: success " + lab);
+                        getActivity().onBackPressed();
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        FileLog.getInstance().error(TAG, "save: " + lab + " save failed", e);
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }

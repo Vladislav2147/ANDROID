@@ -14,9 +14,7 @@ import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.async.QueryAsyncTask;
 
-public class LabRepository extends Repository<Lab> {
-
-    private LabDao dao;
+public class LabRepository extends Repository<Lab, LabDao> {
 
     private MutableLiveData<List<Lab>> labsBySubjectId;
     private MutableLiveData<Lab> item;

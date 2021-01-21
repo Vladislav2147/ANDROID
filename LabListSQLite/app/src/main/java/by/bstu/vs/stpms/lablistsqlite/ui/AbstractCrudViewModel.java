@@ -1,18 +1,20 @@
 package by.bstu.vs.stpms.lablistsqlite.ui;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteException;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.function.Consumer;
+
+import by.bstu.vs.stpms.lablistsqlite.model.dao.Dao;
+import by.bstu.vs.stpms.lablistsqlite.model.entity.Entity;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
+import io.reactivex.Completable;
 
 
-public abstract class AbstractCrudViewModel<E, R extends Repository<E>> extends AndroidViewModel {
+public abstract class AbstractCrudViewModel<E extends Entity, R extends Repository<E, ? extends Dao<E>>> extends AndroidViewModel {
 
     protected LiveData<List<E>> listLiveData;
     protected R repository;
@@ -25,15 +27,15 @@ public abstract class AbstractCrudViewModel<E, R extends Repository<E>> extends 
         return listLiveData;
     }
 
-    public void add(E item, Consumer<SQLiteException> onError) {
-        repository.insert(item, onError);
+    public Completable add(E item) {
+        return repository.insert(item);
     }
 
-    public void update(E item, Consumer<SQLiteException> onError) {
-        repository.update(item, onError);
+    public Completable update(E item) {
+        return repository.update(item);
     }
 
-    public void delete(E item, Consumer<SQLiteException> onError) {
-        repository.delete(item, onError);
+    public Completable delete(E item) {
+        return repository.delete(item);
     }
 }

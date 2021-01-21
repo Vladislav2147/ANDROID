@@ -10,10 +10,10 @@ import by.bstu.vs.stpms.lablistsqlite.model.entity.Entity;
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 
-public abstract class Repository<E extends Entity> {
+public abstract class Repository<E extends Entity, D extends Dao<E>> {
 
     protected SQLiteDatabase database;
-    protected Dao<E> dao;
+    protected D dao;
 
     public Repository(Context context) {
         DatabaseOpenHelper openHelper = new DatabaseOpenHelper(context);

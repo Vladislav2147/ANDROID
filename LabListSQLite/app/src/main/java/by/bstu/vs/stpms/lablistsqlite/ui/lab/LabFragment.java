@@ -27,10 +27,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablistsqlite.R;
+import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
+import io.reactivex.CompletableObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class LabFragment extends Fragment {
 
+    private final static String TAG = "LabCreateFragment";
     private LabViewModel labViewModel;
     private RecyclerView recyclerView;
     private LabAdapter labAdapter;
@@ -74,7 +80,27 @@ public class LabFragment extends Fragment {
                 .setTitle("Delete")
                 .setMessage("Delete item?")
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
-                    labViewModel.delete(lab, showError);
+                    labViewModel.delete(lab)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new CompletableObserver() {
+                                @Override
+                                public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                                    FileLog.getInstance().info(TAG, "deleteLab: success " + lab);
+                                }
+
+                                @Override
+                                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                                    FileLog.getInstance().error(TAG, "deleteLab: " + lab + " delete failed", e);
+                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 })
                 .setNegativeButton("Cancel", null)
                 .create()
@@ -88,7 +114,28 @@ public class LabFragment extends Fragment {
             LabFragmentDirections.ActionNavLabToLabDetailsFragment action = LabFragmentDirections.actionNavLabToLabDetailsFragment(lab.getId());
             navController.navigate(action);
         });
-        labAdapter.setOnIsPassedPropertyChanged(lab -> labViewModel.update(lab, showError));
+        labAdapter.setOnIsPassedPropertyChanged(lab -> {
+            labViewModel.update(lab)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            FileLog.getInstance().info(TAG, "update checkbox: success " + lab);
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                            FileLog.getInstance().error(TAG, "update checkbox: " + lab + " failed", e);
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        });
         labAdapter.setOnLongClickListener((lab, view) -> {
             PopupMenu popupMenu = new PopupMenu(getContext(), view, Gravity.END);
             popupMenu.inflate(R.menu.popup_menu);
@@ -116,7 +163,6 @@ public class LabFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Do something that differs the Activity's menu here
         inflater.inflate(R.menu.lab_sorting_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }

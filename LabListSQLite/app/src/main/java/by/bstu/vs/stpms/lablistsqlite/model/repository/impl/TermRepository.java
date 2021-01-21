@@ -13,22 +13,20 @@ import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.async.QueryAsyncTask;
 import lombok.Getter;
 
-public class TermRepository extends Repository<Term> {
-
-    private TermDao termDao;
+public class TermRepository extends Repository<Term, TermDao> {
 
     @Getter
     private MutableLiveData<List<Term>> terms;
 
     public TermRepository(Context context) {
         super(context);
-        termDao = new TermDaoImpl(database);
+        dao = new TermDaoImpl(database);
         terms = new MutableLiveData<>();
         refresh();
     }
 
     @Override
     protected void refresh() {
-        new QueryAsyncTask<>(terms, () -> termDao.getAll()).execute();
+        new QueryAsyncTask<>(terms, () -> dao.getAll()).execute();
     }
 }

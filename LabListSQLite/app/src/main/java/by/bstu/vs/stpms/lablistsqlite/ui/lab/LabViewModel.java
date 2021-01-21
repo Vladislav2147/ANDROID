@@ -1,25 +1,23 @@
 package by.bstu.vs.stpms.lablistsqlite.ui.lab;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteException;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.impl.LabRepository;
 import by.bstu.vs.stpms.lablistsqlite.ui.AbstractCrudViewModel;
+import io.reactivex.Completable;
 import lombok.Getter;
 
 public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
 
     private int subjectId;
     private boolean createMode = true;
-    private Consumer<SQLiteException> onError;
 
     @Getter
     private LiveData<Lab> labLiveData;
@@ -54,18 +52,14 @@ public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
         this.labLiveData = new MutableLiveData<>(lab);
     }
 
-    public void setOnError(Consumer<SQLiteException> onError) {
-        this.onError = onError;
-    }
-
     public void setSubjectId(int subjectId) {
         this.subjectId = subjectId;
     }
 
-    public void save() {
+    public Completable save() {
         labLiveData.getValue().setSubjectId(subjectId);
-        if (createMode) add(labLiveData.getValue(), onError);
-        else update(labLiveData.getValue(), onError);
+        Lab lab = labLiveData.getValue();
+        return createMode ? add(lab) : update(lab);
     }
 
 }

@@ -27,10 +27,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.function.Consumer;
 
 import by.bstu.vs.stpms.lablistsqlite.R;
+import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Term;
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class TermFragment extends Fragment {
 
+    private final static String TAG = "TermFragment";
     private TermViewModel termViewModel;
     private RecyclerView recyclerView;
     private TermAdapter termAdapter;
@@ -92,12 +99,30 @@ public class TermFragment extends Fragment {
             term.setCourse(Integer.valueOf(et_course.getText().toString()));
             term.setSemester(Integer.valueOf(et_semester.getText().toString()));
 
-            if (termToEdit == null) {
-                termViewModel.add(term, showError);
-            } else {
-                termViewModel.update(term, showError);
-            }
-            dialog.dismiss();
+            Completable completable = termToEdit == null ? termViewModel.add(term) : termViewModel.update(term);
+            completable
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                            FileLog.getInstance().info(TAG, "createAddDialog: save success " + term);
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                            FileLog.getInstance().error(TAG, "createAddDialog: " + term + " save failed", e);
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
         });
     }
 
@@ -107,7 +132,27 @@ public class TermFragment extends Fragment {
                 .setTitle("Delete")
                 .setMessage("Delete item?")
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
-                    termViewModel.delete(term, showError);
+                    termViewModel.delete(term)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new CompletableObserver() {
+                                @Override
+                                public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    Toast.makeText(TermFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                                    FileLog.getInstance().info(TAG, "deleteSubject: delete success " + term);
+                                }
+
+                                @Override
+                                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                                    FileLog.getInstance().error(TAG, "deleteSubject: " + term + " delete failed", e);
+                                    Toast.makeText(TermFragment.this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 })
                 .setNegativeButton("Cancel", null)
                 .create()
