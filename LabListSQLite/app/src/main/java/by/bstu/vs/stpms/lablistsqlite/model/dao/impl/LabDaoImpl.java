@@ -23,7 +23,7 @@ public class LabDaoImpl implements LabDao {
     }
 
     @Override
-    public void insert(Lab item) {
+    public void insert(Lab item) throws SQLiteException {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.LabTable.COLUMN_ID, item.getId());
         cv.put(DatabaseContract.LabTable.COLUMN_NAME, item.getName());
@@ -33,15 +33,7 @@ public class LabDaoImpl implements LabDao {
         cv.put(DatabaseContract.LabTable.COLUMN_NOTES, item.getNotes());
         cv.put(DatabaseContract.LabTable.COLUMN_IS_PASSED, item.isPassed());
 
-        try {
-            if (database.insertOrThrow(DatabaseContract.LabTable.TABLE_NAME, null, cv) == -1) {
-                SQLiteException exception = new SQLiteException("Lab insert failed");
-                FileLog.getInstance().error(TAG, "insert: Lab " + item + " insert failed", exception);
-                throw exception;
-            }
-            FileLog.getInstance().info(TAG, "insert: success " + item);
-        } catch (Exception e) {
-            FileLog.getInstance().error(TAG, "insert: Lab " + item + " insert failed", e);
+        if (database.insertOrThrow(DatabaseContract.LabTable.TABLE_NAME, null, cv) == -1) {
             throw new SQLiteException("Lab insert failed");
         }
     }
@@ -69,7 +61,7 @@ public class LabDaoImpl implements LabDao {
     }
 
     @Override
-    public void delete(Lab item) {
+    public void delete(Lab item) throws SQLiteException {
         int deleted = database.delete(
                 DatabaseContract.LabTable.TABLE_NAME,
                 "id == ?",
@@ -81,11 +73,10 @@ public class LabDaoImpl implements LabDao {
             FileLog.getInstance().error(TAG, "delete: Lab " + item + " wasn't deleted", exception);
             throw exception;
         }
-        FileLog.getInstance().info(TAG, "delete: success " + item);
     }
 
     @Override
-    public void update(Lab item) {
+    public void update(Lab item) throws SQLiteException {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.LabTable.COLUMN_ID, item.getId());
         cv.put(DatabaseContract.LabTable.COLUMN_NAME, item.getName());
@@ -103,11 +94,8 @@ public class LabDaoImpl implements LabDao {
         );
 
         if (updated == 0) {
-            SQLiteException exception = new SQLiteException("Lab wasn't updated");
-            FileLog.getInstance().error(TAG, "update: Lab " + item + " wasn't updated", exception);
-            throw exception;
+            throw new SQLiteException("Lab wasn't updated");
         }
-        FileLog.getInstance().info(TAG, "update: success " + item);
     }
 
     @Override

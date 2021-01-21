@@ -23,27 +23,19 @@ public class TermDaoImpl implements TermDao {
     }
 
     @Override
-    public void insert(Term item) {
+    public void insert(Term item) throws SQLiteException {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.TermTable.COLUMN_ID, item.getId());
         cv.put(DatabaseContract.TermTable.COLUMN_COURSE, item.getCourse());
         cv.put(DatabaseContract.TermTable.COLUMN_SEMESTER, item.getSemester());
 
-        try {
-            if (database.insertOrThrow(DatabaseContract.TermTable.TABLE_NAME, null, cv) == -1) {
-                SQLiteException exception = new SQLiteException("Term insert failed");
-                FileLog.getInstance().error(TAG, "insert: Term " + item + " insert failed", exception);
-                throw exception;
-            }
-            FileLog.getInstance().info(TAG, "insert: success " + item);
-        } catch (Exception e) {
-            FileLog.getInstance().error(TAG, "insert: Term " + item + " insert failed", e);
+        if (database.insertOrThrow(DatabaseContract.TermTable.TABLE_NAME, null, cv) == -1) {
             throw new SQLiteException("Term insert failed");
         }
     }
 
     @Override
-    public void delete(Term item) {
+    public void delete(Term item) throws SQLiteException {
         int deleted = database.delete(
                 DatabaseContract.TermTable.TABLE_NAME,
                 "id == ?",
@@ -51,15 +43,12 @@ public class TermDaoImpl implements TermDao {
         );
 
         if (deleted == 0) {
-            SQLiteException exception = new SQLiteException("Term wasn't deleted");
-            FileLog.getInstance().error(TAG, "delete: Term " + item + " wasn't deleted", exception);
-            throw exception;
+            throw new SQLiteException("Term wasn't deleted");
         }
-        FileLog.getInstance().info(TAG, "delete: success " + item);
     }
 
     @Override
-    public void update(Term item) {
+    public void update(Term item) throws SQLiteException {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.TermTable.COLUMN_ID, item.getId());
         cv.put(DatabaseContract.TermTable.COLUMN_COURSE, item.getCourse());
@@ -73,11 +62,8 @@ public class TermDaoImpl implements TermDao {
         );
 
         if (updated == 0) {
-            SQLiteException exception = new SQLiteException("Term wasn't updated");
-            FileLog.getInstance().error(TAG, "update: Term " + item + " wasn't updated", exception);
-            throw exception;
+            throw new SQLiteException("Term wasn't updated");
         }
-        FileLog.getInstance().info(TAG, "update: success " + item);
     }
 
     @Override

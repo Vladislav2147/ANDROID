@@ -23,27 +23,19 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public void insert(Subject item) {
+    public void insert(Subject item) throws SQLiteException {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.SubjectTable.COLUMN_ID, item.getId());
         cv.put(DatabaseContract.SubjectTable.COLUMN_NAME, item.getName());
         cv.put(DatabaseContract.SubjectTable.COLUMN_TERM_ID, item.getTermId());
 
-        try {
-            if (database.insertOrThrow(DatabaseContract.SubjectTable.TABLE_NAME, null, cv) == -1) {
-                SQLiteException exception = new SQLiteException("Subject insert failed");
-                FileLog.getInstance().error(TAG, "insert: Subject " + item + " insert failed", exception);
-                throw exception;
-            }
-            FileLog.getInstance().info(TAG, "insert: success " + item);
-        } catch (Exception e) {
-            FileLog.getInstance().error(TAG, "insert: Subject " + item + " insert failed", e);
-            throw new SQLiteException("Subject insert failed");
+        if (database.insertOrThrow(DatabaseContract.SubjectTable.TABLE_NAME, null, cv) == -1) {
+            throw  new SQLiteException("Subject insert failed");
         }
     }
 
     @Override
-    public void delete(Subject item) {
+    public void delete(Subject item) throws SQLiteException {
         int deleted = database.delete(
                 DatabaseContract.SubjectTable.TABLE_NAME,
                 "id == ?",
@@ -51,16 +43,12 @@ public class SubjectDaoImpl implements SubjectDao {
         );
 
         if (deleted == 0) {
-            SQLiteException exception = new SQLiteException("Subject wasn't deleted");
-            FileLog.getInstance().error(TAG, "delete: Subject " + item + " wasn't deleted", exception);
-            throw exception;
+            throw new SQLiteException("Subject wasn't deleted");
         }
-        FileLog.getInstance().info(TAG, "delete: success " + item);
-
     }
 
     @Override
-    public void update(Subject item) {
+    public void update(Subject item) throws SQLiteException {
 
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.SubjectTable.COLUMN_ID, item.getId());
@@ -75,11 +63,8 @@ public class SubjectDaoImpl implements SubjectDao {
         );
 
         if (updated == 0) {
-            SQLiteException exception = new SQLiteException("Subject wasn't updated");
-            FileLog.getInstance().error(TAG, "update: Subject " + item + " wasn't updated", exception);
-            throw exception;
+            throw new SQLiteException("Subject wasn't updated");
         }
-        FileLog.getInstance().info(TAG, "update: success " + item);
 
     }
 
