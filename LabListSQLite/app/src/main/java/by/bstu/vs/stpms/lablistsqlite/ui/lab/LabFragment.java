@@ -29,9 +29,8 @@ import java.util.function.Consumer;
 import by.bstu.vs.stpms.lablistsqlite.R;
 import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
-import io.reactivex.CompletableObserver;
+import by.bstu.vs.stpms.lablistsqlite.model.observable.SimpleCompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class LabFragment extends Fragment {
@@ -83,24 +82,16 @@ public class LabFragment extends Fragment {
                     labViewModel.delete(lab)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new CompletableObserver() {
-                                @Override
-                                public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-                                    Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                                    FileLog.getInstance().info(TAG, "deleteLab: success " + lab);
-                                }
-
-                                @Override
-                                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                                    FileLog.getInstance().error(TAG, "deleteLab: " + lab + " delete failed", e);
-                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            .subscribe(new SimpleCompletableObserver(
+                                    () -> {
+                                        Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                                        FileLog.getInstance().info(TAG, "deleteLab: success " + lab);
+                                    },
+                                    (e) -> {
+                                        FileLog.getInstance().error(TAG, "deleteLab: " + lab + " delete failed", e);
+                                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                            ));
                 })
                 .setNegativeButton("Cancel", null)
                 .create()
@@ -118,23 +109,13 @@ public class LabFragment extends Fragment {
             labViewModel.update(lab)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new CompletableObserver() {
-                        @Override
-                        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            FileLog.getInstance().info(TAG, "update checkbox: success " + lab);
-                        }
-
-                        @Override
-                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                            FileLog.getInstance().error(TAG, "update checkbox: " + lab + " failed", e);
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    .subscribe(new SimpleCompletableObserver(
+                            () -> FileLog.getInstance().info(TAG, "update checkbox: success " + lab),
+                            (e) -> {
+                                FileLog.getInstance().error(TAG, "update checkbox: " + lab + " failed", e);
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                    ));
         });
         labAdapter.setOnLongClickListener((lab, view) -> {
             PopupMenu popupMenu = new PopupMenu(getContext(), view, Gravity.END);

@@ -29,10 +29,9 @@ import java.util.function.Consumer;
 import by.bstu.vs.stpms.lablistsqlite.R;
 import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Term;
+import by.bstu.vs.stpms.lablistsqlite.model.observable.SimpleCompletableObserver;
 import io.reactivex.Completable;
-import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class TermFragment extends Fragment {
@@ -103,25 +102,17 @@ public class TermFragment extends Fragment {
             completable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new CompletableObserver() {
-                        @Override
-                        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-                            FileLog.getInstance().info(TAG, "createAddDialog: save success " + term);
-                            dialog.dismiss();
-                        }
-
-                        @Override
-                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                            FileLog.getInstance().error(TAG, "createAddDialog: " + term + " save failed", e);
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    .subscribe(new SimpleCompletableObserver(
+                            () -> {
+                                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                                FileLog.getInstance().info(TAG, "createAddDialog: save success " + term);
+                                dialog.dismiss();
+                            },
+                            (e) -> {
+                                FileLog.getInstance().error(TAG, "createAddDialog: " + term + " save failed", e);
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                    ));
 
         });
     }
@@ -135,24 +126,16 @@ public class TermFragment extends Fragment {
                     termViewModel.delete(term)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new CompletableObserver() {
-                                @Override
-                                public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-                                    Toast.makeText(TermFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                                    FileLog.getInstance().info(TAG, "deleteSubject: delete success " + term);
-                                }
-
-                                @Override
-                                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                                    FileLog.getInstance().error(TAG, "deleteSubject: " + term + " delete failed", e);
-                                    Toast.makeText(TermFragment.this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            .subscribe(new SimpleCompletableObserver(
+                                    () -> {
+                                        Toast.makeText(TermFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                                        FileLog.getInstance().info(TAG, "deleteSubject: delete success " + term);
+                                    },
+                                    (e) -> {
+                                        FileLog.getInstance().error(TAG, "deleteSubject: " + term + " delete failed", e);
+                                        Toast.makeText(TermFragment.this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                            ));
                 })
                 .setNegativeButton("Cancel", null)
                 .create()

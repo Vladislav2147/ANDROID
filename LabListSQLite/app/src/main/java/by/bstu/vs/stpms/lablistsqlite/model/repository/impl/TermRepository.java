@@ -11,7 +11,6 @@ import by.bstu.vs.stpms.lablistsqlite.model.dao.TermDao;
 import by.bstu.vs.stpms.lablistsqlite.model.dao.impl.TermDaoImpl;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Term;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
-import by.bstu.vs.stpms.lablistsqlite.model.repository.async.QueryAsyncTask;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,7 +32,6 @@ public class TermRepository extends Repository<Term, TermDao> {
 
     @Override
     protected void refresh() {
-        new QueryAsyncTask<>(terms, () -> dao.getAll()).execute();
         Single
                 .create((SingleOnSubscribe<List<Term>>) emitter -> emitter.onSuccess(dao.getAll()))
                 .subscribeOn(Schedulers.io())
