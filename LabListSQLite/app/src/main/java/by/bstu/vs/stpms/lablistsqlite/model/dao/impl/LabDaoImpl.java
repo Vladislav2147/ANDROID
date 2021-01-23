@@ -39,7 +39,7 @@ public class LabDaoImpl implements LabDao {
     }
 
     @Override
-    public Lab getById(int id) {
+    public Lab getById(int id) throws SQLiteException{
         Cursor cursor = database.query(
                 DatabaseContract.LabTable.TABLE_NAME,
                 null,
