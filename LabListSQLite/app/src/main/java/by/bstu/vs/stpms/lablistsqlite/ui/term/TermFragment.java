@@ -1,7 +1,7 @@
 package by.bstu.vs.stpms.lablistsqlite.ui.term;
 
+import android.content.Context;
 import android.content.DialogInterface;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,9 +23,10 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.function.Consumer;
+import javax.inject.Inject;
 
 import by.bstu.vs.stpms.lablistsqlite.R;
+import by.bstu.vs.stpms.lablistsqlite.application.LabListApplication;
 import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Term;
 import by.bstu.vs.stpms.lablistsqlite.model.observable.SimpleCompletableObserver;
@@ -37,19 +37,21 @@ import io.reactivex.schedulers.Schedulers;
 public class TermFragment extends Fragment {
 
     private final static String TAG = "TermFragment";
-    private TermViewModel termViewModel;
+    @Inject
+    TermViewModel termViewModel;
     private RecyclerView recyclerView;
     private TermAdapter termAdapter;
-    private Consumer<SQLiteException> showError;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        ((LabListApplication) context.getApplicationContext()).appComponent.inject(this);
+        super.onAttach(context);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        showError = e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
         View root = inflater.inflate(R.layout.fragment_term, container, false);
-
         initRecyclerView(root);
-
         return root;
     }
 

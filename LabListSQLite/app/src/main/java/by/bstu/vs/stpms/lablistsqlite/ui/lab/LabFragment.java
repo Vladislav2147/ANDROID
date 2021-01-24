@@ -1,6 +1,6 @@
 package by.bstu.vs.stpms.lablistsqlite.ui.lab;
 
-import android.database.sqlite.SQLiteException;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,9 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.function.Consumer;
+import javax.inject.Inject;
 
 import by.bstu.vs.stpms.lablistsqlite.R;
+import by.bstu.vs.stpms.lablistsqlite.application.LabListApplication;
 import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
 import by.bstu.vs.stpms.lablistsqlite.model.observable.SimpleCompletableObserver;
@@ -36,13 +36,12 @@ import io.reactivex.schedulers.Schedulers;
 public class LabFragment extends Fragment {
 
     private final static String TAG = "LabCreateFragment";
-    private LabViewModel labViewModel;
+    @Inject
+    LabViewModel labViewModel;
     private RecyclerView recyclerView;
     private LabAdapter labAdapter;
-    private Consumer<SQLiteException> showError;
     private int subjectId;
     private NavController navController;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,11 +49,15 @@ public class LabFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        ((LabListApplication) context.getApplicationContext()).appComponent.inject(this);
+        super.onAttach(context);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        labViewModel = new ViewModelProvider(this).get(LabViewModel.class);
         View root = inflater.inflate(R.layout.fragment_lab, container, false);
-        showError = e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         subjectId = LabFragmentArgs.fromBundle(getArguments()).getSubjectId();
         NavHostFragment navHostFragment = (NavHostFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();

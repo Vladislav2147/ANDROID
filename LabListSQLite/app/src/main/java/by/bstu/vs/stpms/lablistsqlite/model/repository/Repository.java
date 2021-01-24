@@ -1,23 +1,18 @@
 package by.bstu.vs.stpms.lablistsqlite.model.repository;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import by.bstu.vs.stpms.lablistsqlite.model.dao.Dao;
-import by.bstu.vs.stpms.lablistsqlite.model.database.DatabaseOpenHelper;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Entity;
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 
 public abstract class Repository<E extends Entity, D extends Dao<E>> {
 
-    protected SQLiteDatabase database;
     protected D dao;
 
-    public Repository(Context context) {
-        DatabaseOpenHelper openHelper = new DatabaseOpenHelper(context);
-        database = openHelper.getReadableDatabase();
+    public Repository(D dao) {
+        this.dao = dao;
     }
 
     public final Completable insert(E item) {

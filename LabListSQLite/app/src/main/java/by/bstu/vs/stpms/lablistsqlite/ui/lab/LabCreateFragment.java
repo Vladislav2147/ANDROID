@@ -1,6 +1,7 @@
 package by.bstu.vs.stpms.lablistsqlite.ui.lab;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+
+import javax.inject.Inject;
 
 import by.bstu.vs.stpms.lablistsqlite.R;
+import by.bstu.vs.stpms.lablistsqlite.application.LabListApplication;
 import by.bstu.vs.stpms.lablistsqlite.databinding.FragmentLabCreateBinding;
 import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
@@ -25,7 +28,14 @@ import io.reactivex.schedulers.Schedulers;
 public class LabCreateFragment extends Fragment {
 
     private final static String TAG = "LabCreateFragment";
-    private LabViewModel mViewModel;
+    @Inject
+    LabViewModel mViewModel;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        ((LabListApplication) context.getApplicationContext()).appComponent.inject(this);
+        super.onAttach(context);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -34,7 +44,6 @@ public class LabCreateFragment extends Fragment {
         Lab lab = LabCreateFragmentArgs.fromBundle(getArguments()).getLab();
         int subjectId = LabCreateFragmentArgs.fromBundle(getArguments()).getSubjectId();
 
-        mViewModel = new ViewModelProvider(this).get(LabViewModel.class);
         mViewModel.setLabLiveData(lab);
         mViewModel.setSubjectId(subjectId);
 

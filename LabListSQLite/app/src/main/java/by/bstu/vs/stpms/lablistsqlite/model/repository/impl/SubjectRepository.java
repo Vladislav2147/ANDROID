@@ -1,15 +1,16 @@
 package by.bstu.vs.stpms.lablistsqlite.model.repository.impl;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import by.bstu.vs.stpms.lablistsqlite.model.dao.SubjectDao;
-import by.bstu.vs.stpms.lablistsqlite.model.dao.impl.SubjectDaoImpl;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Subject;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
 import io.reactivex.Single;
@@ -17,15 +18,16 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+@Singleton
 @SuppressLint("CheckResult")
 public class SubjectRepository extends Repository<Subject, SubjectDao> {
 
     private MutableLiveData<List<Subject>> subjectsByTermId;
     private int currentId = 0;
 
-    public SubjectRepository(Context context) {
-        super(context);
-        dao = new SubjectDaoImpl(database);
+    @Inject
+    public SubjectRepository(SubjectDao dao) {
+        super(dao);
         subjectsByTermId = new MutableLiveData<>();
     }
 

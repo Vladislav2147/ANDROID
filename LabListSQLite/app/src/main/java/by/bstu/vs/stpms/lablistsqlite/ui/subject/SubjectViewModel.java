@@ -1,10 +1,10 @@
 package by.bstu.vs.stpms.lablistsqlite.ui.subject;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Subject;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.impl.SubjectRepository;
@@ -12,9 +12,9 @@ import by.bstu.vs.stpms.lablistsqlite.ui.AbstractCrudViewModel;
 
 public class SubjectViewModel extends AbstractCrudViewModel<Subject, SubjectRepository> {
 
-    public SubjectViewModel(Application application) {
-        super(application);
-        repository = new SubjectRepository(application);
+    @Inject
+    public SubjectViewModel(SubjectRepository repository) {
+        super(repository);
         listLiveData = repository.getSubjectsByTermId(0);
     }
 

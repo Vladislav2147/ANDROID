@@ -1,7 +1,6 @@
 package by.bstu.vs.stpms.lablistsqlite.model.repository.impl;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,8 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import java.util.function.Supplier;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import by.bstu.vs.stpms.lablistsqlite.model.dao.LabDao;
-import by.bstu.vs.stpms.lablistsqlite.model.dao.impl.LabDaoImpl;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
 import io.reactivex.Single;
@@ -18,6 +19,7 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+@Singleton
 @SuppressLint("CheckResult")
 public class LabRepository extends Repository<Lab, LabDao> {
 
@@ -26,10 +28,9 @@ public class LabRepository extends Repository<Lab, LabDao> {
     private int currentId = 0;
     private boolean isLastDefault = true;
 
-
-    public LabRepository(Context context) {
-        super(context);
-        dao = new LabDaoImpl(database);
+    @Inject
+    public LabRepository(LabDao dao) {
+        super(dao);
         labsBySubjectId = new MutableLiveData<>();
         item = new MutableLiveData<>();
     }

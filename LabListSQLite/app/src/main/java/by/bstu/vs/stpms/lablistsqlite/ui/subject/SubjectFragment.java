@@ -1,7 +1,7 @@
 package by.bstu.vs.stpms.lablistsqlite.ui.subject;
 
+import android.content.Context;
 import android.content.DialogInterface;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,9 +23,10 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.function.Consumer;
+import javax.inject.Inject;
 
 import by.bstu.vs.stpms.lablistsqlite.R;
+import by.bstu.vs.stpms.lablistsqlite.application.LabListApplication;
 import by.bstu.vs.stpms.lablistsqlite.logging.FileLog;
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Subject;
 import by.bstu.vs.stpms.lablistsqlite.model.observable.SimpleCompletableObserver;
@@ -37,17 +37,22 @@ import io.reactivex.schedulers.Schedulers;
 public class SubjectFragment extends Fragment {
 
     private final static String TAG = "SubjectFragment";
-    private SubjectViewModel subjectViewModel;
+    @Inject
+    SubjectViewModel subjectViewModel;
     private RecyclerView recyclerView;
     private SubjectAdapter subjectAdapter;
-    private Consumer<SQLiteException> showError;
     private int termId;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        ((LabListApplication) context.getApplicationContext()).appComponent.inject(this);
+        super.onAttach(context);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        subjectViewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
         View root = inflater.inflate(R.layout.fragment_subject, container, false);
-        showError = e -> Toast.makeText(this.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         termId = SubjectFragmentArgs.fromBundle(getArguments()).getTermId();
 
         initRecyclerView(root);

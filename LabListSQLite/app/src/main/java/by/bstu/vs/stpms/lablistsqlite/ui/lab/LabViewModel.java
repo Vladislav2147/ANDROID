@@ -1,12 +1,11 @@
 package by.bstu.vs.stpms.lablistsqlite.ui.lab;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import by.bstu.vs.stpms.lablistsqlite.model.entity.Lab;
 import by.bstu.vs.stpms.lablistsqlite.model.repository.impl.LabRepository;
@@ -21,9 +20,11 @@ public class LabViewModel extends AbstractCrudViewModel<Lab, LabRepository> {
 
     @Getter
     private LiveData<Lab> labLiveData;
-    public LabViewModel(@NonNull Application application) {
-        super(application);
-        repository = new LabRepository(application);
+
+
+    @Inject
+    public LabViewModel(LabRepository repository) {
+        super(repository);
         listLiveData = repository.getLabsBySubjectId(0);
     }
 

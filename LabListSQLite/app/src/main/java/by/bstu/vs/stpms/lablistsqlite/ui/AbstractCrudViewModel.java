@@ -1,10 +1,7 @@
 package by.bstu.vs.stpms.lablistsqlite.ui;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
@@ -14,13 +11,14 @@ import by.bstu.vs.stpms.lablistsqlite.model.repository.Repository;
 import io.reactivex.Completable;
 
 
-public abstract class AbstractCrudViewModel<E extends Entity, R extends Repository<E, ? extends Dao<E>>> extends AndroidViewModel {
+public abstract class AbstractCrudViewModel<E extends Entity, R extends Repository<E, ? extends Dao<E>>> extends ViewModel {
 
     protected LiveData<List<E>> listLiveData;
     protected R repository;
 
-    public AbstractCrudViewModel(@NonNull Application application) {
-        super(application);
+    public AbstractCrudViewModel(R repository) {
+        super();
+        this.repository = repository;
     }
 
     public LiveData<List<E>> getItems() {
